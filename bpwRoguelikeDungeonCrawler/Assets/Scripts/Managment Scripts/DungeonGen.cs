@@ -34,10 +34,10 @@ public class DungeonGen : Singleton<DungeonGen>
 
     public Tile startTile;
     public Tile endTile;
+    public Tile floorTile;
+    public Tile wallTile;
     public TileLayer[] tileLayers;
 
-    Tile floorTile;
-    Tile wallTile;
 
     public Vector2Int SpawnPos;
 
@@ -46,14 +46,6 @@ public class DungeonGen : Singleton<DungeonGen>
     }
 
     public void GenerateDungeon() {
-        foreach (TileLayer layer in tileLayers) {
-            if (layer.name == "floor") {
-                floorTile = layer.tiles[0];        
-            }
-            if (layer.name == "solid") {
-                wallTile = layer.tiles[0];        
-            }
-        }
 
         AllocateRooms();
         AllocateCorridors();
@@ -63,7 +55,7 @@ public class DungeonGen : Singleton<DungeonGen>
 
         SpawnTiles();
 
-        //EventManager.InvokeEvent("DUNGEON_GENERATED");
+        EventManager.InvokeEvent("DUNGEON_GENERATED");
     }
 
     public void WipeDungeon() {
@@ -96,7 +88,7 @@ public class DungeonGen : Singleton<DungeonGen>
                     room.endRoom = true;
                 }
 
-                if (CheckRoomPos(room, "floor")) {
+                if (CheckRoomPos(room, "floorTileMap")) {
                     roomList.Add(room);
                     AddRoomToDungeon(room);
                 } else {
@@ -114,7 +106,7 @@ public class DungeonGen : Singleton<DungeonGen>
             Room linkedRoom = roomList[Random.Range(0, roomList.Count)];
             room.linkedToRoom = linkedRoom;
             room.position = linkedRoom.position + new Vector2Int(Random.Range(minNewRoomRange, maxNewRoomRange), Random.Range(minNewRoomRange, maxNewRoomRange));
-            if (CheckRoomPos(room, "floor"))  {
+            if (CheckRoomPos(room, "floorTileMap"))  {
                 roomList.Add(room);
                 AddRoomToDungeon(room);
             } else { i--;}
@@ -162,7 +154,7 @@ public class DungeonGen : Singleton<DungeonGen>
 
     void AllocateWalls() {
         foreach(TileLayer tileLayer in tileLayers) {
-            if (tileLayer.name == "floor") {
+            if (tileLayer.name == "floorTileMap") {
                 foreach(KeyValuePair<Vector2Int, Tile> kv in tileLayer.tileDictionary) {
                     Vector2Int position = kv.Key;
                     for (int x = -1; x <= 1; x++) {
@@ -221,6 +213,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 Vector3Int location = new Vector3Int(entry.Key.x, entry.Key.y, 0);
 
                 tileLayer.tilemap.SetTile(location, entry.Value);
+                //Debug.Log("set tile" + entry.Value.name + " at " + location + " on layer " + tileLayer.name);
             }
         }
     }
