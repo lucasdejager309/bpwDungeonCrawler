@@ -15,6 +15,13 @@ public class TileLayer {
     }
 }
 
+//think of better name for this class please
+[System.Serializable]
+public class GenTile {
+    public Tile tile;
+    public int spawnChance;
+}
+
 public class DungeonGen : Singleton<DungeonGen>
 {
     public int maxRange;
@@ -34,8 +41,12 @@ public class DungeonGen : Singleton<DungeonGen>
 
     public Tile startTile;
     public Tile endTile;
-    public Tile floorTile;
     public Tile wallTile;
+
+    //doesnt do anything rn
+    public GenTile[] floorTiles;
+    public GenTile[] wallTiles;
+
     public TileLayer[] tileLayers;
 
 
@@ -46,7 +57,7 @@ public class DungeonGen : Singleton<DungeonGen>
     }
 
     public void GenerateDungeon() {
-
+        WipeDungeon();
         AllocateRooms();
         AllocateCorridors();
         AllocateWalls();
@@ -131,7 +142,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int c = 0; c < corridorWidth; c++) {
                     Vector2Int pos = new Vector2Int(x, startPos.y+c);
 
-                    AddTileToDictionary(pos, floorTile, false);
+                    AddTileToDictionary(pos, PickRandomTile(floorTiles), false);
                 }
             }
 
@@ -144,7 +155,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int c = 0; c < corridorWidth; c++) {
                     Vector2Int pos = new Vector2Int(endPos.x+c, y);
                     
-                    AddTileToDictionary(pos, floorTile, false);
+                    AddTileToDictionary(pos, PickRandomTile(floorTiles), false);
                 }
             }
         }
@@ -159,7 +170,7 @@ public class DungeonGen : Singleton<DungeonGen>
                         for (int y = -1; y <= 1; y++) {
                             Vector2Int gridPos = position + new Vector2Int(x, y);
                             if (!tileLayer.tileDictionary.ContainsKey(gridPos)) {
-                                AddTileToDictionary(gridPos, wallTile, false);
+                                AddTileToDictionary(gridPos, PickRandomTile(wallTiles), false);
                             } 
                         }
                     }
@@ -247,9 +258,33 @@ public class DungeonGen : Singleton<DungeonGen>
         for (int x = room.position.x; x < room.position.x+room.size.x; x++) {
             for (int y = room.position.y; y < room.position.y+room.size.y; y++) {
                 Vector2Int pos = new Vector2Int(x, y);
-                AddTileToDictionary(pos, floorTile, false);
+                AddTileToDictionary(pos, PickRandomTile(floorTiles), false);
             }
         }
+    }
+
+    private Tile PickRandomTile(GenTile[] genTiles) {
+        Tile pickedTile = null;
+        float probabilitySum = 0;
+        
+        //get sum of probabilities
+        foreach(GenTile genTile in genTiles) {
+            probabilitySum += genTile.spawnChance;
+        }
+
+        //generate random number
+        float randomFloat = Random.Range(0, probabilitySum+1);
+
+        //pick tile
+        for (int i = 0; i < genTiles.Length && randomFloat > 0; i++) {
+            randomFloat -= genTiles[i].spawnChance;
+            pickedTile = genTiles[i].tile;
+        }
+        if (pickedTile == null) {
+            pickedTile = genTiles[genTiles.Length-1].tile;
+        }
+     
+        return pickedTile;
     }
 }
 
