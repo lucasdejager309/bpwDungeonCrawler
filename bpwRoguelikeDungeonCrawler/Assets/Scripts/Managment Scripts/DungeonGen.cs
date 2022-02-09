@@ -54,8 +54,6 @@ public class DungeonGen : Singleton<DungeonGen>
         CreateLevelEnds();
 
         SpawnTiles();
-
-        EventManager.InvokeEvent("DUNGEON_GENERATED");
     }
 
     public void WipeDungeon() {
