@@ -22,15 +22,21 @@ public class DungeonGen : Singleton<DungeonGen>
 
     public Tile startTile;
     public Tile endTile;
+    public Tile tempTestTile;
 
     public TileLayer floorTilelayer;
     public TileLayer wallTilelayer;
     public TileLayer dungeonFeaturelayer;
 
+    public int minDungeonFeaturesPerRoom;
+    public int maxDungeonFeaturesPerRoom;
+    public DungeonFeature[] dungeonFeatures;
+
     public Vector2Int SpawnPos;
 
     void Awake() {
         Instance = this;
+        EventManager.AddListener("RELOAD_DUNGEON", GenerateDungeon);
     }
 
     public void GenerateDungeon() {
@@ -38,10 +44,17 @@ public class DungeonGen : Singleton<DungeonGen>
         AllocateRooms();
         AllocateCorridors();
         AllocateWalls();
+        FindRoomEntrances();
 
         CreateLevelEnds();
 
+        if (dungeonFeatures.Length != 0) {
+            AllocateDungeonFeatures();
+        }
+
         SpawnTiles();
+
+        EventManager.InvokeEvent("DUNGEON_GENERATED");
     }
 
     public void WipeDungeon() {
@@ -114,8 +127,8 @@ public class DungeonGen : Singleton<DungeonGen>
                 otherRoom = roomList[i+1];
             }
 
-            Vector2Int startPos = GetRandomPosInRoom(startRoom);
-            Vector2Int endPos = GetRandomPosInRoom(otherRoom);
+            Vector2Int startPos = GetCorridorStartInRoom(startRoom);
+            Vector2Int endPos = GetCorridorStartInRoom(otherRoom);
 
             Vector2Int corridorDir = new Vector2Int((int)Mathf.Sign(endPos.x - startPos.x), (int)Mathf.Sign(endPos.y - startPos.y));
 
@@ -123,7 +136,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int c = 0; c < corridorWidth; c++) {
                     Vector2Int pos = new Vector2Int(x, startPos.y+c);
 
-                    AddTileToDictionary(pos, PickRandomTile(floorTilelayer.tiles), floorTilelayer, false);
+                    AddTileToDictionary(pos, GenTile.PickRandomTile(floorTilelayer.tiles).tile, floorTilelayer, false);
                 }
             }
 
@@ -136,10 +149,43 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int c = 0; c < corridorWidth; c++) {
                     Vector2Int pos = new Vector2Int(endPos.x+c, y);
                     
-                    AddTileToDictionary(pos, PickRandomTile(floorTilelayer.tiles), floorTilelayer, false);
+                    AddTileToDictionary(pos, GenTile.PickRandomTile(floorTilelayer.tiles).tile, floorTilelayer, false);
                 }
             }
         }
+    }
+
+    public Vector2Int GetCorridorStartInRoom(Room room) {
+        // return new Vector2Int(Random.Range(room.position.x+corridorWidth, room.position.x + room.size.x - corridorWidth), 
+        // Random.Range(room.position.y + corridorWidth, room.position.y + room.size.y - corridorWidth));
+
+
+        Vector2Int pos = new Vector2Int();
+
+        Wall chosenWall = (Wall)Mathf.RoundToInt(Random.Range(0, 4));
+
+        switch(chosenWall) {
+            case Wall.bottom:
+                pos.y = room.position.y+corridorWidth;
+                break;
+            case Wall.top:
+                pos.y = room.position.y+room.size.y-corridorWidth-1;
+                break;
+            case Wall.left:
+                pos.x = room.position.x+corridorWidth;
+                break;
+            case Wall.right:
+                pos.x = room.position.x+room.size.x-corridorWidth-1;
+                break;
+        }
+
+        if (chosenWall == Wall.bottom || chosenWall == Wall.top) {
+            pos.x = Random.Range(room.position.x, room.position.x+room.size.x-1);
+        } else {
+            pos.y = Random.Range(room.position.y, room.position.y+room.size.y-1);
+        }
+
+        return pos;
     }
 
     void AllocateWalls() {
@@ -149,46 +195,95 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int y = -1; y <= 1; y++) {
                     Vector2Int gridPos = position + new Vector2Int(x, y);
                     if (!floorTilelayer.tileDictionary.ContainsKey(gridPos)) {
-                        AddTileToDictionary(gridPos, PickRandomTile(wallTilelayer.tiles), wallTilelayer, false);
+                        AddTileToDictionary(gridPos, GenTile.PickRandomTile(wallTilelayer.tiles).tile, wallTilelayer, false);
                     } 
                 }
             }
         }
     }
 
-    bool AddTileToDictionary(Vector2Int pos, Tile tiletoAdd, TileLayer tileLayer, bool overwrite) {
-            foreach (GenTile genTile in tileLayer.tiles) {
-                if (genTile.tile == tiletoAdd) {
-                    if (overwrite || !tileLayer.tileDictionary.ContainsKey(pos)) {
-                        tileLayer.tileDictionary.Add(pos, genTile.tile);
-                        return true;
-                    }
+    void FindRoomEntrances() {
+        foreach (Room room in roomList) {
+            //check bottom wall
+            for (int i = room.position.x; i < room.position.x+room.size.x; i++) {
+                Vector2Int possiblePos = new Vector2Int(i, room.position.y-1);
+                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                    room.entrances.Add(possiblePos);
                 }
+            }
+            //check top wall
+            for (int i = room.position.x; i < room.position.x+room.size.x; i++) {
+                Vector2Int possiblePos = new Vector2Int(i, room.position.y+room.size.y);
+                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                    room.entrances.Add(possiblePos);
+                }
+            }
+            //check right wall
+            for (int i = room.position.y; i < room.position.y+room.size.y; i++) {
+                Vector2Int possiblePos = new Vector2Int(room.position.x+room.size.x, i);
+                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                    room.entrances.Add(possiblePos);
+                }
+            }
+            //check left wall
+            for (int i = room.position.y; i < room.position.y+room.size.y; i++) {
+                Vector2Int possiblePos = new Vector2Int(room.position.x-1, i);
+                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                    room.entrances.Add(possiblePos);
+                }
+            }
         }
+    }
 
+    void AllocateDungeonFeatures() {
+        foreach(Room room in roomList) {
+            int amountOfFeatures = Random.Range(minDungeonFeaturesPerRoom, maxDungeonFeaturesPerRoom);
+            for (int i = 0; i < amountOfFeatures; i++) {
+                DungeonFeature feature = DungeonFeature.PickRandomFeature(dungeonFeatures);
+                Vector2Int pos = room.GetRandomPosInRoom(feature.wallAdjacent);
+                
+                AddTileToDictionary(pos, feature.tile, dungeonFeaturelayer, false);
+                
+            }
+        }
+    }
+
+    bool AddTileToDictionary(Vector2Int pos, Tile tiletoAdd, TileLayer tileLayer, bool overwrite) {
+        //     foreach (GenTile genTile in tileLayer.tiles) {
+        //         if (genTile.tile == tiletoAdd) {
+        //             if (overwrite || !tileLayer.tileDictionary.ContainsKey(pos)) {
+        //                 tileLayer.tileDictionary.Add(pos, genTile.tile);
+        //                 return true;
+        //             }
+        //         }
+        // }
+
+        // return false;
+
+        if (overwrite || !tileLayer.tileDictionary.ContainsKey(pos))
+        {
+            tileLayer.tileDictionary.Add(pos, tiletoAdd);
+            return true;
+        }
         return false;
+        
     }
 
     void CreateLevelEnds() {
         foreach(Room room in roomList) {
             if (room.endRoom) {
-                Vector2Int pos = GetRandomPosInRoom(room);
+                Vector2Int pos = room.GetRandomPosInRoom(false);
 
                 AddTileToDictionary(pos, endTile, dungeonFeaturelayer, true);
             }
 
             if (room.spawnRoom) {
-                Vector2Int pos = GetRandomPosInRoom(room);
+                Vector2Int pos = room.GetRandomPosInRoom(false);
 
                 AddTileToDictionary(pos, startTile, dungeonFeaturelayer, true);
                 SpawnPos = pos;
             }
         }
-    }
-
-    public Vector2Int GetRandomPosInRoom(Room room) {
-        return new Vector2Int(Random.Range(room.position.x+corridorWidth, room.position.x + room.size.x - corridorWidth), 
-        Random.Range(room.position.y + corridorWidth, room.position.y + room.size.y - corridorWidth));
     }
 
     void SpawnTiles() {
@@ -234,36 +329,10 @@ public class DungeonGen : Singleton<DungeonGen>
         for (int x = room.position.x; x < room.position.x+room.size.x; x++) {
             for (int y = room.position.y; y < room.position.y+room.size.y; y++) {
                 Vector2Int pos = new Vector2Int(x, y);
-                AddTileToDictionary(pos, PickRandomTile(floorTilelayer.tiles), floorTilelayer, false);
+                AddTileToDictionary(pos, GenTile.PickRandomTile(floorTilelayer.tiles).tile, floorTilelayer, false);
             }
         }
     }
 
-    private Tile PickRandomTile(GenTile[] genTiles) {
-        //how the fuck does relative probability work??
-        //https://forum.unity.com/threads/random-item-spawn-using-array-with-item-rarity-variable.176234/
-        
-        Tile pickedTile = null;
-        float probabilitySum = 0;
-        
-        //get sum of probabilities
-        foreach(GenTile genTile in genTiles) {
-            probabilitySum += genTile.spawnChance;
-        }
-
-        //generate random number
-        float randomFloat = Random.Range(0, probabilitySum+1);
-
-        //pick tile
-        for (int i = 0; i < genTiles.Length && randomFloat > 0; i++) {
-            randomFloat -= genTiles[i].spawnChance;
-            pickedTile = genTiles[i].tile;
-        }
-        if (pickedTile == null) {
-            pickedTile = genTiles[genTiles.Length-1].tile;
-        }
-     
-        return pickedTile;
-    }
 }
 

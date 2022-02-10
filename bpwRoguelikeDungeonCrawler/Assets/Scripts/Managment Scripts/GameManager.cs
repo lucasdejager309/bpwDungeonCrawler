@@ -8,13 +8,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        EventManager.AddListener("DUNGEON_GENERATED", InitializeEntityDictionary);
+        
+        DungeonGen.Instance.GenerateDungeon();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            DungeonGen.Instance.GenerateDungeon();
-        }
+    void InitializeEntityDictionary() {
+        Debug.Log("yeet");
     }
 }

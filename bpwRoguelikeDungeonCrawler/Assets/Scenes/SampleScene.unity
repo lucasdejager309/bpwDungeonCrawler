@@ -355,8 +355,8 @@ MonoBehaviour:
   corridorWidth: 2
   startTile: {fileID: 11400000, guid: bf6ca791e6b09b14689cc641ebe0b0df, type: 2}
   endTile: {fileID: 11400000, guid: 71657d898350e314182afe25e0baae99, type: 2}
+  tempTestTile: {fileID: 11400000, guid: cd8417a2ff4b50b4699e7cac0910148c, type: 2}
   floorTilelayer:
-    name: 
     tilemap: {fileID: 1016175335}
     tiles:
     - tile: {fileID: 11400000, guid: 50ce4177ad18e2d408002dfdd2852e7d, type: 2}
@@ -364,7 +364,6 @@ MonoBehaviour:
     - tile: {fileID: 11400000, guid: ca6fbf7ce3ab18943b8b8887b7e09374, type: 2}
       spawnChance: 1
   wallTilelayer:
-    name: 
     tilemap: {fileID: 71502960}
     tiles:
     - tile: {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
@@ -372,9 +371,16 @@ MonoBehaviour:
     - tile: {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
       spawnChance: 1
   dungeonFeaturelayer:
-    name: 
     tilemap: {fileID: 1249948054}
-    tiles: []
+    tiles:
+    - tile: {fileID: 11400000, guid: cd8417a2ff4b50b4699e7cac0910148c, type: 2}
+      spawnChance: 0
+  minDungeonFeaturesPerRoom: 10
+  maxDungeonFeaturesPerRoom: 10
+  dungeonFeatures:
+  - tile: {fileID: 11400000, guid: cd8417a2ff4b50b4699e7cac0910148c, type: 2}
+    spawnChance: 10
+    wallAdjacent: 1
   SpawnPos: {x: 0, y: 0}
 --- !u!4 &632915592
 Transform:
@@ -890,7 +896,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1b5f11c32e2d944a9eb79c421c9a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputs: []
+  inputs:
+  - key: 112
+    state: 0
+    action: RELOAD_DUNGEON
 --- !u!1 &1937718095
 GameObject:
   m_ObjectHideFlags: 0
