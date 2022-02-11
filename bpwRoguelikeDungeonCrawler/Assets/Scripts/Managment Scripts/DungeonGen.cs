@@ -32,7 +32,7 @@ public class DungeonGen : Singleton<DungeonGen>
     public int maxDungeonFeaturesPerRoom;
     public DungeonFeature[] dungeonFeatures;
 
-    public Vector2Int SpawnPos;
+    public Vector2 SpawnPos;
 
     void Awake() {
         Instance = this;
@@ -249,16 +249,6 @@ public class DungeonGen : Singleton<DungeonGen>
     }
 
     bool AddTileToDictionary(Vector2Int pos, Tile tiletoAdd, TileLayer tileLayer, bool overwrite) {
-        //     foreach (GenTile genTile in tileLayer.tiles) {
-        //         if (genTile.tile == tiletoAdd) {
-        //             if (overwrite || !tileLayer.tileDictionary.ContainsKey(pos)) {
-        //                 tileLayer.tileDictionary.Add(pos, genTile.tile);
-        //                 return true;
-        //             }
-        //         }
-        // }
-
-        // return false;
 
         if (overwrite || !tileLayer.tileDictionary.ContainsKey(pos))
         {
@@ -281,7 +271,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 Vector2Int pos = room.GetRandomPosInRoom(false);
 
                 AddTileToDictionary(pos, startTile, dungeonFeaturelayer, true);
-                SpawnPos = pos;
+                SpawnPos = new Vector2(pos.x, pos.y);
             }
         }
     }

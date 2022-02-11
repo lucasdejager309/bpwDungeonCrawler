@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : Singleton<GameManager> {
+    public GameObject playerPrefab;
+    public GameObject player;
 
-    // Start is called before the first frame update
     void Start()
-    {
-        EventManager.AddListener("DUNGEON_GENERATED", InitializeEntityDictionary);
-        
+    {   
+        EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
         DungeonGen.Instance.GenerateDungeon();
     }
 
-    void InitializeEntityDictionary() {
-        Debug.Log("yeet");
+    void SpawnPlayer() {
+        player = Instantiate(playerPrefab, DungeonGen.Instance.SpawnPos, Quaternion.identity);
     }
 }
