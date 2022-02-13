@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class DungeonFeature : GenTile {
     public bool wallAdjacent;
+    public bool solid;
 
     //copying and pasting this function from GenTiles is not very elegant
     public static DungeonFeature PickRandomFeature(DungeonFeature[] features) {

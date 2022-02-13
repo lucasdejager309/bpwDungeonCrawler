@@ -156,9 +156,6 @@ public class DungeonGen : Singleton<DungeonGen>
     }
 
     public Vector2Int GetCorridorStartInRoom(Room room) {
-        // return new Vector2Int(Random.Range(room.position.x+corridorWidth, room.position.x + room.size.x - corridorWidth), 
-        // Random.Range(room.position.y + corridorWidth, room.position.y + room.size.y - corridorWidth));
-
 
         Vector2Int pos = new Vector2Int();
 
@@ -240,10 +237,21 @@ public class DungeonGen : Singleton<DungeonGen>
             int amountOfFeatures = Random.Range(minDungeonFeaturesPerRoom, maxDungeonFeaturesPerRoom);
             for (int i = 0; i < amountOfFeatures; i++) {
                 DungeonFeature feature = DungeonFeature.PickRandomFeature(dungeonFeatures);
-                Vector2Int pos = room.GetRandomPosInRoom(feature.wallAdjacent);
+                Vector2Int pos = new Vector2Int();
                 
-                AddTileToDictionary(pos, feature.tile, dungeonFeaturelayer, false);
-                
+                bool posFound = false;
+                while(!posFound) {
+                    pos = room.GetRandomPosInRoom(feature.wallAdjacent);
+                    if (!wallTilelayer.tileDictionary.ContainsKey(pos) && !dungeonFeaturelayer.tileDictionary.ContainsKey(pos)) {
+                        posFound = true;
+                    }
+                }
+
+                if (!feature.solid) {
+                    AddTileToDictionary(pos, feature.tile, dungeonFeaturelayer, false);
+                } else {
+                    AddTileToDictionary(pos, feature.tile, wallTilelayer, false);
+                }
             }
         }
     }

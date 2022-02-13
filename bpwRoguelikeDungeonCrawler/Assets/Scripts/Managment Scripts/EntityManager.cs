@@ -18,5 +18,10 @@ public class EntityManager : Singleton<EntityManager>
         foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.floorTilelayer.tileDictionary) {
             validPositions.Add(tile.Key);
         }
+        foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.wallTilelayer.tileDictionary) {
+            if (validPositions.Contains(tile.Key)) {
+                validPositions.Remove(tile.Key);
+            }         
+        }
     }
 }
