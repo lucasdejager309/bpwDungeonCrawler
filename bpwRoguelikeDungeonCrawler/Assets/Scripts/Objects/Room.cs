@@ -17,8 +17,11 @@ public class Room {
     public bool sequencialRoom;
     public Room linkedToRoom;
 
-    public List<Vector2Int> entrances = new List<Vector2Int>();
+    public float enemyDensity;
+    public List<Vector2Int> validSpawnPositions = new List<Vector2Int>();
 
+    public List<Vector2Int> entrances = new List<Vector2Int>();
+    
     public Vector2Int GetRandomPosInRoom(bool wallAdjacent) {
         if (!wallAdjacent) {
             return new Vector2Int(Random.Range(position.x, position.x+size.x), Random.Range(position.y, position.y+size.y));

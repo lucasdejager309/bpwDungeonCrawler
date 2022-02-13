@@ -7,10 +7,18 @@ using UnityEngine.Tilemaps;
 
 [System.Serializable]
 public class GenTile {
-    public Tile tile;
+    public Tile[] tiles;
     public int spawnChance;
 
-    public static GenTile PickRandomTile(GenTile[] genTiles) {
+    public Tile GetTile() {
+        if (tiles.Length == 1) {
+            return tiles[0];
+        } else {
+            return tiles[Random.Range(0, tiles.Length)];
+        }
+    }
+
+    public static GenTile PickRandomGenTile(GenTile[] genTiles) {
         //how the fuck does relative probability work??
         //https://forum.unity.com/threads/random-item-spawn-using-array-with-item-rarity-variable.176234/
         

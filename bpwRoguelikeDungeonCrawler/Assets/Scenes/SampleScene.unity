@@ -378,7 +378,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.22352943, g: 0.20392159, b: 0.34117648, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -454,6 +454,7 @@ Transform:
   m_Children:
   - {fileID: 1564800001}
   - {fileID: 632915592}
+  - {fileID: 1484113628}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -487,47 +488,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRange: 50
-  amountRooms: 5
+  amountRooms: 3
   amountRandomRooms: 7
-  minRoomSize: 10
-  maxRoomSize: 15
+  minRoomSize: 5
+  maxRoomSize: 10
   minNewRoomRange: -15
-  maxNewRoomRange: 20
+  maxNewRoomRange: 10
   minRoomSpacing: 3
-  corridorWidth: 2
+  corridorWidth: 1
   startTile: {fileID: 11400000, guid: bf6ca791e6b09b14689cc641ebe0b0df, type: 2}
   endTile: {fileID: 11400000, guid: 71657d898350e314182afe25e0baae99, type: 2}
-  tempTestTile: {fileID: 11400000, guid: cd8417a2ff4b50b4699e7cac0910148c, type: 2}
+  doorPrefab: {fileID: 2118473169861415980, guid: 6bf1011a363da834fa43280ed9d11743, type: 3}
   floorTilelayer:
     tilemap: {fileID: 1016175335}
     tiles:
-    - tile: {fileID: 11400000, guid: 50ce4177ad18e2d408002dfdd2852e7d, type: 2}
-      spawnChance: 10
-    - tile: {fileID: 11400000, guid: ca6fbf7ce3ab18943b8b8887b7e09374, type: 2}
-      spawnChance: 1
+    - tiles:
+      - {fileID: 11400000, guid: 50ce4177ad18e2d408002dfdd2852e7d, type: 2}
+      spawnChance: 200
+    - tiles:
+      - {fileID: 11400000, guid: ca6fbf7ce3ab18943b8b8887b7e09374, type: 2}
+      spawnChance: 20
+    - tiles:
+      - {fileID: 11400000, guid: 4267502c9074ae84abd43ec9816c03c0, type: 2}
+      spawnChance: 2
   wallTilelayer:
     tilemap: {fileID: 71502960}
     tiles:
-    - tile: {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
+    - tiles:
+      - {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
       spawnChance: 10
-    - tile: {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
+    - tiles:
+      - {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
       spawnChance: 1
   dungeonFeaturelayer:
     tilemap: {fileID: 1249948054}
-    tiles:
-    - tile: {fileID: 11400000, guid: cd8417a2ff4b50b4699e7cac0910148c, type: 2}
-      spawnChance: 0
+    tiles: []
   minDungeonFeaturesPerRoom: 2
   maxDungeonFeaturesPerRoom: 5
   dungeonFeatures:
-  - tile: {fileID: 11400000, guid: 5a569e67497b13943aadda472a2a0ee2, type: 2}
-    spawnChance: 5
-    wallAdjacent: 1
-    solid: 1
-  - tile: {fileID: 11400000, guid: 75b05a1c17e97134faa81946e6bced99, type: 2}
+  - tiles:
+    - {fileID: 11400000, guid: 75b05a1c17e97134faa81946e6bced99, type: 2}
+    - {fileID: 11400000, guid: 8f62c814a50bf264d88afe94900ea06a, type: 2}
     spawnChance: 10
     wallAdjacent: 0
     solid: 0
+  - tiles:
+    - {fileID: 11400000, guid: 5a569e67497b13943aadda472a2a0ee2, type: 2}
+    spawnChance: 5
+    wallAdjacent: 1
+    solid: 1
   SpawnPos: {x: 0, y: 0}
 --- !u!4 &632915592
 Transform:
@@ -827,6 +836,53 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1484113627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1484113628}
+  - component: {fileID: 1484113629}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1484113628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484113627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 365597007}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1484113629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484113627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f4db0bbd1e92f409ce4bf4e7ddc9de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEnemies: 1
+  minEnemyDensity: 0.05
+  maxEnemyDensity: 0.3
+  tempEnemyPrefab: {fileID: 2118473169861415980, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
 --- !u!1 &1564800000
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,18 +959,6 @@ MonoBehaviour:
   - key: 112
     state: 0
     action: RELOAD_DUNGEON
-  - key: 119
-    state: 0
-    action: PLAYER_UP
-  - key: 115
-    state: 0
-    action: PLAYER_DOWN
-  - key: 97
-    state: 0
-    action: PLAYER_LEFT
-  - key: 100
-    state: 0
-    action: PLAYER_RIGHT
 --- !u!1 &1657897173
 GameObject:
   m_ObjectHideFlags: 0

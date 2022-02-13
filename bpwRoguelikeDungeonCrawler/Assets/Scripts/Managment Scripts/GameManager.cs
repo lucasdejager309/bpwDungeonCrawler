@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
     public GameObject playerPrefab;
@@ -10,15 +11,11 @@ public class GameManager : Singleton<GameManager> {
     void Start()
     {   
         EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
-        EventManager.AddListener("RELOAD_DUNGEON", DestroyPlayer);
         DungeonGen.Instance.GenerateDungeon();
     }
 
     void SpawnPlayer() {
         player = Instantiate(playerPrefab, DungeonGen.Instance.SpawnPos, Quaternion.identity);
-    }
-
-    void DestroyPlayer() {
-        GameObject.Destroy(player);
+        EventManager.InvokeEvent("PLAYER_SPAWNED");
     }
 }

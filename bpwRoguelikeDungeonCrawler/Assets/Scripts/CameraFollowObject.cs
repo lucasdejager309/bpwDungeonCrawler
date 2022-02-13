@@ -8,11 +8,19 @@ public class CameraFollowObject : MonoBehaviour
     GameObject objectToFollow;
     public Vector2 offset;
 
+    void Start() {
+        EventManager.AddListener("PLAYER_SPAWNED", SetCameraToFollow);
+    }
+
+    void SetCameraToFollow() {
+        objectToFollow = GameObject.FindGameObjectWithTag(tagToFollow);
+    }
+
     void Update() {
-        if (objectToFollow == null) {
-            objectToFollow = GameObject.FindGameObjectWithTag(tagToFollow);
-            transform.parent = objectToFollow.transform;
+        if (objectToFollow != null) {
             transform.position = new Vector3(objectToFollow.transform.position.x+offset.x, objectToFollow.transform.position.y+offset.y, transform.position.z);
+        } else {
+            SetCameraToFollow();
         }
     }
 }

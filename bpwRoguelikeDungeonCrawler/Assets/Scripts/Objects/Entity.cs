@@ -11,7 +11,7 @@ public class Entity : MonoBehaviour
         UpdatePosInDict();
     }
 
-    public bool Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveSpeed = 0.2f) {
+    public bool Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveSpeed = 0.2f, float waitBetweenMoves = 0) {
         if (allowedToMove) {
             UpdatePosInDict(); //ugly fix
         
@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour
                 } else {
                     allowedToMove = false;
                     Vector3 startPos = transform.position;
-                    Task t = new Task(SmoothMove(newPos, moveSpeed/distance));
+                    Task t = new Task(SmoothMove(newPos, moveSpeed/distance, waitBetweenMoves));
                     t.Finished += delegate (bool manual) {
                         allowedToMove = true;
                         transform.position = new Vector3(newPos.x, newPos.y, 0);
@@ -57,17 +57,21 @@ public class Entity : MonoBehaviour
         } return false;
     }
 
-    IEnumerator SmoothMove(Vector2Int newPos, float speed) {
+    IEnumerator SmoothMove(Vector2Int newPos, float speed, float waitBetweenMoves = 0) {
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(newPos.x, newPos.y, transform.position.z);
 
         float elapsedTime = 0;
+        
 
         while (elapsedTime < speed) {
             transform.position = Vector3.Lerp(startPos, endPos, (elapsedTime/speed));
             elapsedTime += Time.deltaTime;
+            
             yield return null;
         }
+
+        yield return new WaitForSeconds(waitBetweenMoves);
     }
 
     bool UpdatePosInDict() {
@@ -83,6 +87,7 @@ public class Entity : MonoBehaviour
                 return false;
             }
         }
+        
         //if object not yet in dictionary;
         EntityManager.Instance.entityPositions.Add(new Vector2Int((int)transform.position.x, (int)transform.position.y), this.gameObject);
         return true;

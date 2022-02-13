@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2118473169861415954}
   - component: {fileID: -7954610942754421442}
-  - component: {fileID: -8041413422110321472}
+  - component: {fileID: -8643223625929954232}
   m_Layer: 0
-  m_Name: tempPlayer
-  m_TagString: Player
+  m_Name: doorPrefab
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 21300000, guid: 2d12a64362818264dae7c34e3a03d14d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 820069a8b0d3e8c4fa9f47ad4835fe85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &-8041413422110321472
+--- !u!114 &-8643223625929954232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,8 +92,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2118473169861415980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0eda1b1ca17a5144bee2d8debe581d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 759c2f5f484e1774fac09229c120bae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 0.1
-  timeBetweenMoves: 0.05

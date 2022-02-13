@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    void Start() {
-        EventManager.AddListener("PLAYER_UP", MoveUp);
-        EventManager.AddListener("PLAYER_DOWN", MoveDown);
-        EventManager.AddListener("PLAYER_LEFT", MoveLeft);
-        EventManager.AddListener("PLAYER_RIGHT", MoveRight);
+    public float moveTime;
+    public float timeBetweenMoves;
+
+    void Update() {
+        Move(GetInput(), 1, true, moveTime, timeBetweenMoves);
     }
 
-    void MoveUp() { Move(new Vector2Int(0,1), 1, true, 0.1f); }
-    void MoveDown() { Move(new Vector2Int(0,-1), 1, true, 0.1f); }
-    void MoveLeft() { Move(new Vector2Int(-1,0), 1, true, 0.1f); }
-    void MoveRight() { Move(new Vector2Int(1,0), 1, true, 0.1f); }
+    Vector2Int GetInput() {
+        Vector2Int input = new Vector2Int();
+
+        if (Input.GetKey(KeyCode.W)) {
+            input.y = 1;
+        }
+        if (Input.GetKey(KeyCode.S)) {
+            input.y = -1;
+        }
+        if (Input.GetKey(KeyCode.A)) {
+            input.x = -1;
+        }
+        if (Input.GetKey(KeyCode.D)) {
+            input.x = 1;
+        }
+
+        return input;
+    }
 }

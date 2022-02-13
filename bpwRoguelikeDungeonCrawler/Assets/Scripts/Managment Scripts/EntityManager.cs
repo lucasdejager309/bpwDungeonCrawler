@@ -11,6 +11,7 @@ public class EntityManager : Singleton<EntityManager>
     void Awake() {
         Instance = this;
         EventManager.AddListener("DUNGEON_GENERATED", GetValidPositions);
+        EventManager.AddListener("RELOAD_DUNGEON", DeleteEntities);
     }
 
     void GetValidPositions() {
@@ -23,5 +24,25 @@ public class EntityManager : Singleton<EntityManager>
                 validPositions.Remove(tile.Key);
             }         
         }
+
+        foreach (Room room in DungeonGen.Instance.roomList) {
+            for (int x = room.position.x; x < room.position.x+room.size.x; x++) {
+                for (int y = room.position.y; y < room.position.y+room.size.y; y++) {
+                    Vector2Int pos = new Vector2Int(x, y);
+                    if (validPositions.Contains(pos)) {
+                        room.validSpawnPositions.Add(pos);
+                    }
+                }
+            }
+        }
+    }
+    
+    void DeleteEntities() {
+        foreach (KeyValuePair<Vector2Int, GameObject> entityPos in entityPositions) {
+            GameObject.Destroy(entityPos.Value);
+        }
+
+        entityPositions.Clear();
+        validPositions.Clear();
     }
 }
