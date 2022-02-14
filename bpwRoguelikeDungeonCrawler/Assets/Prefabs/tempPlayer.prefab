@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2118473169861415954}
   - component: {fileID: -7954610942754421442}
   - component: {fileID: -8041413422110321472}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: tempPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -95,5 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0eda1b1ca17a5144bee2d8debe581d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  solidLayer:
+    serializedVersion: 2
+    m_Bits: 64
   moveTime: 0.1
   timeBetweenMoves: 0.05
+  moveDistance: 1
+  inputAllowed: 1

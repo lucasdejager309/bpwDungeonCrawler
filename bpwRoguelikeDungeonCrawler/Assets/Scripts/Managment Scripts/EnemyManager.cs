@@ -15,13 +15,14 @@ public class EnemyManager : Singleton<EnemyManager>
 
     void SpawnEnemies() {
         foreach (Room room in DungeonGen.Instance.roomList) {
-            room.enemyDensity = Random.Range(minEnemyDensity, maxEnemyDensity);
+            if (!room.spawnRoom) {
+                room.enemyDensity = Random.Range(minEnemyDensity, maxEnemyDensity);
 
-            foreach(Vector2Int spawnPos in room.validSpawnPositions) {
-                if (Random.Range(0, 101) < room.enemyDensity) {
-                    GameObject enemy = Instantiate(tempEnemyPrefab, new Vector3(spawnPos.x, spawnPos.y, 1), Quaternion.identity);
-                    Debug.Log("spawning enemy!");
-                    EntityManager.Instance.entityPositions.Add(spawnPos, enemy);
+                foreach(Vector2Int spawnPos in room.validSpawnPositions) {
+                    if (Random.Range(0, 101) < room.enemyDensity) {
+                        GameObject enemy = Instantiate(tempEnemyPrefab, new Vector3(spawnPos.x, spawnPos.y, 1), Quaternion.identity);
+                        EntityManager.Instance.entityDict.Add(spawnPos, enemy);
+                    }
                 }
             }
         }

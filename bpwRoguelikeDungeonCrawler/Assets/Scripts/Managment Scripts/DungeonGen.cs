@@ -25,7 +25,7 @@ public class DungeonGen : Singleton<DungeonGen>
     public GameObject doorPrefab;
 
     public TileLayer floorTilelayer;
-    public TileLayer wallTilelayer;
+    public TileLayer solidTileLayer;
     public TileLayer dungeonFeaturelayer;
 
     public int minDungeonFeaturesPerRoom;
@@ -64,8 +64,8 @@ public class DungeonGen : Singleton<DungeonGen>
         floorTilelayer.tilemap.ClearAllTiles();
         floorTilelayer.tileDictionary.Clear();
 
-        wallTilelayer.tilemap.ClearAllTiles();
-        wallTilelayer.tileDictionary.Clear();
+        solidTileLayer.tilemap.ClearAllTiles();
+        solidTileLayer.tileDictionary.Clear();
 
         dungeonFeaturelayer.tilemap.ClearAllTiles();
         dungeonFeaturelayer.tileDictionary.Clear();
@@ -193,7 +193,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int y = -1; y <= 1; y++) {
                     Vector2Int gridPos = position + new Vector2Int(x, y);
                     if (!floorTilelayer.tileDictionary.ContainsKey(gridPos)) {
-                        AddTileToDictionary(gridPos, GenTile.PickRandomGenTile(wallTilelayer.tiles).GetTile(), wallTilelayer, false);
+                        AddTileToDictionary(gridPos, GenTile.PickRandomGenTile(solidTileLayer.tiles).GetTile(), solidTileLayer, false);
                     } 
                 }
             }
@@ -205,28 +205,28 @@ public class DungeonGen : Singleton<DungeonGen>
             //check bottom wall
             for (int i = room.position.x; i < room.position.x+room.size.x; i++) {
                 Vector2Int possiblePos = new Vector2Int(i, room.position.y-1);
-                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                if (!solidTileLayer.tileDictionary.ContainsKey(possiblePos)) {
                     room.entrances.Add(possiblePos);
                 }
             }
             //check top wall
             for (int i = room.position.x; i < room.position.x+room.size.x; i++) {
                 Vector2Int possiblePos = new Vector2Int(i, room.position.y+room.size.y);
-                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                if (!solidTileLayer.tileDictionary.ContainsKey(possiblePos)) {
                     room.entrances.Add(possiblePos);
                 }
             }
             //check right wall
             for (int i = room.position.y; i < room.position.y+room.size.y; i++) {
                 Vector2Int possiblePos = new Vector2Int(room.position.x+room.size.x, i);
-                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                if (!solidTileLayer.tileDictionary.ContainsKey(possiblePos)) {
                     room.entrances.Add(possiblePos);
                 }
             }
             //check left wall
             for (int i = room.position.y; i < room.position.y+room.size.y; i++) {
                 Vector2Int possiblePos = new Vector2Int(room.position.x-1, i);
-                if (!wallTilelayer.tileDictionary.ContainsKey(possiblePos)) {
+                if (!solidTileLayer.tileDictionary.ContainsKey(possiblePos)) {
                     room.entrances.Add(possiblePos);
                 }
             }
@@ -243,7 +243,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 bool posFound = false;
                 while(!posFound) {
                     pos = room.GetRandomPosInRoom(feature.wallAdjacent);
-                    if (!wallTilelayer.tileDictionary.ContainsKey(pos) && !dungeonFeaturelayer.tileDictionary.ContainsKey(pos)) {
+                    if (!solidTileLayer.tileDictionary.ContainsKey(pos) && !dungeonFeaturelayer.tileDictionary.ContainsKey(pos)) {
                         posFound = true;
                     }
                 }
@@ -251,7 +251,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 if (!feature.solid) {
                     AddTileToDictionary(pos, feature.GetTile(), dungeonFeaturelayer, false);
                 } else {
-                    AddTileToDictionary(pos, feature.GetTile(), wallTilelayer, false);
+                    AddTileToDictionary(pos, feature.GetTile(), solidTileLayer, false);
                 }
             }
         }
@@ -293,9 +293,9 @@ public class DungeonGen : Singleton<DungeonGen>
                 floorTilelayer.tilemap.SetTile(location, entry.Value);
         }
 
-        foreach(KeyValuePair<Vector2Int, Tile> entry in wallTilelayer.tileDictionary) {
+        foreach(KeyValuePair<Vector2Int, Tile> entry in solidTileLayer.tileDictionary) {
                 Vector3Int location = new Vector3Int(entry.Key.x, entry.Key.y, 0);
-                wallTilelayer.tilemap.SetTile(location, entry.Value);
+                solidTileLayer.tilemap.SetTile(location, entry.Value);
         }
 
         foreach(KeyValuePair<Vector2Int, Tile> entry in dungeonFeaturelayer.tileDictionary) {

@@ -6,9 +6,30 @@ public class Player : Entity
 {
     public float moveTime;
     public float timeBetweenMoves;
+    public int moveDistance;
+    public bool inputAllowed = true;
 
     void Update() {
-        Move(GetInput(), 1, true, moveTime, timeBetweenMoves);
+        if (GetInput() != new Vector2Int(0,0) && inputAllowed) {
+            inputAllowed = false;
+            Task t = new Task(Move(GetInput(), moveDistance, true, moveTime, timeBetweenMoves));
+            t.Finished += delegate {
+                EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+            };
+        }
+    }
+
+    void Start() {
+        EventManager.AddListener("OTHERS_TURN_FINISHED", AllowInput);
+    }
+    
+    void AllowInput() {
+        inputAllowed = true;
+    }
+
+    protected override IEnumerator Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveTime = 0.2f, float waitBetweenMoves = 0) {
+        StartCoroutine(base.Move(direction, distance, smoothMove, moveTime, waitBetweenMoves));
+        yield return new WaitForSeconds(moveTime + timeBetweenMoves);
     }
 
     Vector2Int GetInput() {

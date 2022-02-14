@@ -18,4 +18,8 @@ public class GameManager : Singleton<GameManager> {
         player = Instantiate(playerPrefab, DungeonGen.Instance.SpawnPos, Quaternion.identity);
         EventManager.InvokeEvent("PLAYER_SPAWNED");
     }
+
+    public Vector2Int GetPlayerPos() {
+        return new Vector2Int((int)player.transform.position.x, (int)player.transform.position.y);
+    }
 }

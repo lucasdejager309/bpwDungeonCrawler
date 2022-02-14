@@ -137,9 +137,9 @@ GameObject:
   - component: {fileID: 71502961}
   - component: {fileID: 71502963}
   - component: {fileID: 71502962}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: solidTileMap
-  m_TagString: Untagged
+  m_TagString: solidTileMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -511,12 +511,12 @@ MonoBehaviour:
     - tiles:
       - {fileID: 11400000, guid: 4267502c9074ae84abd43ec9816c03c0, type: 2}
       spawnChance: 2
-  wallTilelayer:
+  solidTileLayer:
     tilemap: {fileID: 71502960}
     tiles:
     - tiles:
       - {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
-      spawnChance: 10
+      spawnChance: 20
     - tiles:
       - {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
       spawnChance: 1
@@ -880,8 +880,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEnemies: 1
-  minEnemyDensity: 0.05
-  maxEnemyDensity: 0.3
+  minEnemyDensity: 0.1
+  maxEnemyDensity: 3
   tempEnemyPrefab: {fileID: 2118473169861415980, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
 --- !u!1 &1564800000
 GameObject:
