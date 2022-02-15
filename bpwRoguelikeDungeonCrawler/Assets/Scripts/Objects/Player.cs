@@ -35,16 +35,17 @@ public class Player : Entity
     Vector2Int GetInput() {
         Vector2Int input = new Vector2Int();
 
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetKeyDown(KeyCode.W)) {
             input.y = 1;
         }
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKeyDown(KeyCode.S)) {
             input.y = -1;
         }
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKeyDown(KeyCode.A)) {
             input.x = -1;
         }
-        if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKeyDown
+         (KeyCode.D)) {
             input.x = 1;
         }
 

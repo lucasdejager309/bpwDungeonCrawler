@@ -61,6 +61,7 @@ public class Entity : MonoBehaviour
     }
 
     bool IsValidMovePos(Vector2Int newPos) {
+        Debug.Log(EntityManager.Instance.validPositions.Contains(newPos) + " "  + EntityManager.Instance.validPositions.Count);
         if (EntityManager.Instance.validPositions.Contains(newPos) && !EntityManager.Instance.entityDict.ContainsKey(newPos)) {
             return true;
         } return false;

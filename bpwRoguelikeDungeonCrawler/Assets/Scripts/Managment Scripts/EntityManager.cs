@@ -5,18 +5,17 @@ using UnityEngine.Tilemaps;
 
 public class EntityManager : Singleton<EntityManager>
 {
-    public List<Vector2Int> validPositions;
+    public List<Vector2Int> validPositions = new List<Vector2Int>();
     public Dictionary<Vector2Int, GameObject> entityDict = new Dictionary<Vector2Int, GameObject>();
     
     void Awake() {
         Instance = this;
-        EventManager.AddListener("DUNGEON_GENERATED", GetValidPositions);
+        EventManager.AddListener("DUNGEON_GENERATED", FillValidPositionsDict);
         EventManager.AddListener("RELOAD_DUNGEON", DeleteEntities);
         EventManager.AddListener("PLAYER_TURN_FINISHED", OtherTurns);
     }
 
-    void GetValidPositions() {
-        validPositions = new List<Vector2Int>();
+    void FillValidPositionsDict() {
         foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.floorTilelayer.tileDictionary) {
             validPositions.Add(tile.Key);
         }
@@ -36,6 +35,7 @@ public class EntityManager : Singleton<EntityManager>
                 }
             }
         }
+        Debug.Log("vp " + validPositions.Count);
     }
 
     void OtherTurns() {
@@ -45,7 +45,6 @@ public class EntityManager : Singleton<EntityManager>
     IEnumerator DoActions() {
         List<GameObject> entities = new List<GameObject>();
 
-        //TODO make queue of entities in range of players instead of all of em
         foreach(KeyValuePair<Vector2Int, GameObject> entity in entityDict) {
             if (entity.Value.gameObject.tag != "Player") {
                 if (entity.Value.GetComponent<Entity>().TileInSight(GameObject.FindGameObjectWithTag("Player").transform.position)) {
@@ -54,27 +53,28 @@ public class EntityManager : Singleton<EntityManager>
             }
         }
 
-
-        int i = 0;
-        bool next = true;
-        while (i < entities.Count) {
-            Task t = new Task(entities[i].GetComponent<Entity>().DoAction(), false);
-            if (next) {
-                t.Start();
-                next = false;
-            }
-            t.Finished += delegate {
-                i++;
-                next = true;
-            };
-            yield return null;
-        }   
+        if (entities.Count != 0) {
+            int i = 0;
+            bool next = true;
+            while (i < entities.Count) {
+                Task t = new Task(entities[i].GetComponent<Entity>().DoAction(), false);
+                if (next) {
+                    t.Start();
+                    next = false;
+                }
+                t.Finished += delegate {
+                    i++;
+                    next = true;
+                };
+                yield return null;
+            }   
+        }
         EventManager.InvokeEvent("OTHERS_TURN_FINISHED"); 
     }
     
     void DeleteEntities() {
-        foreach (KeyValuePair<Vector2Int, GameObject> entityPos in entityDict) {
-            GameObject.Destroy(entityPos.Value);
+        foreach (KeyValuePair<Vector2Int, GameObject> entity in entityDict) {
+            GameObject.Destroy(entity.Value);
         }
 
         entityDict.Clear();

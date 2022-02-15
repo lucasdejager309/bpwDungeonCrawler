@@ -14,13 +14,11 @@ public class CameraFollowObject : MonoBehaviour
 
     void SetCameraToFollow() {
         objectToFollow = GameObject.FindGameObjectWithTag(tagToFollow);
+        transform.parent = objectToFollow.transform;
+        transform.position = new Vector3(transform.parent.position.x+0.5f, transform.parent.position.y+0.5f, -10);
     }
 
     void Update() {
-        if (objectToFollow != null) {
-            transform.position = new Vector3(objectToFollow.transform.position.x+offset.x, objectToFollow.transform.position.y+offset.y, transform.position.z);
-        } else {
-            SetCameraToFollow();
-        }
+        SetCameraToFollow();
     }
 }
