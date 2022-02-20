@@ -8,10 +8,16 @@ public class GameManager : Singleton<GameManager> {
     public GameObject playerPrefab;
     public GameObject player;
 
+    void Awake() {
+        Instance = this;
+    }
+
     void Start()
     {   
         EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
         DungeonGen.Instance.GenerateDungeon();
+
+        
     }
 
     void SpawnPlayer() {

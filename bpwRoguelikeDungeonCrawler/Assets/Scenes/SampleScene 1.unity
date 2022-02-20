@@ -455,6 +455,7 @@ Transform:
   - {fileID: 1564800001}
   - {fileID: 632915592}
   - {fileID: 1484113628}
+  - {fileID: 710628997}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -487,7 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677c0ce198801a94eb9bc45956598f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 50
+  maxRange: 35
   amountRooms: 3
   amountRandomRooms: 7
   minRoomSize: 5
@@ -552,6 +553,55 @@ Transform:
   m_Father: {fileID: 365597007}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &710628996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710628997}
+  - component: {fileID: 710628998}
+  m_Layer: 0
+  m_Name: InteractableObjectsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &710628997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710628996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 365597007}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &710628998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710628996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c894792bea0634e86d47a3f9619fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableObjects:
+  - spawnChance: 1
+    gameObject: {fileID: 2118473169861415980, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+    wallAdjacent: 1
+  minDensity: 0.2
+  maxDensity: 1
 --- !u!1 &1016175332
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +932,10 @@ MonoBehaviour:
   spawnEnemies: 1
   minEnemyDensity: 0.1
   maxEnemyDensity: 3
-  tempEnemyPrefab: {fileID: 2118473169861415980, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+  enemyPrefabs:
+  - spawnChance: 1
+    gameObject: {fileID: 2118473169861415980, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+    wallAdjacent: 0
 --- !u!1 &1564800000
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,6 +1012,9 @@ MonoBehaviour:
   - key: 112
     state: 0
     action: RELOAD_DUNGEON
+  - key: 32
+    state: 0
+    action: INTERACT
 --- !u!1 &1657897173
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,4 +75,24 @@ public class Room {
         return new Vector2Int();
         
     }
+
+    public bool IsWallAdjacent(Vector2Int pos) {
+        if (pos.x == position.x || pos.x == position.x+size.x-1 || pos.y == position.y || pos.y == position.y+size.y-1) {
+            bool entranceFound = false;
+            for (int x = pos.x-1; x < pos.x+1; x++) {
+                if (entrances.Contains(new Vector2Int(x, pos.y))) {
+                    entranceFound = true;
+                }
+            }
+            for (int y = pos.y-1; y < pos.y+2; y++) {
+                if (entrances.Contains(new Vector2Int(pos.x, y))){
+                    entranceFound = true;
+                }
+            }
+            if (!entranceFound) {
+                return true;
+            } else return false;
+
+        } else return false;
+    }
 }

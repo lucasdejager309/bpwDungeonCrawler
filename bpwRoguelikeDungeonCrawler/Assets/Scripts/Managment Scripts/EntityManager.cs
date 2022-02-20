@@ -6,13 +6,12 @@ using UnityEngine.Tilemaps;
 public class EntityManager : Singleton<EntityManager>
 {
     public List<Vector2Int> validPositions = new List<Vector2Int>();
-    public Dictionary<Vector2Int, GameObject> entityDict = new Dictionary<Vector2Int, GameObject>();
+    public Dictionary<Entity, Vector2Int> entityDict = new Dictionary<Entity, Vector2Int>();
     
     void Awake() {
         Instance = this;
         EventManager.AddListener("DUNGEON_GENERATED", FillValidPositionsDict);
         EventManager.AddListener("RELOAD_DUNGEON", DeleteEntities);
-        EventManager.AddListener("PLAYER_TURN_FINISHED", OtherTurns);
     }
 
     void FillValidPositionsDict() {
@@ -35,46 +34,64 @@ public class EntityManager : Singleton<EntityManager>
                 }
             }
         }
-        Debug.Log("vp " + validPositions.Count);
     }
 
-    void OtherTurns() {
-        StartCoroutine(DoActions());
+    public Dictionary<Vector2Int, GameObject> SpawnByDensity(SpawnableObject[] prefabs, float minDensity, float maxDensity) {
+        Dictionary<Vector2Int, GameObject> objectsToReturn = new Dictionary<Vector2Int, GameObject>();
+        foreach (Room room in DungeonGen.Instance.roomList) {
+            if (!room.spawnRoom) {
+                room.enemyDensity = Random.Range(minDensity, maxDensity);
+
+                foreach(Vector2Int spawnPos in room.validSpawnPositions) {
+                    SpawnableObject pickedObject = PickRandom.PickRandomObject(prefabs);
+                    if ((!pickedObject.wallAdjacent || room.IsWallAdjacent(spawnPos)) && !entityDict.ContainsValue(spawnPos)) {
+                        if (Random.Range(0, 101) < room.enemyDensity) {    
+                            objectsToReturn.Add(spawnPos, pickedObject.gameObject);
+                        }
+                    } 
+                }
+            }
+        }
+        return objectsToReturn;
     }
 
-    IEnumerator DoActions() {
-        List<GameObject> entities = new List<GameObject>();
+    public Dictionary<Vector2Int, GameObject> SpawnByNumber(SpawnableObject[] prefabs, float minDensity, float maxDensity) {
+        Dictionary<Vector2Int, GameObject> objectsToReturn = new Dictionary<Vector2Int, GameObject>();
+        
+        foreach(Room room in DungeonGen.Instance.roomList) {
+            int amountOfObjects = (int)Random.Range(minDensity, maxDensity);
+            for (int i = 0; i < amountOfObjects; i++) {
+                SpawnableObject objectToAdd = PickRandom.PickRandomObject(prefabs);
 
-        foreach(KeyValuePair<Vector2Int, GameObject> entity in entityDict) {
-            if (entity.Value.gameObject.tag != "Player") {
-                if (entity.Value.GetComponent<Entity>().TileInSight(GameObject.FindGameObjectWithTag("Player").transform.position)) {
-                    entities.Add(entity.Value);
-                }   
+                Vector2Int spawnPos = new Vector2Int();
+                bool posFound = false;
+                while (!posFound) {
+                    spawnPos = room.GetRandomPosInRoom(objectToAdd.wallAdjacent);
+                    if (!entityDict.ContainsValue(spawnPos)) {
+                        posFound = true;
+                    }
+                }
+
+                objectsToReturn.Add(spawnPos, objectToAdd.gameObject);
             }
         }
 
-        if (entities.Count != 0) {
-            int i = 0;
-            bool next = true;
-            while (i < entities.Count) {
-                Task t = new Task(entities[i].GetComponent<Entity>().DoAction(), false);
-                if (next) {
-                    t.Start();
-                    next = false;
-                }
-                t.Finished += delegate {
-                    i++;
-                    next = true;
-                };
-                yield return null;
-            }   
+        return objectsToReturn;
+    }    
+    public void SpawnEntities(Dictionary<Vector2Int, GameObject> objects) {
+        foreach(KeyValuePair<Vector2Int, GameObject> objectToSpawn in objects) {
+            SpawnEntity(objectToSpawn.Key, objectToSpawn.Value);
         }
-        EventManager.InvokeEvent("OTHERS_TURN_FINISHED"); 
     }
-    
+
+    public void SpawnEntity(Vector2Int pos, GameObject objectToSpawn) {
+        GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(pos.x, pos.y, 1), Quaternion.identity);
+        entityDict.Add(spawnedObject.gameObject.GetComponent<Entity>(), pos);
+    }
+
     void DeleteEntities() {
-        foreach (KeyValuePair<Vector2Int, GameObject> entity in entityDict) {
-            GameObject.Destroy(entity.Value);
+        foreach (KeyValuePair<Entity, Vector2Int> entity in entityDict) {
+            entity.Key.DeleteEntity();
         }
 
         entityDict.Clear();

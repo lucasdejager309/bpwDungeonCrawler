@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2118473169861415954}
   - component: {fileID: -7954610942754421442}
   - component: {fileID: -8041413422110321472}
+  - component: {fileID: 1802014564538316043}
   m_Layer: 2
   m_Name: tempPlayer
   m_TagString: Player
@@ -92,13 +93,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 2118473169861415980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0eda1b1ca17a5144bee2d8debe581d4, type: 3}
+  m_Script: {fileID: 11500000, guid: e8aec6af949c9db4ba5f218a8140ec01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  entityIsSolid: 1
   moveTime: 0.1
   timeBetweenMoves: 0
   moveDistance: 1
   inputAllowed: 1
+--- !u!61 &1802014564538316043
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118473169861415980}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.5, y: 0.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8}
+  m_EdgeRadius: 0
