@@ -32,7 +32,7 @@ public class DungeonGen : Singleton<DungeonGen>
     public int maxDungeonFeaturesPerRoom;
     public DungeonFeature[] dungeonFeatures;
 
-    public Vector2 SpawnPos;
+    public Vector2Int SpawnPos;
 
     void Awake() {
         Instance = this;
@@ -53,7 +53,7 @@ public class DungeonGen : Singleton<DungeonGen>
         }
 
         SpawnTiles();
-        //SpawnDoors();
+        SpawnDoors();
 
         EventManager.InvokeEvent("DUNGEON_GENERATED");
     }
@@ -137,7 +137,8 @@ public class DungeonGen : Singleton<DungeonGen>
                 for (int c = 0; c < corridorWidth; c++) {
                     Vector2Int pos = new Vector2Int(x, startPos.y+c);
 
-                    AddTileToDictionary(pos, GenTile.PickRandomGenTile(floorTilelayer.tiles).GetTile(), floorTilelayer, false);
+                    Tile tileToAdd = GenTile.PickRandomGenTile(floorTilelayer.tiles).GetTile();
+                    AddTileToDictionary(pos, tileToAdd, floorTilelayer, false);
                 }
             }
 
@@ -280,7 +281,7 @@ public class DungeonGen : Singleton<DungeonGen>
                 Vector2Int pos = room.GetRandomPosInRoom(false);
 
                 AddTileToDictionary(pos, startTile, dungeonFeaturelayer, true);
-                SpawnPos = new Vector2(pos.x, pos.y);
+                SpawnPos = new Vector2Int(pos.x, pos.y);
             }
         }
     }
@@ -307,7 +308,8 @@ public class DungeonGen : Singleton<DungeonGen>
     void SpawnDoors() {
         foreach(Room room in roomList) {
             foreach(Vector2Int entrance in room.entrances) {
-                Instantiate(doorPrefab, new Vector3(entrance.x, entrance.y, -3), Quaternion.identity);
+                //Instantiate(doorPrefab, new Vector3(entrance.x, entrance.y, -3), Quaternion.identity);
+                EntityManager.Instance.SpawnEntity(entrance, doorPrefab);
             }
         }
     }

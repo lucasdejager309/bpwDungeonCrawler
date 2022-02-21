@@ -5,7 +5,7 @@ using UnityEngine;
 public class InteractableObject : Entity
 {
     
-    public void Interact() {
+    public virtual void Interact() {
         Debug.Log("interacted @ "+ transform.position);
     }
 }

@@ -9,14 +9,23 @@ public class Player : Entity
     public int moveDistance;
     public bool inputAllowed = true;
 
+    //DEBUG.
+    List<PathNode> path = new List<PathNode>();
+
     void Update() {
         if (GetInput() != new Vector2Int(0,0) && inputAllowed) {
             inputAllowed = false;
             Task t = new Task(Move(GetInput(), moveDistance, true, moveTime, timeBetweenMoves));
+            GetComponent<Animator>().SetBool("isWalking", true);
             t.Finished += delegate {
                 EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+                GetComponent<Animator>().SetBool("isWalking", false);
+                EventManager.InvokeEvent("INTERACT");
             };
         }
+
+        //DEBUG.
+        GameManager.Instance.DrawPath(path);
     }
 
     void Start() {
@@ -29,6 +38,10 @@ public class Player : Entity
 
     protected override IEnumerator Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveTime = 0.2f, float waitBetweenMoves = 0) {
         StartCoroutine(base.Move(direction, distance, smoothMove, moveTime, waitBetweenMoves));
+        
+        //DEBUG.
+        path = Pathfinding.FindPath(new PathNode(GetPos()), new PathNode(DungeonGen.Instance.SpawnPos), PathNode.Vector2IntListToNodes(EntityManager.Instance.validPositions));
+        
         yield return new WaitForSeconds(moveTime + timeBetweenMoves);
     }
 

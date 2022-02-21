@@ -15,6 +15,7 @@ public static class Pathfinding {
 			PathNode currentNode = PathNode.GetLowestFcostNode(openList);
 
 			if (currentNode.pos == endNode.pos) {
+				Debug.Log(closedList.Count);
 				return CalculatePath(currentNode);
 			}
 

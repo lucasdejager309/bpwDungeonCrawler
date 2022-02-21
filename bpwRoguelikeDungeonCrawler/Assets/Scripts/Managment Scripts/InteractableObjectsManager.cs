@@ -22,15 +22,11 @@ public class InteractableObjectsManager : MonoBehaviour
 
     void Interact() {
         foreach(KeyValuePair<Entity, Vector2Int> entry in EntityManager.Instance.entityDict) {
-            if (entry.Key.GetComponent<InteractableObject>() != null) {
-                if (entry.Value == GameManager.Instance.GetPlayerPos()) {
+            if (entry.Value == EntityManager.Instance.entityDict[GameManager.Instance.player.GetComponent<Entity>()]) {
+                if (entry.Key.GetComponent<InteractableObject>() != null) {
                     entry.Key.GetComponent<InteractableObject>().Interact();
                 }
             }
         }
-        
-        //if entity is interactable object
-
-        //do interaction in entity
     }
 }

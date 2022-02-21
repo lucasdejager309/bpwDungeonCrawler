@@ -219,7 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74612072935471846b0a3a5e4e3ccf82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSize: {x: 5, y: 5}
   validPositions: []
-  pathPositions: []
-  startPos: {x: -3, y: -3}
-  endPos: {x: 3, y: 3}
+  pathNodes: []
+  startPos: {x: 0, y: 0}
+  endPos: {x: 5, y: 2}

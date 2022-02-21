@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: -7954610942754421442}
   - component: {fileID: -8041413422110321472}
   - component: {fileID: 1802014564538316043}
+  - component: {fileID: 6146340682177474645}
   m_Layer: 2
-  m_Name: tempPlayer
+  m_Name: playerPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +102,7 @@ MonoBehaviour:
     m_Bits: 64
   entityIsSolid: 1
   moveTime: 0.1
-  timeBetweenMoves: 0
+  timeBetweenMoves: 0.001
   moveDistance: 1
   inputAllowed: 1
 --- !u!61 &1802014564538316043
@@ -130,3 +131,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
+--- !u!95 &6146340682177474645
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118473169861415980}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d55a44bf27117ce40bd7f36ee34cbdaf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

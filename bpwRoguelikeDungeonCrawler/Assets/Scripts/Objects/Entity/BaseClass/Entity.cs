@@ -60,7 +60,11 @@ public class Entity : MonoBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    bool UpdatePosInDict() {
+    public Vector2Int GetPos() {
+        return new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+
+    public bool UpdatePosInDict() {
         foreach(KeyValuePair<Entity, Vector2Int> entity in EntityManager.Instance.entityDict) {
             if (entity.Key == this) {
                 if (entity.Value != new Vector2Int((int)transform.position.x, (int)transform.position.y)) {

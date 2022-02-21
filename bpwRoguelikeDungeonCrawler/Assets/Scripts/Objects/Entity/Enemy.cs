@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    List<Vector2Int> path = new List<Vector2Int>();
+    public List<PathNode> path = new List<PathNode>();
 
     public override IEnumerator DoAction()
     {
-        //path = Pathfinding.GetPath(new Vector2Int((int)transform.position.x, (int)transform.position.y), new Vector2Int(0,0), EntityManager.Instance.validPositions);
         yield return new WaitForSeconds(0.0f);
     }
 

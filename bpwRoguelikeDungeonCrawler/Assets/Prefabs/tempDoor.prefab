@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2118473169861415954}
   - component: {fileID: -7954610942754421442}
   - component: {fileID: -8643223625929954232}
+  - component: {fileID: 4991335416540592823}
   m_Layer: 0
   m_Name: tempDoor
   m_TagString: Untagged
@@ -95,3 +96,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 759c2f5f484e1774fac09229c120bae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  solidLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  entityIsSolid: 0
+--- !u!95 &4991335416540592823
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118473169861415980}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 480021608b8ff1043be64b9d94abfafd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
