@@ -34,6 +34,8 @@ public class EntityManager : Singleton<EntityManager>
                 }
             }
         }
+
+        Debug.Log(validPositions.Count);
     }
 
     public Dictionary<Vector2Int, GameObject> SpawnByDensity(SpawnableObject[] prefabs, float minDensity, float maxDensity) {

@@ -40,7 +40,7 @@ public class Player : Entity
         StartCoroutine(base.Move(direction, distance, smoothMove, moveTime, waitBetweenMoves));
         
         //DEBUG.
-        path = Pathfinding.FindPath(new PathNode(GetPos()), new PathNode(DungeonGen.Instance.SpawnPos), PathNode.Vector2IntListToNodes(EntityManager.Instance.validPositions));
+        path = Pathfinding.FindPath(new PathNode(GetPos()), new PathNode(DungeonGen.Instance.SpawnPos), EntityManager.Instance.validPositions);
         
         yield return new WaitForSeconds(moveTime + timeBetweenMoves);
     }

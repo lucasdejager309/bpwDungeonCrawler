@@ -20,7 +20,7 @@ public class PathNode {
         }
     }
 
-    public List<PathNode> GetNeighbouringNodes(List<PathNode> allowedNodes) {
+    public List<PathNode> GetNeighbouringNodes(List<Vector2Int> allowedPositions) {
         List<PathNode> neighbours = new List<PathNode>();
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
@@ -28,7 +28,7 @@ public class PathNode {
                     continue;
                 }
                 PathNode potentialNode = new PathNode(new Vector2Int(pos.x+x, pos.y+y));
-                if (potentialNode.PosIsIn(allowedNodes)) {
+                if (allowedPositions.Contains(potentialNode.pos)) {
                     neighbours.Add(potentialNode);
                 }   
             }
@@ -36,16 +36,6 @@ public class PathNode {
 
         return neighbours;
 	}
-
-    private bool PosIsIn(List<PathNode> allowedNodes) {
-        foreach(PathNode node in allowedNodes) {
-            if (node.pos == this.pos) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public static int CalculateDistance(PathNode a, PathNode b) {
         int xDistance = Mathf.Abs(a.pos.x - b.pos.x);

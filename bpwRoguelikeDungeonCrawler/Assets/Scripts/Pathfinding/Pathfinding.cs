@@ -2,9 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//FOR THIS SCRIPT I USED THE FOLLOWING TUTORIALS:
+//A* Pathfinding Tutorial by Sebastian Lague: https://www.youtube.com/playlist?list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW
+//A* Pathfinding in Unity by Code Monkey: https://www.youtube.com/watch?v=alU04hvz6L4 
+
 public static class Pathfinding {
 
-    public static List<PathNode> FindPath(PathNode startNode, PathNode endNode, List<PathNode> allowedNodes) {
+    public static List<PathNode> FindPath(PathNode startNode, PathNode endNode, List<Vector2Int> allowedPositions) {
 		List<PathNode>openList = new List<PathNode>() { startNode };
 		List<PathNode>closedList = new List<PathNode>();
 
@@ -22,7 +26,7 @@ public static class Pathfinding {
 			openList.Remove(currentNode);
 			closedList.Add(currentNode);
 
-			foreach(PathNode neighbourNode in currentNode.GetNeighbouringNodes(allowedNodes)) {
+			foreach(PathNode neighbourNode in currentNode.GetNeighbouringNodes(allowedPositions)) {
 				if (closedList.Contains(neighbourNode)) continue;
 
 				int tentativeGCost = currentNode.gCost + PathNode.CalculateDistance(currentNode, neighbourNode);
