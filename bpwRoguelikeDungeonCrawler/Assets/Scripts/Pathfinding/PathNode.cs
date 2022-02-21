@@ -2,9 +2,11 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class PathNode {
+public class PathNode : IHeapItem<PathNode> {
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
+
+    private int heapIndex;
 
     public PathNode(Vector2Int pos) {
         this.pos = pos;
@@ -14,10 +16,29 @@ public class PathNode {
     public Vector2Int pos;
     public int gCost = int.MaxValue;
     public int hCost;
+    
     public int fCost {
         get {
             return gCost+hCost;
         }
+    }
+
+    public int HeapIndex {
+        get {
+            return heapIndex;
+        }
+        set {
+            heapIndex = value;
+        }
+    }
+
+    public int CompareTo(PathNode nodeToCompare) {
+        int compare = fCost.CompareTo(nodeToCompare.fCost);
+        if (compare == 0) {
+            compare = hCost.CompareTo(nodeToCompare.hCost);
+        }
+
+        return -compare;
     }
 
     public List<PathNode> GetNeighbouringNodes(List<Vector2Int> allowedPositions) {
@@ -35,7 +56,7 @@ public class PathNode {
         }
 
         return neighbours;
-	}
+	}    
 
     public static int CalculateDistance(PathNode a, PathNode b) {
         int xDistance = Mathf.Abs(a.pos.x - b.pos.x);
@@ -44,27 +65,5 @@ public class PathNode {
         int remaining = Mathf.Abs(xDistance - yDistance);
 
         return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
-    }
-
-    public static PathNode GetLowestFcostNode(List<PathNode> nodes) {
-        PathNode lowestFCostNode = nodes[0];
-        foreach (PathNode node in nodes) {
-            if (node.fCost < lowestFCostNode.fCost) {
-                lowestFCostNode = node;
-            }
-        }
-
-        return lowestFCostNode;
-    }
-    public static PathNode Vector2IntToNode(Vector2Int vector) {
-        return new PathNode(vector);
-    }
-
-    public static List<PathNode> Vector2IntListToNodes(List<Vector2Int> vectors) {
-        List<PathNode> nodes = new List<PathNode>();
-        foreach(Vector2Int vector in vectors) {
-            nodes.Add(new PathNode(vector));
-        }
-        return nodes;
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 //FOR THIS SCRIPT I USED THE FOLLOWING TUTORIALS:
 //A* Pathfinding Tutorial by Sebastian Lague: https://www.youtube.com/playlist?list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW
@@ -8,22 +9,23 @@ using System.Collections.Generic;
 
 public static class Pathfinding {
 
-    public static List<PathNode> FindPath(PathNode startNode, PathNode endNode, List<Vector2Int> allowedPositions) {
-		List<PathNode>openList = new List<PathNode>() { startNode };
+    public static List<PathNode> FindPath(PathNode startNode, PathNode endNode, List<Vector2Int> allowedPositions) {	
+		Heap<PathNode>openHeap = new Heap<PathNode>(1000000);
 		List<PathNode>closedList = new List<PathNode>();
+
+		openHeap.Add(startNode);
 
 		startNode.gCost = 0;
 		startNode.hCost = PathNode.CalculateDistance(startNode, endNode);
 
-		while (openList.Count > 0) {
-			PathNode currentNode = PathNode.GetLowestFcostNode(openList);
+		while (openHeap.Count > 0) {
+			PathNode currentNode = openHeap.RemoveFirst();
 
 			if (currentNode.pos == endNode.pos) {
-				Debug.Log(closedList.Count);
+				UnityEngine.Debug.Log(closedList.Count);
 				return CalculatePath(currentNode);
 			}
 
-			openList.Remove(currentNode);
 			closedList.Add(currentNode);
 
 			foreach(PathNode neighbourNode in currentNode.GetNeighbouringNodes(allowedPositions)) {
@@ -37,8 +39,8 @@ public static class Pathfinding {
 					neighbourNode.hCost = PathNode.CalculateDistance(neighbourNode, endNode);
 
 
-					if (!openList.Contains(neighbourNode)) {
-						openList.Add(neighbourNode);
+					if (!openHeap.Contains(neighbourNode)) {
+						openHeap.Add(neighbourNode);
 					}
 				}
 			}
