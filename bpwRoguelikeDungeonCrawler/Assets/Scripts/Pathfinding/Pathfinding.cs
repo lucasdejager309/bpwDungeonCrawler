@@ -22,7 +22,6 @@ public static class Pathfinding {
 			PathNode currentNode = openHeap.RemoveFirst();
 
 			if (currentNode.pos == endNode.pos) {
-				UnityEngine.Debug.Log(closedList.Count);
 				return CalculatePath(currentNode);
 			}
 

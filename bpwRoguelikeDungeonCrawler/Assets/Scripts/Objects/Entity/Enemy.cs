@@ -13,9 +13,9 @@ public class Enemy : Entity
 
     public override void DeleteEntity()
     {
-        foreach(KeyValuePair<Vector2Int, GameObject> enemy in EnemyManager.Instance.enemies) {
-            if (enemy.Value == this.gameObject) {
-                EnemyManager.Instance.enemies.Remove(enemy.Key);
+        foreach(GameObject enemy in EnemyManager.Instance.enemies) {
+            if (enemy == this.gameObject) {
+                EnemyManager.Instance.enemies.Remove(enemy);
                 break;
             }
         }

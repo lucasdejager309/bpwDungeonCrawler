@@ -9,9 +9,6 @@ public class Player : Entity
     public int moveDistance;
     public bool inputAllowed = true;
 
-    //DEBUG.
-    List<PathNode> path = new List<PathNode>();
-
     void Update() {
         if (GetInput() != new Vector2Int(0,0) && inputAllowed) {
             inputAllowed = false;
@@ -23,9 +20,6 @@ public class Player : Entity
                 EventManager.InvokeEvent("INTERACT");
             };
         }
-
-        //DEBUG.
-        GameManager.Instance.DrawPath(path);
     }
 
     void Start() {
@@ -38,9 +32,6 @@ public class Player : Entity
 
     protected override IEnumerator Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveTime = 0.2f, float waitBetweenMoves = 0) {
         StartCoroutine(base.Move(direction, distance, smoothMove, moveTime, waitBetweenMoves));
-        
-        //DEBUG.
-        path = Pathfinding.FindPath(new PathNode(GetPos()), new PathNode(DungeonGen.Instance.SpawnPos), EntityManager.Instance.validPositions);
         
         yield return new WaitForSeconds(moveTime + timeBetweenMoves);
     }

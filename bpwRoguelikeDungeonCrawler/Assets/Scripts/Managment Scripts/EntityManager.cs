@@ -34,8 +34,6 @@ public class EntityManager : Singleton<EntityManager>
                 }
             }
         }
-
-        Debug.Log(validPositions.Count);
     }
 
     public Dictionary<Vector2Int, GameObject> SpawnByDensity(SpawnableObject[] prefabs, float minDensity, float maxDensity) {
@@ -86,9 +84,10 @@ public class EntityManager : Singleton<EntityManager>
         }
     }
 
-    public void SpawnEntity(Vector2Int pos, GameObject objectToSpawn) {
+    public GameObject SpawnEntity(Vector2Int pos, GameObject objectToSpawn) {
         GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(pos.x, pos.y, 1), Quaternion.identity);
         entityDict.Add(spawnedObject.gameObject.GetComponent<Entity>(), pos);
+        return spawnedObject;
     }
 
     void DeleteEntities() {

@@ -58,7 +58,7 @@ public class Entity : MonoBehaviour
         // }
 
         GameObject.Destroy(gameObject);
-    }
+    } 
 
     public Vector2Int GetPos() {
         return new Vector2Int((int)transform.position.x, (int)transform.position.y);

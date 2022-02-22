@@ -9,12 +9,12 @@ public class EnemyManager : Singleton<EnemyManager>
     public float minEnemyDensity;
     public float maxEnemyDensity;
     public SpawnableObject[] enemyPrefabs;
-    public Dictionary<Vector2Int, GameObject> enemies = new Dictionary<Vector2Int, GameObject>();
+    public List<GameObject> enemies = new List<GameObject>();
 
     void Awake() {
         Instance = this;
-    }
-
+    } 
+ 
     void Start() {
         EventManager.AddListener("DUNGEON_GENERATED", SpawnEnemies);
         EventManager.AddListener("PLAYER_TURN_FINISHED", OtherTurns);
@@ -25,19 +25,19 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     void SpawnEnemies() {
-        enemies = EntityManager.Instance.SpawnByDensity(enemyPrefabs, minEnemyDensity, maxEnemyDensity);
-        foreach (KeyValuePair<Vector2Int, GameObject> enemy in enemies) {
-            EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value);
+        Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(enemyPrefabs, minEnemyDensity, maxEnemyDensity);
+        foreach (KeyValuePair<Vector2Int, GameObject> enemy in enemiesToSpawn) {
+            enemies.Add(EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value));
         }
     }
 
     IEnumerator DoActions() {
         List<GameObject> actionQueue = new List<GameObject>();
 
-        foreach(KeyValuePair<Vector2Int, GameObject> enemy in enemies) {
-            if (enemy.Value != null) {
-                if (enemy.Value.GetComponent<Entity>().TileInSight(GameObject.FindGameObjectWithTag("Player").transform.position)) {
-                    actionQueue.Add(enemy.Value);
+        foreach(GameObject enemy in enemies) {
+            if (enemy != null) {
+                if (enemy.GetComponent<Entity>().TileInSight(GameObject.FindGameObjectWithTag("Player").transform.position)) {
+                    actionQueue.Add(enemy);
                 }   
             }
         }
