@@ -24,7 +24,7 @@ public class EntityMovement {
             }
         }
         
-        if (EntityManager.Instance.validPositions.Contains(newPos) && (!EntityManager.Instance.entityDict.ContainsValue(newPos) || !entityAtNewPosIsSolid)) {
+        if (EntityManager.Instance.validPositions.Contains(newPos) && !EntityManager.Instance.entityDict.ContainsValue(newPos) || !entityAtNewPosIsSolid) {
             return true;
         } return false;
     }

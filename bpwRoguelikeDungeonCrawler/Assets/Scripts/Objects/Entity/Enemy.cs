@@ -4,11 +4,42 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    public enum enemyState {
+        CHASE,
+        ATTACK,
+        FLEE
+    }
+    public enemyState state = enemyState.CHASE; 
+
     public List<PathNode> path = new List<PathNode>();
+    public float sightRange;
+
+    public GameObject target;
+
+    void Start() {
+        target = GameManager.Instance.player;
+    }
 
     public override IEnumerator DoAction()
     {
-        yield return new WaitForSeconds(0.0f);
+        switch (state) {
+            case(enemyState.CHASE):
+                //do chase stuff
+                bool finished = false;
+                Task t = new Task(MoveToWards(target, 1, 0.2f));
+                t.Finished += delegate {
+                    finished = true;
+                };
+
+                while (true) {
+                    if (finished) {
+                        yield break;
+                    } else yield return null;
+                }
+
+            default:
+                break;      
+        };
     }
 
     public override void DeleteEntity()

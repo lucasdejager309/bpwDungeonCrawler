@@ -36,7 +36,12 @@ public class EnemyManager : Singleton<EnemyManager>
 
         foreach(GameObject enemy in enemies) {
             if (enemy != null) {
-                if (enemy.GetComponent<Entity>().TileInSight(GameObject.FindGameObjectWithTag("Player").transform.position)) {
+                bool playerInSight = GameManager.Instance.player.GetComponent<Player>().TileInSight(enemy.GetComponent<Enemy>().GetPos());
+                bool playerInrange = false;
+                if (Vector2.Distance(enemy.GetComponent<Enemy>().GetPos(), GameManager.Instance.GetPlayerPos()) <= enemy.GetComponent<Enemy>().sightRange*1.4f) {
+                    playerInrange = true;
+                }
+                if (playerInSight && playerInrange) {
                     actionQueue.Add(enemy);
                 }   
             }
@@ -56,7 +61,7 @@ public class EnemyManager : Singleton<EnemyManager>
                     next = true;
                 };
                 yield return null;
-            }   
+            }
         }
         EventManager.InvokeEvent("OTHERS_TURN_FINISHED"); 
     }

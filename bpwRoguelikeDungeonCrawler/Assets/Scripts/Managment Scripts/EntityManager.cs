@@ -14,6 +14,21 @@ public class EntityManager : Singleton<EntityManager>
         EventManager.AddListener("RELOAD_DUNGEON", DeleteEntities);
     }
 
+    //temp DRAWS NICE LITTLE CROSSES AT ENTITYDICT VALUES
+    void Update() {
+        foreach (Vector2Int pos in entityDict.Values) {
+            Vector2 startPos = new Vector2(pos.x, pos.y);
+            Vector2 endPos = new Vector2(pos.x+1f, pos.y+1f);
+            
+            Debug.DrawLine(startPos, endPos, Color.green);
+
+            startPos = new Vector2(pos.x+1, pos.y);
+            endPos = new Vector2(pos.x, pos.y+1f);
+
+            Debug.DrawLine(startPos, endPos, Color.green);
+        }
+    }
+
     void FillValidPositionsDict() {
         foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.floorTilelayer.tileDictionary) {
             validPositions.Add(tile.Key);
@@ -33,6 +48,20 @@ public class EntityManager : Singleton<EntityManager>
                     }
                 }
             }
+        }
+    }
+
+    public void UpdatePos(Entity entity) {
+        Vector2Int entityPos = entity.GetPos();
+        
+        if (entityDict.ContainsKey(entity) && entityDict[entity] != entityPos) {
+                
+            entityDict.Remove(entity);
+            entityDict.Add(entity, entityPos);
+
+        } else if(!entityDict.ContainsKey(entity)) {
+
+            entityDict.Add(entity, entityPos);
         }
     }
 
@@ -78,6 +107,7 @@ public class EntityManager : Singleton<EntityManager>
 
         return objectsToReturn;
     }    
+
     public void SpawnEntities(Dictionary<Vector2Int, GameObject> objects) {
         foreach(KeyValuePair<Vector2Int, GameObject> objectToSpawn in objects) {
             SpawnEntity(objectToSpawn.Key, objectToSpawn.Value);

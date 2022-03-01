@@ -17,7 +17,6 @@ public class Player : Entity
             t.Finished += delegate {
                 EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
                 GetComponent<Animator>().SetBool("isWalking", false);
-                EventManager.InvokeEvent("INTERACT");
             };
         }
     }

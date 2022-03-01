@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 //FOR THIS SCRIPT I USED THE FOLLOWING TUTORIALS:
 //A* Pathfinding Tutorial by Sebastian Lague: https://www.youtube.com/playlist?list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW
@@ -10,6 +9,11 @@ using System.Diagnostics;
 public static class Pathfinding {
 
     public static List<PathNode> FindPath(PathNode startNode, PathNode endNode, List<Vector2Int> allowedPositions) {	
+		//add pos of entity to validnodePositions (otherwise pathfinding is like huh no valid position)
+        List<Vector2Int> validNodePositions = allowedPositions;
+        validNodePositions.Add(startNode.pos);
+        validNodePositions.Add(endNode.pos);
+		
 		Heap<PathNode>openHeap = new Heap<PathNode>(1000000);
 		List<PathNode>closedList = new List<PathNode>();
 
@@ -27,7 +31,7 @@ public static class Pathfinding {
 
 			closedList.Add(currentNode);
 
-			foreach(PathNode neighbourNode in currentNode.GetNeighbouringNodes(allowedPositions)) {
+			foreach(PathNode neighbourNode in currentNode.GetNeighbouringNodes(validNodePositions)) {
 				if (closedList.Contains(neighbourNode)) continue;
 
 				int tentativeGCost = currentNode.gCost + PathNode.CalculateDistance(currentNode, neighbourNode);
@@ -37,13 +41,19 @@ public static class Pathfinding {
 					neighbourNode.gCost = tentativeGCost;
 					neighbourNode.hCost = PathNode.CalculateDistance(neighbourNode, endNode);
 
-
+					//TODO: THIS STATEMENT NEVER RETURNS FALSE
 					if (!openHeap.Contains(neighbourNode)) {
 						openHeap.Add(neighbourNode);
 					}
 				}
 			}
+
+			if (openHeap.Count > 1000) {
+				break;
+			}
 		}
+
+		Debug.Log(openHeap.Count);
 
 		return null;
 	}

@@ -16,8 +16,6 @@ public class GameManager : Singleton<GameManager> {
     {   
         EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
         DungeonGen.Instance.GenerateDungeon();
-
-        
     }
 
     void SpawnPlayer() {
@@ -27,7 +25,7 @@ public class GameManager : Singleton<GameManager> {
 
     //temp
     public Vector2Int GetPlayerPos() {
-        player.GetComponent<Entity>().UpdatePosInDict();
+        EntityManager.Instance.UpdatePos(player.GetComponent<Entity>());
         return EntityManager.Instance.entityDict[player.GetComponent<Entity>()];
     }
 
@@ -39,7 +37,7 @@ public class GameManager : Singleton<GameManager> {
             Vector2 endPos = nodes[i+1].pos;
             endPos.x += 0.5f; endPos.y += 0.5f;
 
-            Debug.DrawLine(startPos, endPos);
+            Debug.DrawLine(startPos, endPos, Color.red, 1f);
         }
     }
 }

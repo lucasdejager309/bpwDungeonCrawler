@@ -53,7 +53,7 @@ public class DungeonGen : Singleton<DungeonGen>
         }
 
         SpawnTiles();
-        SpawnDoors();
+        //SpawnDoors();
 
         EventManager.InvokeEvent("DUNGEON_GENERATED");
     }

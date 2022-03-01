@@ -100,6 +100,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   entityIsSolid: 1
+  path: []
+  sightRange: 7
+  target: {fileID: 0}
 --- !u!61 &338651139270102538
 BoxCollider2D:
   m_ObjectHideFlags: 0
