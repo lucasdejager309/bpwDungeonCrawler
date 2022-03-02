@@ -9,3 +9,4 @@ public class InteractableObject : Entity
         Debug.Log("interacted @ "+ transform.position);
     }
 }
+ 

@@ -3,15 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, IDamagable
 {
     public LayerMask solidLayer;
+    
+    [Header("entity attributes")]
+    
     public bool entityIsSolid;
+    
+    [SerializeField]private int health;
+    public int Health {
+        get { return health; }
+    }
 
     void Start() {
         EntityManager.Instance.UpdatePos(this);
     }
+    
+    public virtual void TakeDamage(int damage) {
+        health -= damage; 
 
+        if (health <= 0) {
+            Die();
+        }
+    }
+
+    public virtual void Die() {
+        DeleteEntity();
+    }
+
+    
     protected virtual IEnumerator Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveTime = 0.2f, float waitBetweenMoves = 0) {
             EntityManager.Instance.UpdatePos(this); //ugly fix
 
@@ -26,7 +47,7 @@ public class Entity : MonoBehaviour
                     EntityManager.Instance.UpdatePos(this);
                 } else {
                     Vector3 startPos = transform.position;
-                    Task t = new Task(EntityMovement.SmoothMove(transform, newPos, moveTime/distance, waitBetweenMoves));
+                    Task t = new Task(SmoothMove(transform, newPos, moveTime/distance, waitBetweenMoves));
                     t.Finished += delegate (bool manual) {
                         transform.position = new Vector3(newPos.x, newPos.y, 0);
 
@@ -60,6 +81,26 @@ public class Entity : MonoBehaviour
                 yield return null;
             }
         } else yield return null;
+    }
+
+    public IEnumerator SmoothMove(Transform originalPos, Vector2Int newPos, float speed, float waitBetweenMoves = 0) {
+        Vector3 startPos = originalPos.position;
+        Vector3 endPos = new Vector3(newPos.x, newPos.y, originalPos.position.z);
+
+        float elapsedTime = 0;
+
+        if (GetComponent<Animator>() != null) GetComponent<Animator>().SetBool("isWalking", true);        
+
+        while (elapsedTime < speed) {
+            originalPos.position = Vector3.Lerp(startPos, endPos, (elapsedTime/speed));
+            elapsedTime += Time.deltaTime;
+            
+            yield return null;
+        }
+
+        if (GetComponent<Animator>() != null) GetComponent<Animator>().SetBool("isWalking", false);
+
+        yield return new WaitForSeconds(waitBetweenMoves);
     }
 
     //IM SURE THERE IS A BETTER WAY TO DO THIS HOLY SHIT
@@ -97,8 +138,11 @@ public class Entity : MonoBehaviour
         GameObject.Destroy(gameObject);
     } 
 
+    public float GetDistance(Vector2Int pos) {
+        return Vector2.Distance(GetPos(), pos);
+    }
+
     public Vector2Int GetPos() {
-        // UpdatePos();
         return new Vector2Int((int)transform.position.x, (int)transform.position.y);
     }
 }

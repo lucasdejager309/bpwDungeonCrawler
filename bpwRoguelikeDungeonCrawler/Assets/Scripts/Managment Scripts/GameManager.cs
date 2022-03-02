@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager> {
 
     void Awake() {
         Instance = this;
+        
     }
 
     void Start()
@@ -21,12 +22,6 @@ public class GameManager : Singleton<GameManager> {
     void SpawnPlayer() {
         player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
         EventManager.InvokeEvent("PLAYER_SPAWNED");
-    }
-
-    //temp
-    public Vector2Int GetPlayerPos() {
-        EntityManager.Instance.UpdatePos(player.GetComponent<Entity>());
-        return EntityManager.Instance.entityDict[player.GetComponent<Entity>()];
     }
 
     //temp

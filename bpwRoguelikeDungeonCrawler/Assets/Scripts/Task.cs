@@ -75,6 +75,12 @@ public class Task
 		if(autoStart)
 			Start();
 	}
+
+
+	//IK HEB ZELF EEN EMPTY CONSTRUCTOR TOEGEVOEGD (WANT DIE HAD IK NODIG);
+	public Task() {
+
+	}
 	
 	/// Begins execution of the coroutine
 	public void Start()

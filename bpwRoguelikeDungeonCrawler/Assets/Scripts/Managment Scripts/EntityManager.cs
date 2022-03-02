@@ -65,6 +65,20 @@ public class EntityManager : Singleton<EntityManager>
         }
     }
 
+    public Entity EntityAtPos(Vector2Int pos) {
+        foreach (var kv in entityDict) {
+            if (kv.Value == pos) {                
+                return kv.Key;
+            }
+        }
+
+        return null;
+    }
+
+    public Vector2Int PosOfEntity(Entity entity) {
+        return entityDict[entity];
+    }
+
     public Dictionary<Vector2Int, GameObject> SpawnByDensity(SpawnableObject[] prefabs, float minDensity, float maxDensity) {
         Dictionary<Vector2Int, GameObject> objectsToReturn = new Dictionary<Vector2Int, GameObject>();
         foreach (Room room in DungeonGen.Instance.roomList) {

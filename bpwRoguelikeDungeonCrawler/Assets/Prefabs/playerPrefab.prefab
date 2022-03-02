@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8041413422110321472}
   - component: {fileID: 1802014564538316043}
   - component: {fileID: 6146340682177474645}
+  - component: {fileID: -7691622291691934766}
   m_Layer: 2
   m_Name: playerPrefab
   m_TagString: Player
@@ -101,8 +102,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   entityIsSolid: 1
+  health: 6
   moveTime: 0.1
-  timeBetweenMoves: 0.001
+  timeBetweenMoves: 0
   moveDistance: 1
   inputAllowed: 1
 --- !u!61 &1802014564538316043
@@ -150,3 +152,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-7691622291691934766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118473169861415980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae97972f0f4e3f40b693b57a91ad85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

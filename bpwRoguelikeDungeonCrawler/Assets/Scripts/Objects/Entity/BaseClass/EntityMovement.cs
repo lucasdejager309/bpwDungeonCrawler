@@ -28,22 +28,4 @@ public class EntityMovement {
             return true;
         } return false;
     }
-
-    public static IEnumerator SmoothMove(Transform originalPos, Vector2Int newPos, float speed, float waitBetweenMoves = 0) {
-        Vector3 startPos = originalPos.position;
-        Vector3 endPos = new Vector3(newPos.x, newPos.y, originalPos.position.z);
-
-        float elapsedTime = 0;
-        
-
-        while (elapsedTime < speed) {
-            originalPos.position = Vector3.Lerp(startPos, endPos, (elapsedTime/speed));
-            elapsedTime += Time.deltaTime;
-            
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(waitBetweenMoves);
-    }
-
 }

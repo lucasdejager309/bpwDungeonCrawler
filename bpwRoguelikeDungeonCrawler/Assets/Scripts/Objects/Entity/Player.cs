@@ -9,16 +9,57 @@ public class Player : Entity
     public int moveDistance;
     public bool inputAllowed = true;
 
+    [Header("player attributes")]
+    int damage = 2;
+
+    enum ActionType {
+        MOVE,
+        ATTACK,
+        NOTHING
+    }
+
     void Update() {
-        if (GetInput() != new Vector2Int(0,0) && inputAllowed) {
+        Vector2Int input = GetInput();
+
+        if (input != new Vector2Int(0,0) && GetActionType(input) != ActionType.NOTHING && inputAllowed) {
             inputAllowed = false;
-            Task t = new Task(Move(GetInput(), moveDistance, true, moveTime, timeBetweenMoves));
-            GetComponent<Animator>().SetBool("isWalking", true);
-            t.Finished += delegate {
-                EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
-                GetComponent<Animator>().SetBool("isWalking", false);
-            };
+
+            switch (GetActionType(input)) {
+                case ActionType.MOVE:
+                    
+                    Task move = new Task(Move(GetInput(), moveDistance, true, moveTime, timeBetweenMoves));
+                    move.Finished += delegate {
+                        EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+                    };
+
+                    break;
+                case ActionType.ATTACK:
+
+                    Task attack = new Task(GetComponent<Attack>().DoAttack(input+GetPos(), damage, this));
+                    attack.Finished += delegate {
+                        EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+                    };
+                    
+                    break;
+                default:
+                    break;
+            }
         }
+    }
+
+    ActionType GetActionType(Vector2Int input)
+    {
+        Vector2Int pos = input + GetPos();
+        ActionType actionToReturn = ActionType.NOTHING;
+        Entity entity = EntityManager.Instance.EntityAtPos(pos);
+        if (entity != null && entity.GetComponent<Enemy>() != null) {
+            actionToReturn = ActionType.ATTACK;
+        }
+        else if (EntityManager.Instance.validPositions.Contains(pos)) {
+            actionToReturn = ActionType.MOVE;
+        }
+        else actionToReturn = ActionType.NOTHING;
+        return actionToReturn;
     }
 
     void Start() {

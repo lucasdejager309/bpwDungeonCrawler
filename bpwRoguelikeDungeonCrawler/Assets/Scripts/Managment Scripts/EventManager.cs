@@ -19,6 +19,8 @@ public static class EventManager {
     }
 
     public static void InvokeEvent(string eventName) {
-        eventDictionary[eventName]?.Invoke();
+        if (eventDictionary.ContainsKey(eventName)) {
+            eventDictionary[eventName]?.Invoke();
+        }
     }
 } 
