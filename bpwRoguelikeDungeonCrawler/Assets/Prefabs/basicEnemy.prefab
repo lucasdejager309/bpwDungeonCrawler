@@ -165,3 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae97972f0f4e3f40b693b57a91ad85a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationSpeed: 10
+  howManyTurns: 2
+  lastTurnDone: 0

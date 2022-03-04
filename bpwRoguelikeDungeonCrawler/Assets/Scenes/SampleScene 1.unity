@@ -492,10 +492,10 @@ MonoBehaviour:
   maxRange: 35
   amountRooms: 3
   amountRandomRooms: 7
-  minRoomSize: 5
-  maxRoomSize: 10
-  minNewRoomRange: -15
-  maxNewRoomRange: 10
+  minRoomSize: 4
+  maxRoomSize: 6
+  minNewRoomRange: -7
+  maxNewRoomRange: 7
   minRoomSpacing: 3
   corridorWidth: 1
   startTile: {fileID: 11400000, guid: bf6ca791e6b09b14689cc641ebe0b0df, type: 2}
@@ -1097,11 +1097,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEnemies: 1
-  minEnemyDensity: 0.1
-  maxEnemyDensity: 3
+  minEnemyDensity: 2
+  maxEnemyDensity: 7
   enemyPrefabs:
-  - spawnChance: 1
+  - spawnChance: 2
     gameObject: {fileID: 2118473169861415980, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+    wallAdjacent: 0
+  - spawnChance: 1
+    gameObject: {fileID: 2118473169861415980, guid: 47d203b0323b7a74a8aa78561d4b12c7, type: 3}
     wallAdjacent: 0
   enemies: []
 --- !u!1 &1564800000
@@ -1149,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109b4468625a6154eb78bb024497485d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTurn: 0
   playerPrefab: {fileID: 2118473169861415980, guid: e799840a2dc91e947a4fb3e0099680ca, type: 3}
   player: {fileID: 0}
 --- !u!114 &1564800003
@@ -1180,9 +1184,6 @@ MonoBehaviour:
   - key: 112
     state: 0
     action: RELOAD_DUNGEON
-  - key: 32
-    state: 0
-    action: INTERACT
 --- !u!1 &1657897173
 GameObject:
   m_ObjectHideFlags: 0

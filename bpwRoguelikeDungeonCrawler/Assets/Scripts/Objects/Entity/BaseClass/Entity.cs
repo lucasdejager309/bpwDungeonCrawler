@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour, IDamagable
     }
 
     void Start() {
-        EntityManager.Instance.UpdatePos(this);
+        EntityManager.Instance.UpdatePos(this, GetPos());
     }
     
     public virtual void TakeDamage(int damage) {
@@ -34,9 +34,9 @@ public class Entity : MonoBehaviour, IDamagable
 
     
     protected virtual IEnumerator Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveTime = 0.2f, float waitBetweenMoves = 0) {
-            EntityManager.Instance.UpdatePos(this); //ugly fix
-
             //get actual position to move to (incase target position is unreachable)
+            
+            
             Vector2Int newPos = EntityMovement.GetNewPosition(transform, direction, distance);
 
             //move to actual position
@@ -44,14 +44,14 @@ public class Entity : MonoBehaviour, IDamagable
                 if (!smoothMove) {
                     transform.position = new Vector3(newPos.x, newPos.y, 0);
 
-                    EntityManager.Instance.UpdatePos(this);
                 } else {
                     Vector3 startPos = transform.position;
                     Task t = new Task(SmoothMove(transform, newPos, moveTime/distance, waitBetweenMoves));
                     t.Finished += delegate (bool manual) {
                         transform.position = new Vector3(newPos.x, newPos.y, 0);
+                        
+                        EntityManager.Instance.UpdatePos(this, newPos);
 
-                        EntityManager.Instance.UpdatePos(this);
                     };
                     yield return new WaitForSeconds(moveTime+waitBetweenMoves);
                 }

@@ -36,7 +36,7 @@ public class Enemy : Entity
                 break;
 
             case enemyState.MELEEATTACK:
-                t = new Task(GetComponent<MeleeAttack>().DoAttack(target.GetComponent<Entity>().GetPos(), damage, this));
+                t = new Task(GetComponent<MeleeAttack>().DoAttack(EntityManager.Instance.PosOfEntity(target.GetComponent<Entity>()), damage, this));
                 t.Finished += delegate {
                     finished = true;
                 };
@@ -44,7 +44,7 @@ public class Enemy : Entity
                 break;
 
             case enemyState.RANGEDATTACK:
-                t = new Task(GetComponent<RangedAttack>().DoAttack(target.GetComponent<Entity>().GetPos(), damage, this));
+                t = new Task(GetComponent<RangedAttack>().DoAttack(EntityManager.Instance.PosOfEntity(target.GetComponent<Entity>()), damage, this));
                 t.Finished += delegate {
                     finished = true;
                 };
@@ -64,13 +64,18 @@ public class Enemy : Entity
 
     public enemyState GetState() {
         float distance = GetDistance(target.GetComponent<Entity>().GetPos());
-        if (distance <= attackRange && distance <= 1.5f && GetComponent<MeleeAttack>() != null) {
-            return enemyState.MELEEATTACK;
-        } else if (distance <= attackRange && GetComponent<RangedAttack>() != null) {
-            return enemyState.RANGEDATTACK;
-        } else {
-            return enemyState.CHASE;
+        if (distance <= attackRange) {
+            if (distance <= 1.5f && GetComponent<MeleeAttack>() != null) {
+                if (GetComponent<MeleeAttack>().AttackIsAllowed()) {
+                    return enemyState.MELEEATTACK;
+                }
+            } else if (GetComponent<RangedAttack>() != null) {
+                if (GetComponent<RangedAttack>().AttackIsAllowed()) {
+                    return enemyState.RANGEDATTACK;
+                }
+            }
         }
+        return enemyState.CHASE;
     }
 
     public override void DeleteEntity()

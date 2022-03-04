@@ -51,8 +51,8 @@ public class EntityManager : Singleton<EntityManager>
         }
     }
 
-    public void UpdatePos(Entity entity) {
-        Vector2Int entityPos = entity.GetPos();
+    public void UpdatePos(Entity entity, Vector2Int entityPos) {
+        //Vector2Int entityPos = entity.GetPos();
         
         if (entityDict.ContainsKey(entity) && entityDict[entity] != entityPos) {
                 

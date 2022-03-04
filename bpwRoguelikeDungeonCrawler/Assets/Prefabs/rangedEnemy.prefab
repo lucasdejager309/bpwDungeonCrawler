@@ -9,15 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2118473169861415954}
-  - component: {fileID: -8041413422110321472}
-  - component: {fileID: -7691622291691934766}
-  - component: {fileID: 184184215787896632}
+  - component: {fileID: -6009707562076051032}
+  - component: {fileID: 3436106798544155819}
   - component: {fileID: -7954610942754421442}
-  - component: {fileID: 1802014564538316043}
-  - component: {fileID: 6146340682177474645}
+  - component: {fileID: 338651139270102538}
+  - component: {fileID: 2664543417932978900}
+  - component: {fileID: 2909873950017586618}
   m_Layer: 2
-  m_Name: playerPrefab
-  m_TagString: Player
+  m_Name: rangedEnemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8041413422110321472
+--- !u!114 &-6009707562076051032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,18 +45,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2118473169861415980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53c3780c83ac62749bf08a48415c063d, type: 3}
+  m_Script: {fileID: 11500000, guid: fbde7a0841ad37c4eb8386c4342b70f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
   entityIsSolid: 1
-  health: 300
-  timeBetweenMoves: 0.01
-  moveDistance: 1
-  inputAllowed: 1
---- !u!114 &-7691622291691934766
+  health: 4
+  sightRange: 7
+  attackRange: 5
+  moveSpeed: 1
+  damage: 1
+  target: {fileID: 0}
+--- !u!114 &3436106798544155819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,25 +67,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2118473169861415980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ae97972f0f4e3f40b693b57a91ad85a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cad13c13283b1e459e08207e3d85a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animationSpeed: 10
-  howManyTurns: 1
+  howManyTurns: 4
   lastTurnDone: 0
---- !u!114 &184184215787896632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118473169861415980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9290b1d96098eb642844d201f3093808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationSpeed: 10
+  projectilePrefab: {fileID: 5834953968125994364, guid: b0e4538f1fd4f494fa97fa51b4f4d548, type: 3}
 --- !u!212 &-7954610942754421442
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -124,7 +114,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 21300000, guid: 4f4ebdacb2da82848af263cb363c66bb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8dbe36dd6ed1fc408b0600140802b4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -135,7 +125,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &1802014564538316043
+--- !u!61 &338651139270102538
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,9 +149,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!95 &6146340682177474645
+--- !u!95 &2664543417932978900
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -171,7 +161,7 @@ Animator:
   m_GameObject: {fileID: 2118473169861415980}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d55a44bf27117ce40bd7f36ee34cbdaf, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -180,3 +170,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2909873950017586618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118473169861415980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae97972f0f4e3f40b693b57a91ad85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
+  howManyTurns: 1
+  lastTurnDone: 0

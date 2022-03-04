@@ -11,22 +11,11 @@ public class InteractableObjectsManager : MonoBehaviour
     void Start()
     {
         EventManager.AddListener("DUNGEON_GENERATED", SpawnObjects);
-        EventManager.AddListener("INTERACT", Interact);
     }
     
     void SpawnObjects() {
         Dictionary<Vector2Int, GameObject> objectsToSpawn = new Dictionary<Vector2Int, GameObject>();
         objectsToSpawn = EntityManager.Instance.SpawnByDensity(interactableObjects, minDensity, maxDensity);
         EntityManager.Instance.SpawnEntities(objectsToSpawn);
-    }
-
-    void Interact() {
-        foreach(KeyValuePair<Entity, Vector2Int> entry in EntityManager.Instance.entityDict) {
-            if (entry.Value == EntityManager.Instance.entityDict[GameManager.Instance.player.GetComponent<Entity>()]) {
-                if (entry.Key.GetComponent<InteractableObject>() != null) {
-                    entry.Key.GetComponent<InteractableObject>().Interact();
-                }
-            }
-        }
     }
 }

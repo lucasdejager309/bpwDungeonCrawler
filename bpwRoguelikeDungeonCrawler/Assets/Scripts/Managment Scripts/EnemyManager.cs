@@ -51,6 +51,9 @@ public class EnemyManager : Singleton<EnemyManager>
         }
 
         if (actionQueue.Count != 0) {
+            //this is a bad fix for the wrong attack pos bug
+            yield return new WaitForSeconds(0.1f);
+
             int i = 0;
             bool next = true;
             while (i < actionQueue.Count) {
@@ -62,11 +65,12 @@ public class EnemyManager : Singleton<EnemyManager>
                 t.Finished += delegate {
                     i++;
                     next = true;
+                    EventManager.InvokeEvent("ADD_TURN");
                 };
                 yield return null;
             }
         }
         EventManager.InvokeEvent("UI_WAIT");
-        EventManager.InvokeEvent("OTHERS_TURN_FINISHED"); 
+        EventManager.InvokeEvent("OTHER_TURNS_FINISHED"); 
     }
 }

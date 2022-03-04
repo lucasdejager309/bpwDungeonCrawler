@@ -5,18 +5,30 @@ using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
+    [SerializeField]
+    private int currentTurn = 0;
+    public int CurrentTurn {
+        get {
+            return currentTurn;
+        }
+    }
+    
     public GameObject playerPrefab;
     public GameObject player;
 
     void Awake() {
         Instance = this;
-        
     }
 
     void Start()
     {   
         EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
+        EventManager.AddListener("ADD_TURN", AddTurn);
         DungeonGen.Instance.GenerateDungeon();
+    }
+
+    void AddTurn() {
+        currentTurn++;
     }
 
     void SpawnPlayer() {
