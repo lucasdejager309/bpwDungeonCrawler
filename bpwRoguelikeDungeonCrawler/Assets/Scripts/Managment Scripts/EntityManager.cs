@@ -79,6 +79,25 @@ public class EntityManager : Singleton<EntityManager>
         return entityDict[entity];
     }
 
+    public static List<Vector2Int> GetNeighbours(Vector2Int pos, bool getCorners, bool includeSelf) {
+        List<Vector2Int> positionsToReturn = new List<Vector2Int>();
+        
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (x == 0 && y == 0 && !includeSelf) {
+                    continue;
+                }
+                if (!getCorners && Mathf.Abs(x) == Mathf.Abs(y)) {
+                    continue;
+                }
+                
+                positionsToReturn.Add(pos + new Vector2Int(x,y));
+            }
+        }
+
+        return positionsToReturn;
+    }
+
     public Dictionary<Vector2Int, GameObject> SpawnByDensity(SpawnableObject[] prefabs, float minDensity, float maxDensity) {
         Dictionary<Vector2Int, GameObject> objectsToReturn = new Dictionary<Vector2Int, GameObject>();
         foreach (Room room in DungeonGen.Instance.roomList) {

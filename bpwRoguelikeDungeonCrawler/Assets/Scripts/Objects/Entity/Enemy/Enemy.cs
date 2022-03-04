@@ -70,7 +70,7 @@ public class Enemy : Entity
                     return enemyState.MELEEATTACK;
                 }
             } else if (GetComponent<RangedAttack>() != null) {
-                if (GetComponent<RangedAttack>().AttackIsAllowed()) {
+                if (GetComponent<RangedAttack>().AttackIsAllowed() && GetComponent<RangedAttack>().HasAimOnTarget(target.GetComponent<Entity>())) {
                     return enemyState.RANGEDATTACK;
                 }
             }

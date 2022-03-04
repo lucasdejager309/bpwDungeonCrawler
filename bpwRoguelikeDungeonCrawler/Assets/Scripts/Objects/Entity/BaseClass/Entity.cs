@@ -117,16 +117,24 @@ public class Entity : MonoBehaviour, IDamagable
         return new Vector2Int(0,0);
     }
 
-    public bool TileInSight(Vector2 posToCheck) {
-       Vector2 pos = new Vector2(GetPos().x+0.5f, GetPos().y+0.5f);
-       posToCheck = new Vector2(posToCheck.x+0.5f, posToCheck.y+0.5f);
-       RaycastHit2D hit = Physics2D.Raycast(pos, (posToCheck-pos), (posToCheck-pos).magnitude, solidLayer);
-       //Debug.DrawRay(pos, posToCheck-pos, Color.cyan, 1f);
-       if (hit.collider != null) {
-           if (hit.collider.tag == "solidTileMap") {
-               return false;
-           } else return true;
-       } else return true;
+    public bool TileInSight(Vector2Int posToCheck) {
+        Vector2 selfPos = new Vector2(GetPos().x+0.5f, GetPos().y+0.5f);
+
+        bool inSight = false;
+
+        foreach(Vector2Int checkPos in EntityManager.GetNeighbours(posToCheck, false, true)) {
+            Vector2 posFloat = new Vector2(checkPos.x+0.5f, checkPos.y+0.5f);
+            if (EntityManager.Instance.validPositions.Contains(checkPos)) {
+                RaycastHit2D hit = Physics2D.Raycast(selfPos, (posFloat-selfPos), (posFloat-selfPos).magnitude, solidLayer);
+                if (hit.collider != null) {
+                    if (hit.collider.tag == "solidTileMap") {
+                        continue;
+                    } else inSight = true;
+                } else inSight = true;
+            }
+        }
+
+        return inSight;
     }
 
     public virtual IEnumerator DoAction() {
