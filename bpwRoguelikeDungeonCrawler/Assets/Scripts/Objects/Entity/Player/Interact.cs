@@ -8,7 +8,7 @@ public class Interact : MonoBehaviour {
     public IEnumerator DoInteract(Vector2Int pos) {
         foreach(var kv in EntityManager.Instance.entityDict) {
             if (kv.Value == pos) {
-                kv.Key.GetComponent<InteractableObject>().Interact();
+                kv.Key.GetComponent<InteractableObject>().Interact(this.gameObject);
 
                 bool finished = false;
                 Task t = new Task(MeleeAttack.AttackAnimMelee(pos, this.GetComponent<Entity>(), animationSpeed));

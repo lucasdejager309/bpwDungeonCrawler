@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2118473169861415954}
   - component: {fileID: -7954610942754421442}
-  - component: {fileID: 6528562171668716834}
+  - component: {fileID: 9116571867532774549}
   m_Layer: 0
   m_Name: chestPrefab
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6528562171668716834
+--- !u!114 &9116571867532774549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2118473169861415980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e968f9f3b438ee4dbff2093beddc8e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b44be64f20607c4eb506cb31cad0ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   solidLayer:
@@ -100,3 +100,6 @@ MonoBehaviour:
     m_Bits: 64
   entityIsSolid: 1
   health: 0
+  minItemsFromChest: 1
+  maxItemsFromChest: 4
+  lootTable: {fileID: 11400000, guid: 90790a5eb49414b43875d09bfb5e2b97, type: 2}

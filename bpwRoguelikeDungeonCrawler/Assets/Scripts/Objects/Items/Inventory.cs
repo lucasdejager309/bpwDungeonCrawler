@@ -2,56 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
-    private Item[,] itemSlots = new Item[3,3];
+    private Dictionary <Item, int> items = new Dictionary<Item, int>();
+    public int maxSlots;
 
     public bool AddItem(Item item) {
-        if (InventoryFull(itemSlots)) {
-            return false;
-        } else {
-            
-            Vector2Int slot = FirstEmptySlot(itemSlots);
-            itemSlots[slot.x, slot.y] = item;
-
+        if (items.ContainsKey(item)) {
+            items[item]++;
             return true;
-        }
+        } else if (!InventoryFull()) {
+            items.Add(item, 1);
+            return true;
+        } else return false;
     }
 
     public bool RemoveItem(Item item) {
-        for(int x = 0; x < itemSlots.GetLength(0); x++) {
-            for (int y = 0; y < itemSlots.GetLength(1); y++) {
-                if (itemSlots[x,y] == item) {
-                    itemSlots[x,y] = null;
-                    return true;
-                }
+        if (items.ContainsKey(item)) {
+            items[item]--;
+
+            if (items[item] <= 0) {
+                items.Remove(item);
             }
+
+            return true;
         }
 
         return false;
     }
 
-    private static Vector2Int FirstEmptySlot(Item[,] items) {
-        for(int x = 0; x < items.GetLength(0); x++) {
-            for (int y = 0; y < items.GetLength(1); y++) {
-                if (items[x,y] != null) {
-                    return new Vector2Int(x, y);
-                }
-            }
-        }
-
-        return new Vector2Int();
+    public int GetItemAmount(Item item) {
+        if (items.ContainsKey(item)) {
+            return items[item];
+        } else return 0;
     }
 
-    private static bool InventoryFull(Item[,] items) {
-        for(int x = 0; x < items.GetLength(0); x++) {
-            for (int y = 0; y < items.GetLength(1); y++) {
-                if (items[x,y] != null) {
-                    return false;
-                }
-            }
-        }
+    private bool InventoryFull() {
+        if (items.Count >= maxSlots) {
+            return true;
+        } else return false;
+    }
 
-        return true;
+    //temp
+    public void DebugLogContent() {
+        foreach(var kv in items) {
+            Debug.Log(kv.Key + " " + kv.Value);
+        }
     }
 }

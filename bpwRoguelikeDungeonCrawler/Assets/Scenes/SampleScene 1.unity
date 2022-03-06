@@ -701,7 +701,7 @@ MonoBehaviour:
   - spawnChance: 1
     gameObject: {fileID: 2118473169861415980, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
     wallAdjacent: 1
-  minDensity: 0.2
+  minDensity: 0.6
   maxDensity: 1
 --- !u!1 &1016175332
 GameObject:
