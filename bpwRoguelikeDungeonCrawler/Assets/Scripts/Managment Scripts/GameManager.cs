@@ -16,6 +16,13 @@ public class GameManager : Singleton<GameManager> {
     public GameObject playerPrefab;
     public GameObject player;
 
+    public enum GameState {
+        PLAYING,
+        IN_INVENTORY,
+    }
+
+    public GameState currentGameState = GameState.PLAYING;
+
     void Awake() {
         Instance = this;
     }
@@ -24,7 +31,36 @@ public class GameManager : Singleton<GameManager> {
     {   
         EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
         EventManager.AddListener("ADD_TURN", AddTurn);
+        EventManager.AddListener("TOGGLE_INVENTORY", ToggleInventory);
         DungeonGen.Instance.GenerateDungeon();
+    }
+
+    void ToggleInventory() {
+        switch (currentGameState) {
+            case GameState.PLAYING:
+                currentGameState = GameState.IN_INVENTORY;
+                UIManager.Instance.ToggleInventory();
+                break;
+            case GameState.IN_INVENTORY:
+                currentGameState = GameState.PLAYING;
+                UIManager.Instance.ToggleInventory();
+                player.GetComponent<PlayerInventory>().SetInventoryPointer(0);
+                EventManager.InvokeEvent("UI_UPDATE_INVENTORY_POINTER");
+                break;
+        }
+    }
+
+    void Update() {
+        switch (currentGameState) {
+            case GameState.PLAYING:
+                player.GetComponent<Player>().UpdatePlayer(GetInput());
+                break;
+
+            case GameState.IN_INVENTORY:
+                
+                player.GetComponent<PlayerInventory>().UpdateInventoryPointer(GetInput());
+                break;
+        }
     }
 
     void AddTurn() {
@@ -34,6 +70,27 @@ public class GameManager : Singleton<GameManager> {
     void SpawnPlayer() {
         player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
         EventManager.InvokeEvent("PLAYER_SPAWNED");
+        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
+    }
+
+    Vector2Int GetInput() {
+        Vector2Int input = new Vector2Int();
+
+        if (Input.GetKeyDown(KeyCode.W)) {
+            input.y = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.S)) {
+            input.y = -1;
+        }
+        if (Input.GetKeyDown(KeyCode.A)) {
+            input.x = -1;
+        }
+        if (Input.GetKeyDown
+         (KeyCode.D)) {
+            input.x = 1;
+        }
+
+        return input;
     }
 
     //temp

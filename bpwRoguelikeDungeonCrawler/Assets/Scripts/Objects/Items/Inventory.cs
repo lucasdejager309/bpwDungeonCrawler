@@ -2,22 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class inventorySlot {
+    public int amount;
+    public Item item;
+}
+
 public class Inventory : MonoBehaviour
 {
     private Dictionary <Item, int> items = new Dictionary<Item, int>();
-    public int maxSlots;
+    
+    public Dictionary<Item, int> Items {
+        get {return items;}
+    }   
+    public const int MAX_SLOTS = 9;
 
-    public bool AddItem(Item item) {
-        if (items.ContainsKey(item)) {
-            items[item]++;
-            return true;
-        } else if (!InventoryFull()) {
-            items.Add(item, 1);
-            return true;
-        } else return false;
+    void Start() {
+        EventManager.AddListener("RELOAD_DUNGEON", ClearInventory);
     }
 
-    public bool RemoveItem(Item item) {
+    public virtual bool AddItem(Item item) {
+        if (items.ContainsKey(item)) {
+            items[item]++;
+        
+            return true;
+
+        } else if (!InventoryFull()) {
+            items.Add(item, 1);
+            
+            return true;
+
+        } else return false;
+
+        
+    }
+
+    public virtual bool RemoveItem(Item item) {
         if (items.ContainsKey(item)) {
             items[item]--;
 
@@ -37,16 +56,14 @@ public class Inventory : MonoBehaviour
         } else return 0;
     }
 
-    private bool InventoryFull() {
-        if (items.Count >= maxSlots) {
-            return true;
-        } else return false;
+    public void ClearInventory() {
+        items.Clear();
+        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
     }
 
-    //temp
-    public void DebugLogContent() {
-        foreach(var kv in items) {
-            Debug.Log(kv.Key + " " + kv.Value);
-        }
+    private bool InventoryFull() {
+        if (items.Count >= MAX_SLOTS) {
+            return true;
+        } else return false;
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - solidTileMap
   - UIWait
+  - inventorySlot
+  - inventoryPointer
   layers:
   - Default
   - TransparentFX

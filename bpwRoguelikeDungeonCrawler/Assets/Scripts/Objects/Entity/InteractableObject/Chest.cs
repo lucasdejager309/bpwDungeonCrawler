@@ -14,7 +14,6 @@ public class Chest : InteractableObject {
         foreach (Item item in lootItems) {
             interacter.GetComponent<Inventory>().AddItem(item);
         }
-        interacter.GetComponent<Inventory>().DebugLogContent();
 
         base.Interact(interacter);
     }

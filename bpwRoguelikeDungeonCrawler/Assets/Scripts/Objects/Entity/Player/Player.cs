@@ -18,9 +18,7 @@ public class Player : Entity
         NOTHING
     }
 
-    void Update() {
-        Vector2Int input = GetInput();
-
+    public void UpdatePlayer(Vector2Int input) {
         Task action = new Task();
 
         if (input != new Vector2Int(0,0) && GetActionType(input) != ActionType.NOTHING && inputAllowed) {
@@ -29,7 +27,7 @@ public class Player : Entity
             switch (GetActionType(input)) {
                 case ActionType.MOVE:
                     
-                    action = new Task(Move(GetInput(), moveDistance, true, 0.1f, timeBetweenMoves));
+                    action = new Task(Move(input, moveDistance, true, 0.1f, timeBetweenMoves));
                     
                     break;
                 case ActionType.ATTACK:
@@ -83,26 +81,5 @@ public class Player : Entity
         StartCoroutine(base.Move(direction, distance, smoothMove, moveTime, waitBetweenMoves));
         
         yield return new WaitForSeconds(moveTime + timeBetweenMoves);
-    }
-
-    //temp
-    Vector2Int GetInput() {
-        Vector2Int input = new Vector2Int();
-
-        if (Input.GetKeyDown(KeyCode.W)) {
-            input.y = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.S)) {
-            input.y = -1;
-        }
-        if (Input.GetKeyDown(KeyCode.A)) {
-            input.x = -1;
-        }
-        if (Input.GetKeyDown
-         (KeyCode.D)) {
-            input.x = 1;
-        }
-
-        return input;
     }
 }
