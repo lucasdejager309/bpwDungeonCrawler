@@ -25,9 +25,11 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     void SpawnEnemies() {
-        Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(enemyPrefabs, minEnemyDensity, maxEnemyDensity);
-        foreach (KeyValuePair<Vector2Int, GameObject> enemy in enemiesToSpawn) {
-            enemies.Add(EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value));
+        if (spawnEnemies) {
+            Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(enemyPrefabs, minEnemyDensity, maxEnemyDensity);
+            foreach (KeyValuePair<Vector2Int, GameObject> enemy in enemiesToSpawn) {
+                enemies.Add(EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value));
+            }
         }
     }
 

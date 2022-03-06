@@ -5,10 +5,11 @@ using UnityEngine;
 class PlayerInventory : Inventory {
     
     public int pointerIndex = 0;
-    
+    public bool inputAllowed = true;
+
     public bool UpdateInventoryPointer(Vector2Int input) {
         bool succeeded = false;
-        if (input != new Vector2Int(0, 0)) {
+        if (input != new Vector2Int(0, 0) && inputAllowed) {
             if (Mathf.Abs(input.x) == 1) {
                 if (pointerIndex+input.x >= 0 && pointerIndex+input.x < MAX_SLOTS) {
                     pointerIndex+=input.x;

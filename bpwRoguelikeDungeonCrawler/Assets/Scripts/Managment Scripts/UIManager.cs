@@ -19,6 +19,7 @@ public class UIManager : Singleton<UIManager>
         EventManager.AddListener("UI_UPDATE_INVENTORY_POINTER", UpdateInventoryPointer);
         EventManager.AddListener("INTERACT", ToggleItemCard);
 
+
         foreach(GameObject slot in inventorySlots) {
             slot.transform.GetChild(0).GetComponent<Image>().enabled = false;
             slot.transform.GetChild(1).GetComponent<Text>().enabled = false;
@@ -30,11 +31,20 @@ public class UIManager : Singleton<UIManager>
         int pointerIndex = inventory.pointerIndex;
 
         inventoryPointer.transform.position = inventorySlots[pointerIndex].transform.position;
+        
+        if (pointerIndex < inventory.Items.Count) {
+            inventoryPointer.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = inventory.Items[pointerIndex].item.itemName;
+        }
     }
 
     void ToggleItemCard() {
-        if (GameManager.Instance.currentGameState == GameManager.GameState.IN_INVENTORY) {
-            inventoryPointer.transform.GetChild(0).gameObject.SetActive(!inventoryPointer.transform.GetChild(0).gameObject.activeSelf);
+        PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
+        
+        if (inventory.pointerIndex < inventory.Items.Count) {
+            inventory.inputAllowed = !inventory.inputAllowed;
+            if (GameManager.Instance.currentGameState == GameManager.GameState.IN_INVENTORY) {
+                inventoryPointer.transform.GetChild(0).gameObject.SetActive(!inventoryPointer.transform.GetChild(0).gameObject.activeSelf);
+            }
         }
     }
 
@@ -44,7 +54,8 @@ public class UIManager : Singleton<UIManager>
     }
 
     public void ToggleInventory() {
-        
+        GameManager.Instance.player.GetComponent<PlayerInventory>().inputAllowed = true;
+        inventoryPointer.transform.GetChild(0).gameObject.SetActive(false);
         inventoryObject.SetActive(!inventoryObject.activeSelf);
     }
 
@@ -52,10 +63,10 @@ public class UIManager : Singleton<UIManager>
         PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
 
         int index = 0;
-        foreach (var kv in inventory.Items) {
-            if (kv.Key != null) {
-                inventorySlots[index].transform.GetChild(0).GetComponent<Image>().sprite = kv.Key.itemSprite;
-                inventorySlots[index].transform.GetChild(1).GetComponent<Text>().text = kv.Value.ToString();
+        foreach (InventoryItem item in inventory.Items) {
+            if (item != null) {
+                inventorySlots[index].transform.GetChild(0).GetComponent<Image>().sprite = item.item.itemSprite;
+                inventorySlots[index].transform.GetChild(1).GetComponent<Text>().text = item.amount.ToString();
                 inventorySlots[index].transform.GetChild(0).GetComponent<Image>().enabled = true;
                 inventorySlots[index].transform.GetChild(1).GetComponent<Text>().enabled = true;
             }

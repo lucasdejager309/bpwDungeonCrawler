@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class inventorySlot {
+public class InventoryItem {
+    public InventoryItem(Item item) {
+        this.item = item;
+        amount = 1;
+    }
     public int amount;
     public Item item;
 }
 
 public class Inventory : MonoBehaviour
 {
-    private Dictionary <Item, int> items = new Dictionary<Item, int>();
+    private List<InventoryItem> items = new List<InventoryItem>();
     
-    public Dictionary<Item, int> Items {
+    public List<InventoryItem> Items {
         get {return items;}
     }   
     public const int MAX_SLOTS = 9;
@@ -21,27 +25,29 @@ public class Inventory : MonoBehaviour
     }
 
     public virtual bool AddItem(Item item) {
-        if (items.ContainsKey(item)) {
-            items[item]++;
-        
+        foreach (InventoryItem slot in items) {
+            if (slot.item == item) {
+                slot.amount++;
+                return true;
+            }
+        }
+
+        if (!InventoryFull()) {
+            items.Add(new InventoryItem(item));
             return true;
+        }
 
-        } else if (!InventoryFull()) {
-            items.Add(item, 1);
-            
-            return true;
-
-        } else return false;
-
-        
+        return false;
     }
 
     public virtual bool RemoveItem(Item item) {
-        if (items.ContainsKey(item)) {
-            items[item]--;
+        foreach (InventoryItem slot in items) {
+            if (slot.item = item) {
+                slot.amount--;
+            }
 
-            if (items[item] <= 0) {
-                items.Remove(item);
+            if (slot.amount <= 0) {
+                items.Remove(slot);
             }
 
             return true;
@@ -51,9 +57,13 @@ public class Inventory : MonoBehaviour
     }
 
     public int GetItemAmount(Item item) {
-        if (items.ContainsKey(item)) {
-            return items[item];
-        } else return 0;
+        foreach (InventoryItem slot in items) {
+            if (slot.item = item) {
+                return slot.amount;
+            }
+        }
+
+        return 0;
     }
 
     public void ClearInventory() {
