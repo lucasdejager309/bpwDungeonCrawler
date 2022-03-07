@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62b98fbbf522c0846891e5990e71fe73, type: 3}
-  m_Name: testItem 1
+  m_Name: coins
   m_EditorClassIdentifier: 
-  itemName: testItem1
-  itemSprite: {fileID: 21300000, guid: 1286a557e98b38844832e7663aaedcbf, type: 3}
+  itemName: coins
+  itemSprite: {fileID: 21300000, guid: 440171d56ab1c7f4f9aabab2b3d1b9a5, type: 3}
+  stackAble: 1
+  equippable: 0
+  equipSlotID: 

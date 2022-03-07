@@ -97,8 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31cce2e2444e314fa61b121fce260e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSlots: 9
+  equipSlots:
+  - slotID: ARMOR
+  - slotID: WEAPON
   pointerIndex: 0
+  inputAllowed: 1
 --- !u!212 &-7954610942754421442
 SpriteRenderer:
   m_ObjectHideFlags: 0

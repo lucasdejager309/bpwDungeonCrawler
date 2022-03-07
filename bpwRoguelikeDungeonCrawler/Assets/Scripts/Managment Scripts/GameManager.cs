@@ -29,6 +29,7 @@ public class GameManager : Singleton<GameManager> {
 
     void Start()
     {   
+        UIManager.Instance.inventoryUI.SetActive(false);
         EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
         EventManager.AddListener("ADD_TURN", AddTurn);
         EventManager.AddListener("TOGGLE_INVENTORY", ToggleInventory);
@@ -38,12 +39,11 @@ public class GameManager : Singleton<GameManager> {
     void ToggleInventory() {
         switch (currentGameState) {
             case GameState.PLAYING:
+                EventManager.InvokeEvent("UI_UPDATE_INVENTORY_POINTER");
                 currentGameState = GameState.IN_INVENTORY;
-                UIManager.Instance.ToggleInventory();
                 break;
             case GameState.IN_INVENTORY:
                 currentGameState = GameState.PLAYING;
-                UIManager.Instance.ToggleInventory();
                 player.GetComponent<PlayerInventory>().SetInventoryPointer(0);
                 EventManager.InvokeEvent("UI_UPDATE_INVENTORY_POINTER");
                 break;
@@ -51,16 +51,20 @@ public class GameManager : Singleton<GameManager> {
     }
 
     void Update() {
-        switch (currentGameState) {
-            case GameState.PLAYING:
-                player.GetComponent<Player>().UpdatePlayer(GetInput());
-                break;
+        Vector2Int input = GetInput();
+        if (input != new Vector2Int(0, 0)) {
+            switch (currentGameState) {
+                case GameState.PLAYING:
+                    player.GetComponent<Player>().UpdatePlayer(GetInput());
+                    break;
 
-            case GameState.IN_INVENTORY:
-                
-                player.GetComponent<PlayerInventory>().UpdateInventoryPointer(GetInput());
-                break;
+                case GameState.IN_INVENTORY:
+                    
+                    player.GetComponent<PlayerInventory>().UpdateInventoryPointer(GetInput());
+                    break;
+            }
         }
+        
     }
 
     void AddTurn() {

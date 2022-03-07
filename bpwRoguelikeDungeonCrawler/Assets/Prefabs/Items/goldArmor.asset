@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62b98fbbf522c0846891e5990e71fe73, type: 3}
-  m_Name: testItem 2
+  m_Name: goldArmor
   m_EditorClassIdentifier: 
-  itemName: testItem2
-  itemSprite: {fileID: 21300000, guid: 1286a557e98b38844832e7663aaedcbf, type: 3}
+  itemName: Gold Chestplate
+  itemSprite: {fileID: 21300000, guid: 4cf976eeeb0398e4cbc78dc4d4f95de0, type: 3}
+  stackAble: 0
+  equippable: 1
+  equipSlotID: ARMOR

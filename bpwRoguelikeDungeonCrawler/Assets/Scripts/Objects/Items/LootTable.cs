@@ -6,6 +6,14 @@ using UnityEngine;
 public class LootItem {
     public int pickChance;
     public Item item;
+
+    [Header("multiple")]
+    public bool multiple;
+    public Vector2Int amountRange;
+
+    public int GetAmount() {
+        return Random.Range(amountRange.x, amountRange.y);
+    }
 }
 
 [CreateAssetMenu(fileName = "New LootTable", menuName = "LootTable")]
@@ -17,7 +25,7 @@ public class LootTable : ScriptableObject {
         List<Item> pickedItems = new List<Item>();
         
         for (int i = 0; i < number; i++) {
-            Item pickedItem = null;
+            LootItem pickedItem = null;
             
             float probabilitySum = 0;
         
@@ -33,15 +41,22 @@ public class LootTable : ScriptableObject {
             foreach(LootItem item in table) {
                 if (randomFloat > 0) {
                     randomFloat -= item.pickChance;
-                    pickedItem = item.item;
+                    pickedItem = item;
                 } else break;
             }
 
             if (pickedItem == null) {
-                pickedItem = table[table.Length-1].item;
+                pickedItem = table[table.Length-1];
             }
 
-            pickedItems.Add(pickedItem);
+
+            if (pickedItem.multiple) {
+                int amount = pickedItem.GetAmount();
+                for (int a = 0; a < amount; a++) {
+                    pickedItems.Add(pickedItem.item);
+                }
+            }
+            pickedItems.Add(pickedItem.item);
         }
         
      
