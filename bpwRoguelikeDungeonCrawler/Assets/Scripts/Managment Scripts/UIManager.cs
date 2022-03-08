@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class UISlot {
-    public GameObject gameObject;
-    public string slotID;
-}
-
 public class UIManager : Singleton<UIManager>
 {
-    public GameObject inventoryUI;
+    public UIInventory  inventory;
+    public UIPanel inventoryCard;
+    public UISlider healthSlider;
 
     void Awake() {
         Instance = this;
-
-        EventManager.AddListener("UI_WAIT", UpdateWait);
+        EventManager.AddListener("UI_WAIT", ToggleWait);
+        EventManager.AddListener("UI_UPDATE_STATS", UpdateHealthBar);
+        EventManager.AddListener("PLAYER_SPAWNED", UpdateHealthBar);
     }
 
-    void UpdateWait() {
+    void UpdateHealthBar() {
+        Player player = GameManager.Instance.player.GetComponent<Player>();
+        healthSlider.SetMaxValue(player.MaxHealth);
+        healthSlider.SetValue(player.Health);
+    }
+
+    public void UpdateStats() {
+        inventory.STR.text = "STR: " + GameManager.Instance.player.GetComponent<Player>().Strength.ToString();
+        inventory.INT.text = "INT: " + GameManager.Instance.player.GetComponent<Player>().Inteligence.ToString();
+    }
+
+    //loading icon during opponent moves
+    void ToggleWait() {
         Image wait = GameObject.FindGameObjectWithTag("UIWait").GetComponent<Image>();
         wait.enabled = !wait.enabled;
     }

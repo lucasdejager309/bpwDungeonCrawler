@@ -2,15 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "Item/Item")]
 public class Item : ScriptableObject
 {
     [Header("Basic Information")]
     public string itemName;
     public Sprite itemSprite;
+    public string itemDescription;
     public bool stackAble;
 
     [Header("Equippable")]
     public bool equippable;
     public string equipSlotID;
+    public int requiredStrength = 0;
+    public int requiredInteligence = 0;
+
+    public virtual void Use() {
+        PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
+        inventory.RemoveItem(this);
+    }
+
+    public virtual string GetDescription() {
+        string description = "";
+        if (requiredStrength > 0) {
+            description = description + "REQ STR: " + requiredStrength + "\n\n";
+        }
+        if (requiredInteligence > 0) {
+            description = description + "REQ INT: " + requiredInteligence + "\n\n";
+        }
+        description = description + itemDescription;
+        return description;
+    }
 }

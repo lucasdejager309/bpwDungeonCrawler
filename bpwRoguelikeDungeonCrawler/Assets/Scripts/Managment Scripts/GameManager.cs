@@ -16,36 +16,84 @@ public class GameManager : Singleton<GameManager> {
     public GameObject playerPrefab;
     public GameObject player;
 
-    public enum GameState {
-        PLAYING,
-        IN_INVENTORY,
+    public enum Controlling {
+        PLAYER,
+        INVENTORY,
+        INVENTORYCARD
     }
 
-    public GameState currentGameState = GameState.PLAYING;
+    public Controlling currentlyControling = Controlling.PLAYER;
 
     void Awake() {
         Instance = this;
     }
 
     void Start()
-    {   
-        UIManager.Instance.inventoryUI.SetActive(false);
-        EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
+    {   EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
         EventManager.AddListener("ADD_TURN", AddTurn);
         EventManager.AddListener("TOGGLE_INVENTORY", ToggleInventory);
+        EventManager.AddListener("INTERACT", Interact);
         DungeonGen.Instance.GenerateDungeon();
+
+        UIManager.Instance.inventory.TogglePanel(false);
+        UIManager.Instance.inventoryCard.TogglePanel(false);
+    }
+
+    void Interact() {
+        switch (currentlyControling) {
+            case Controlling.PLAYER:
+                StartCoroutine(player.GetComponent<Interact>().DoInteract(player.GetComponent<Player>().GetPos()));
+                EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+                break;
+            case Controlling.INVENTORY:
+                UIManager.Instance.inventory.DoActionAtPointer();
+                break;
+            case Controlling.INVENTORYCARD:
+                UIManager.Instance.inventoryCard.DoActionAtPointer();
+                break;
+        }
     }
 
     void ToggleInventory() {
-        switch (currentGameState) {
-            case GameState.PLAYING:
-                EventManager.InvokeEvent("UI_UPDATE_INVENTORY_POINTER");
-                currentGameState = GameState.IN_INVENTORY;
+        switch(currentlyControling) {
+            case(Controlling.PLAYER):
+                SetControlTo(Controlling.INVENTORY);
                 break;
-            case GameState.IN_INVENTORY:
-                currentGameState = GameState.PLAYING;
-                player.GetComponent<PlayerInventory>().SetInventoryPointer(0);
-                EventManager.InvokeEvent("UI_UPDATE_INVENTORY_POINTER");
+            case(Controlling.INVENTORY):
+                SetControlTo(Controlling.PLAYER);
+                break;
+            case(Controlling.INVENTORYCARD):
+                SetControlTo(Controlling.INVENTORY);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void SetControlTo(Controlling control) {
+        currentlyControling = control;
+
+        switch (currentlyControling) {
+            case Controlling.PLAYER:
+                UIManager.Instance.inventory.TogglePanel(false);
+                UIManager.Instance.inventoryCard.TogglePanel(false);
+                UIManager.Instance.inventory.SetPointer(0);
+                
+                break;
+            case Controlling.INVENTORY:
+                
+                UIManager.Instance.inventory.TogglePanel(true);
+                UIManager.Instance.inventoryCard.TogglePanel(false);
+                UIManager.Instance.inventory.UpdateInventory();
+                
+                break;
+            case Controlling.INVENTORYCARD:
+                UIManager.Instance.inventory.UpdateCard();
+                UIManager.Instance.inventoryCard.TogglePanel(true);
+                UIManager.Instance.inventoryCard.SetPointer(0);
+
+                break;
+            default:
                 break;
         }
     }
@@ -53,14 +101,17 @@ public class GameManager : Singleton<GameManager> {
     void Update() {
         Vector2Int input = GetInput();
         if (input != new Vector2Int(0, 0)) {
-            switch (currentGameState) {
-                case GameState.PLAYING:
+            switch (currentlyControling) {
+                case Controlling.PLAYER:
                     player.GetComponent<Player>().UpdatePlayer(GetInput());
                     break;
 
-                case GameState.IN_INVENTORY:
-                    
-                    player.GetComponent<PlayerInventory>().UpdateInventoryPointer(GetInput());
+                case Controlling.INVENTORY:
+                    UIManager.Instance.inventory.UpdatePointer(GetInput());
+                    break;
+
+                case Controlling.INVENTORYCARD:
+                    UIManager.Instance.inventoryCard.UpdatePointer(GetInput());
                     break;
             }
         }
@@ -74,7 +125,6 @@ public class GameManager : Singleton<GameManager> {
     void SpawnPlayer() {
         player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
         EventManager.InvokeEvent("PLAYER_SPAWNED");
-        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
     }
 
     Vector2Int GetInput() {

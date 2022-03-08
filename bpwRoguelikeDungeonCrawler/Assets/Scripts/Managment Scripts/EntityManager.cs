@@ -148,7 +148,7 @@ public class EntityManager : Singleton<EntityManager>
     }
 
     public GameObject SpawnEntity(Vector2Int pos, GameObject objectToSpawn) {
-        GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(pos.x, pos.y, 1), Quaternion.identity);
+        GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(pos.x, pos.y, -2), Quaternion.identity);
         entityDict.Add(spawnedObject.gameObject.GetComponent<Entity>(), pos);
         return spawnedObject;
     }

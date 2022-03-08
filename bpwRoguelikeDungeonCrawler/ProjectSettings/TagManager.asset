@@ -8,6 +8,11 @@ TagManager:
   - UIWait
   - inventorySlot
   - inventoryPointer
+  - inventoryItemName
+  - inventoryItemDescription
+  - dropButton
+  - useButton
+  - fill
   layers:
   - Default
   - TransparentFX

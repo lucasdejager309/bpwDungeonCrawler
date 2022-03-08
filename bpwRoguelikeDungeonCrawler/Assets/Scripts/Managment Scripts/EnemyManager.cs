@@ -18,10 +18,26 @@ public class EnemyManager : Singleton<EnemyManager>
     void Start() {
         EventManager.AddListener("DUNGEON_GENERATED", SpawnEnemies);
         EventManager.AddListener("PLAYER_TURN_FINISHED", OtherTurns);
+        EventManager.AddListener("DAMAGE_HAPPENED", UpdateHealthBars);
     }
 
     void OtherTurns() {
         StartCoroutine(DoActions());
+    }
+
+    void UpdateHealthBars() {
+        Debug.Log("yeet");
+        foreach (GameObject enemyObject in enemies) {
+            Enemy enemy = enemyObject.GetComponent<Enemy>();
+            enemy.slider.SetMaxValue(enemy.MaxHealth);
+            
+            if (enemy.Health < enemy.MaxHealth) {
+                enemy.slider.gameObject.SetActive(true);
+                enemy.slider.SetValue(enemy.Health);                
+            } else {
+                enemy.slider.gameObject.SetActive(false);
+            }
+        }
     }
 
     void SpawnEnemies() {

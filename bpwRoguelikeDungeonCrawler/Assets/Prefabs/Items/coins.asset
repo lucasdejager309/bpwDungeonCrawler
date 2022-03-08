@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b98fbbf522c0846891e5990e71fe73, type: 3}
   m_Name: coins
   m_EditorClassIdentifier: 
-  itemName: coins
+  itemName: Coins
   itemSprite: {fileID: 21300000, guid: 440171d56ab1c7f4f9aabab2b3d1b9a5, type: 3}
+  itemDescription: Ooh! Shiny!
   stackAble: 1
   equippable: 0
   equipSlotID: 

@@ -4,9 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 public class InventoryItem {
-    public InventoryItem(Item item) {
+    public InventoryItem(Item item, int amount) {
         this.item = item;
-        amount = 1;
+        this.amount = amount;
     }
     public int amount;
     public Item item;
@@ -28,37 +28,69 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public GameObject droppedItemPrefab;
+
     void Start() {
         EventManager.AddListener("RELOAD_DUNGEON", ClearInventory);
     }
 
-    public virtual bool AddItem(Item item) {
+    public virtual bool AddItem(Item item, int amount = 1) {
         foreach (InventoryItem slot in items) {
             if (slot.item == item && slot.item.stackAble) {
-                slot.amount++;
+                slot.amount+=amount;
                 return true;
             }
         }
 
         if (!InventoryFull()) {
-            items.Add(new InventoryItem(item));
+            InventoryItem newItem = new InventoryItem(item, amount);
+            items.Add(newItem);
+            return true;
+        } else {
+            DropItem(item, this.GetComponent<Entity>().GetPos());
             return true;
         }
 
         return false;
     }
 
-    public virtual bool RemoveItem(Item item) {
-        foreach (InventoryItem slot in items) {
-            if (slot.item = item) {
-                slot.amount--;
-            }
+    public bool DropItem(Item item, Vector2Int pos) {
+        int itemAmount = GetItemAmount(item);
+        
+        if (RemoveStack(item)) {
+            Inventory.SpawnDroppedItem(droppedItemPrefab, item, itemAmount, pos);
 
-            if (slot.amount <= 0) {
-                items.Remove(slot);
-            }
+            EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
 
             return true;
+        } else return false;
+    }
+
+    public virtual bool RemoveItem(Item item) {
+        foreach (InventoryItem slot in items) {
+            if (slot.item == item && item.stackAble) {
+                slot.amount--;
+                if (slot.amount <= 0) {
+                    items.Remove(slot);
+                }
+                return true;
+            } else if (slot.item == item) {
+                items.Remove(slot);
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    public virtual bool RemoveStack(Item item) {
+        foreach (InventoryItem slot in items) {
+            if (slot.item == item) {
+                items.Remove(slot);
+
+                return true;
+            }
         }
 
         return false;
@@ -76,7 +108,6 @@ public class Inventory : MonoBehaviour
 
     public void ClearInventory() {
         items.Clear();
-        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
     }
 
     private bool InventoryFull() {
@@ -89,5 +120,20 @@ public class Inventory : MonoBehaviour
         if (index < Items.Count) {
             return Items[index].item;
         } else return null;
+    }
+
+    public void DebugItems() {
+        foreach (InventoryItem item in Items) {
+            if (item.item != null) {
+                Debug.Log(item.item.itemName + " " + item.amount);
+            }
+        }
+    }
+
+    public static void SpawnDroppedItem(GameObject prefab, Item item, int amount, Vector2Int pos) {
+        GameObject droppedItemObject = prefab;
+        droppedItemObject.GetComponent<ItemPickup>().SetItem(item, amount);
+
+        EntityManager.Instance.SpawnEntity(pos, droppedItemObject);
     }
 }

@@ -17,10 +17,17 @@ public class Enemy : Entity
     public int moveSpeed = 1;
     public int damage = 1;
 
+    public UISlider slider;
+
     public GameObject target;
 
-    void Start() {
+    public override void Start() {
+        base.Start();
         target = GameManager.Instance.player;
+    }
+
+    public override int CalculateDamage() {
+        return damage;
     }
 
     public override IEnumerator DoAction()
@@ -36,7 +43,7 @@ public class Enemy : Entity
                 break;
 
             case enemyState.MELEEATTACK:
-                t = new Task(GetComponent<MeleeAttack>().DoAttack(EntityManager.Instance.PosOfEntity(target.GetComponent<Entity>()), damage, this));
+                t = new Task(GetComponent<MeleeAttack>().DoAttack(EntityManager.Instance.PosOfEntity(target.GetComponent<Entity>()), CalculateDamage(), this));
                 t.Finished += delegate {
                     finished = true;
                 };
@@ -44,7 +51,7 @@ public class Enemy : Entity
                 break;
 
             case enemyState.RANGEDATTACK:
-                t = new Task(GetComponent<RangedAttack>().DoAttack(EntityManager.Instance.PosOfEntity(target.GetComponent<Entity>()), damage, this));
+                t = new Task(GetComponent<RangedAttack>().DoAttack(EntityManager.Instance.PosOfEntity(target.GetComponent<Entity>()), CalculateDamage(), this));
                 t.Finished += delegate {
                     finished = true;
                 };

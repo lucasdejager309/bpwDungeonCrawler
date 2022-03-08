@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: ChestLootTable
   m_EditorClassIdentifier: 
   table:
-  - pickChance: 20
+  - pickChance: 30
     item: {fileID: 11400000, guid: d96b04adcb481f745b52665337213cb4, type: 2}
     multiple: 1
     amountRange: {x: 1, y: 14}
-  - pickChance: 7
-    item: {fileID: 11400000, guid: 329e848c60891f84dbfa3f43f551f19f, type: 2}
-    multiple: 0
-    amountRange: {x: 0, y: 0}
-  - pickChance: 3
-    item: {fileID: 11400000, guid: f90ba21c8140fba4aa8cce37483e397f, type: 2}
+  - pickChance: 10
+    item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
     multiple: 0
     amountRange: {x: 0, y: 0}
   - pickChance: 10
-    item: {fileID: 11400000, guid: 9a540896001308e45ac35d257ecbacf3, type: 2}
+    item: {fileID: 11400000, guid: dbb027bd52e2100499dd3a78b2d2fa43, type: 2}
+    multiple: 0
+    amountRange: {x: 0, y: 0}
+  - pickChance: 10
+    item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
+    multiple: 0
+    amountRange: {x: 0, y: 0}
+  - pickChance: 10
+    item: {fileID: 11400000, guid: df6313313122f6d4e89437c515647b25, type: 2}
     multiple: 0
     amountRange: {x: 0, y: 0}

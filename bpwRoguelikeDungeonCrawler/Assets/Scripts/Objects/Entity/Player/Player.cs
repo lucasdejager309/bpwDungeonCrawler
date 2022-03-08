@@ -9,13 +9,79 @@ public class Player : Entity
     public bool inputAllowed = true;
 
     [Header("player attributes")]
-    int damage = 2;
+    public int baseDamage = 2;
+    [SerializeField] private int strength = 11;
+    public int Strength {
+        get { return strength; }
+    }
+    [SerializeField] private int inteligence = 11;
+    public int Inteligence {
+        get { return inteligence; }
+    }
 
     enum ActionType {
         MOVE,
         ATTACK,
         INTERACT,
         NOTHING
+    }
+
+    public bool CheckStrength(int value) {
+        if (strength >= value) {
+            return true;
+        }
+        return false;
+    }
+
+    public void SetStrength(int value) {
+        strength = value;
+        UIManager.Instance.UpdateStats();
+    }
+
+    public bool CheckInteligence(int value) {
+        if (inteligence >= value) {
+            return true;
+        }
+        return false;
+    }
+
+    public void SetInteligence(int value) {
+        inteligence = value;
+        UIManager.Instance.UpdateStats();
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        ArmorItem armor = (ArmorItem)GetComponent<PlayerInventory>().GetItemBySlotID("ARMOR");
+        if (armor != null) {
+            damage -= armor.AbsorbDamage();
+            if (damage < 0) damage = 0;
+        }
+
+        base.TakeDamage(damage);
+
+        EventManager.InvokeEvent("UI_UPDATE_STATS");
+    }
+
+    public override void SetHealth(int newHealth)
+    {
+        base.SetHealth(newHealth);
+        EventManager.InvokeEvent("UI_UPDATE_STATS");
+    }
+
+
+    public override int CalculateDamage() {
+        WeaponItem weapon = (WeaponItem)GetComponent<PlayerInventory>().GetItemBySlotID("WEAPON");
+        int damage = 0;
+        if (weapon != null) {
+            damage = weapon.GetDamage();
+        } else {
+            damage = baseDamage;
+        }
+        
+        damage += (int)Random.Range(0, Strength/6);
+
+        return damage;
     }
 
     public void UpdatePlayer(Vector2Int input) {
@@ -31,7 +97,10 @@ public class Player : Entity
                     
                     break;
                 case ActionType.ATTACK:
-                    action = new Task(GetComponent<Attack>().DoAttack(input+GetPos(), damage, this));
+                    action = new Task(GetComponent<MeleeAttack>().DoAttack(input+GetPos(), CalculateDamage(), this));
+                    action.Finished += delegate {
+                        EventManager.InvokeEvent("DAMAGE_HAPPENED");
+                    };
                     
                     break;                
                 case ActionType.INTERACT:
@@ -55,7 +124,7 @@ public class Player : Entity
         Vector2Int pos = input + GetPos();
         ActionType actionToReturn = ActionType.NOTHING;
         Entity entity = EntityManager.Instance.EntityAtPos(pos);
-        if (entity != null) {
+        if (entity != null && entity.entityIsSolid) {
             if (entity.GetComponent<Enemy>() != null && GetComponent<Attack>().AttackIsAllowed()) {
                 actionToReturn = ActionType.ATTACK;
             } else if (entity.GetComponent<InteractableObject>() != null) {
@@ -69,7 +138,8 @@ public class Player : Entity
         return actionToReturn;
     }
 
-    void Start() {
+    public override void Start() {
+        base.Start();
         EventManager.AddListener("OTHER_TURNS_FINISHED", AllowInput);
     }
     
