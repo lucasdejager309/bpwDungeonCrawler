@@ -16,7 +16,9 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 3afa386a4c3de2e4581886ad6eaacc2d, type: 3}
   itemDescription: Armor fit for a king! (Or a frog, in this case..)
   stackAble: 0
+  useButtonText: EQUIP
   equippable: 1
   equipSlotID: ARMOR
   requiredStrength: 15
+  requiredInteligence: 0
   maxAbsorbedDamage: 5

@@ -15,7 +15,7 @@ public class Entity : MonoBehaviour, IDamagable
     public int MaxHealth {
         get { return maxHealth; }
     }
-    private int health;
+    [SerializeField] private int health;
     public int Health {
         get { return health; }
     }
@@ -28,8 +28,6 @@ public class Entity : MonoBehaviour, IDamagable
     public virtual void TakeDamage(int damage) {
         health -= damage; 
 
-        EventManager.InvokeEvent("DAMAGE_HAPPENED");
-
         if (health <= 0) {
             Die();
         }
@@ -40,11 +38,7 @@ public class Entity : MonoBehaviour, IDamagable
         if (health < 0) health = 0;
         if (health > maxHealth) health = maxHealth;
     }
-
-    public virtual int CalculateDamage() {
-        return 0;
-    }
-
+    
     public virtual void Die() {
         DeleteEntity();
     }

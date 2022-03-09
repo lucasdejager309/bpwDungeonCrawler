@@ -16,7 +16,9 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 4bdc95a58b567934d9286a930e03ec6a, type: 3}
   itemDescription: Not the most effective armor, but it will have to do for now...
   stackAble: 0
+  useButtonText: EQUIP
   equippable: 1
   equipSlotID: ARMOR
   requiredStrength: 11
+  requiredInteligence: 0
   maxAbsorbedDamage: 2

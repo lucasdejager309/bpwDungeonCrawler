@@ -16,5 +16,8 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 440171d56ab1c7f4f9aabab2b3d1b9a5, type: 3}
   itemDescription: Ooh! Shiny!
   stackAble: 1
+  useButtonText: 
   equippable: 0
   equipSlotID: 
+  requiredStrength: 0
+  requiredInteligence: 0

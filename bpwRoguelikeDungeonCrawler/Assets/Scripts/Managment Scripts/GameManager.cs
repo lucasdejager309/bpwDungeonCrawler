@@ -19,7 +19,8 @@ public class GameManager : Singleton<GameManager> {
     public enum Controlling {
         PLAYER,
         INVENTORY,
-        INVENTORYCARD
+        INVENTORYCARD,
+        AIM_POINTER
     }
 
     public Controlling currentlyControling = Controlling.PLAYER;
@@ -33,23 +34,37 @@ public class GameManager : Singleton<GameManager> {
         EventManager.AddListener("ADD_TURN", AddTurn);
         EventManager.AddListener("TOGGLE_INVENTORY", ToggleInventory);
         EventManager.AddListener("INTERACT", Interact);
+        EventManager.AddListener("TOGGLE_AIM", ToggleAimingPointer);
+        EventManager.AddListener("ESC", Esc);
         DungeonGen.Instance.GenerateDungeon();
 
         UIManager.Instance.inventory.TogglePanel(false);
         UIManager.Instance.inventoryCard.TogglePanel(false);
+        UIManager.Instance.aimpointer.SetActive(false);
     }
 
     void Interact() {
         switch (currentlyControling) {
             case Controlling.PLAYER:
                 StartCoroutine(player.GetComponent<Interact>().DoInteract(player.GetComponent<Player>().GetPos()));
-                EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
                 break;
             case Controlling.INVENTORY:
                 UIManager.Instance.inventory.DoActionAtPointer();
                 break;
             case Controlling.INVENTORYCARD:
                 UIManager.Instance.inventoryCard.DoActionAtPointer();
+                break;
+            case Controlling.AIM_POINTER:
+                if (player.GetComponent<RangedAttack>().HasAimOnTarget(UIManager.Instance.aimpointer.GetPos())) {
+                    player.GetComponent<Player>().inputAllowed = false;
+                    Esc();
+                    Task t = new Task(player.GetComponent<RangedAttack>().DoAttack(UIManager.Instance.aimpointer.GetPos(), player.GetComponent<Player>().CalculateDamage(UIManager.Instance.aimpointer.itemToThrow), player.GetComponent<Entity>()));
+                    
+                    t.Finished += delegate {
+                        EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+                        UIManager.Instance.aimpointer.itemToThrow.DeleteItem();
+                    };
+                }
                 break;
         }
     }
@@ -70,6 +85,14 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    void ToggleAimingPointer() { 
+        SetControlTo(Controlling.AIM_POINTER);
+    }
+
+    void Esc() {
+        SetControlTo(Controlling.PLAYER);
+    }
+
     public void SetControlTo(Controlling control) {
         currentlyControling = control;
 
@@ -78,6 +101,7 @@ public class GameManager : Singleton<GameManager> {
                 UIManager.Instance.inventory.TogglePanel(false);
                 UIManager.Instance.inventoryCard.TogglePanel(false);
                 UIManager.Instance.inventory.SetPointer(0);
+                UIManager.Instance.aimpointer.SetActive(false);
                 
                 break;
             case Controlling.INVENTORY:
@@ -85,12 +109,22 @@ public class GameManager : Singleton<GameManager> {
                 UIManager.Instance.inventory.TogglePanel(true);
                 UIManager.Instance.inventoryCard.TogglePanel(false);
                 UIManager.Instance.inventory.UpdateInventory();
+                UIManager.Instance.aimpointer.SetActive(false);
                 
                 break;
             case Controlling.INVENTORYCARD:
                 UIManager.Instance.inventory.UpdateCard();
                 UIManager.Instance.inventoryCard.TogglePanel(true);
                 UIManager.Instance.inventoryCard.SetPointer(0);
+                UIManager.Instance.aimpointer.SetActive(false);
+
+                break;
+            case Controlling.AIM_POINTER:
+                UIManager.Instance.inventory.TogglePanel(false);
+                UIManager.Instance.inventoryCard.TogglePanel(false);
+                UIManager.Instance.inventoryCard.SetPointer(0);
+                UIManager.Instance.aimpointer.SetPos(player.GetComponent<Player>().GetPos());
+                UIManager.Instance.aimpointer.SetActive(true);
 
                 break;
             default:
@@ -103,15 +137,19 @@ public class GameManager : Singleton<GameManager> {
         if (input != new Vector2Int(0, 0)) {
             switch (currentlyControling) {
                 case Controlling.PLAYER:
-                    player.GetComponent<Player>().UpdatePlayer(GetInput());
+                    player.GetComponent<Player>().UpdatePlayer(input);
                     break;
 
                 case Controlling.INVENTORY:
-                    UIManager.Instance.inventory.UpdatePointer(GetInput());
+                    UIManager.Instance.inventory.UpdatePointer(input);
                     break;
 
                 case Controlling.INVENTORYCARD:
-                    UIManager.Instance.inventoryCard.UpdatePointer(GetInput());
+                    UIManager.Instance.inventoryCard.UpdatePointer(input);
+                    break;
+
+                case Controlling.AIM_POINTER:
+                    UIManager.Instance.aimpointer.UpdatePos(input);
                     break;
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New LevelItem", menuName = "Item/LevelItem")]
-public class LevelItem : Item
+public class LevelItem : ConsumableItem
 {
     [Header("Level")]
     public int addINT = 0;

@@ -14,7 +14,7 @@ public class InventoryItem {
 
 public class Inventory : MonoBehaviour
 {
-    private List<InventoryItem> items = new List<InventoryItem>();
+    [SerializeField] private List<InventoryItem> items = new List<InventoryItem>();
     
     public List<InventoryItem> Items {
         get {return items;}
@@ -50,8 +50,6 @@ public class Inventory : MonoBehaviour
             DropItem(item, this.GetComponent<Entity>().GetPos());
             return true;
         }
-
-        return false;
     }
 
     public bool DropItem(Item item, Vector2Int pos) {

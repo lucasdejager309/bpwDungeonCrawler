@@ -7,13 +7,21 @@ public class UISlider : MonoBehaviour
 {
     public bool smoothFill = true;
     public float animationTime = 0.4f;
+    Image background;
     Image slider;
+    Image border;
     
     [SerializeField] float maxValue;
     [SerializeField] float currentValue;
 
     void Start() {
+        background = gameObject.transform.GetChild(0).GetComponent<Image>();
         slider = gameObject.transform.GetChild(1).GetComponent<Image>();
+        border = gameObject.transform.GetChild(2).GetComponent<Image>();
+    }
+
+    public void SetActive(bool state) {
+        background.enabled = slider.enabled = border.enabled = state;
     }
 
     public void SetMaxValue(float value) {
@@ -23,7 +31,13 @@ public class UISlider : MonoBehaviour
     public bool SetValue(float value) {
         if (value <= maxValue && value > 0) {
             currentValue = value;
-            StartCoroutine(UpdateSlider(value));
+            
+            if (smoothFill) {
+                StartCoroutine(UpdateSlider(currentValue));
+            }  else {
+                slider.fillAmount = (1/maxValue)*currentValue;
+            }
+            
             
             return true;
         }
@@ -41,18 +55,14 @@ public class UISlider : MonoBehaviour
         }
     }
 
-    IEnumerator UpdateSlider(float newAmount) {
+    IEnumerator UpdateSlider(float newValue) {
         if (slider != null) {
-            if (smoothFill) {
             float fromAmount = slider.fillAmount;
-            float endAmount = (1/maxValue)*currentValue;
-            
+            float endAmount = (1/maxValue)*newValue;
+                
             for (float t = 0f; t < 1; t += Time.deltaTime/animationTime) {
                 slider.fillAmount = Mathf.Lerp(fromAmount, endAmount, t);
                 yield return null;
-            }
-            } else {
-                    slider.fillAmount = (1/maxValue)*currentValue;
             }
         }
         else yield return null;

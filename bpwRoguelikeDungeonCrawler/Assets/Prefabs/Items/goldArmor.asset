@@ -16,7 +16,9 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 4cf976eeeb0398e4cbc78dc4d4f95de0, type: 3}
   itemDescription: Shiny, but not very sturdy...
   stackAble: 0
+  useButtonText: EQUIP
   equippable: 1
   equipSlotID: ARMOR
   requiredStrength: 12
+  requiredInteligence: 0
   maxAbsorbedDamage: 3

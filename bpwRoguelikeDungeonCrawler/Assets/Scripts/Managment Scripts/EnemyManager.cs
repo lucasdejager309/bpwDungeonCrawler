@@ -26,16 +26,17 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     void UpdateHealthBars() {
-        Debug.Log("yeet");
         foreach (GameObject enemyObject in enemies) {
             Enemy enemy = enemyObject.GetComponent<Enemy>();
             enemy.slider.SetMaxValue(enemy.MaxHealth);
             
-            if (enemy.Health < enemy.MaxHealth) {
-                enemy.slider.gameObject.SetActive(true);
-                enemy.slider.SetValue(enemy.Health);                
+
+            if (enemy.Health < enemy.MaxHealth) { 
+                enemy.slider.SetActive(true);
+                enemy.slider.SetValue(enemy.Health);
+                               
             } else {
-                enemy.slider.gameObject.SetActive(false);
+                enemy.slider.SetActive(false);
             }
         }
     }

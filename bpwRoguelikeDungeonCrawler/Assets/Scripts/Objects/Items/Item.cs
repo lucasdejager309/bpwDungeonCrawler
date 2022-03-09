@@ -10,6 +10,7 @@ public class Item : ScriptableObject
     public Sprite itemSprite;
     public string itemDescription;
     public bool stackAble;
+    public string useButtonText;
 
     [Header("Equippable")]
     public bool equippable;
@@ -18,8 +19,7 @@ public class Item : ScriptableObject
     public int requiredInteligence = 0;
 
     public virtual void Use() {
-        PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
-        inventory.RemoveItem(this);
+        //use!
     }
 
     public virtual string GetDescription() {
@@ -32,5 +32,10 @@ public class Item : ScriptableObject
         }
         description = description + itemDescription;
         return description;
+    }
+
+    public void DeleteItem() {
+        PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
+        inventory.RemoveItem(this);
     }
 }

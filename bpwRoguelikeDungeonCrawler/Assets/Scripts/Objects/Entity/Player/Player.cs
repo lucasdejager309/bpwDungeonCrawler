@@ -69,9 +69,7 @@ public class Player : Entity
         EventManager.InvokeEvent("UI_UPDATE_STATS");
     }
 
-
-    public override int CalculateDamage() {
-        WeaponItem weapon = (WeaponItem)GetComponent<PlayerInventory>().GetItemBySlotID("WEAPON");
+    public int CalculateDamage(IWeapon weapon) {
         int damage = 0;
         if (weapon != null) {
             damage = weapon.GetDamage();
@@ -97,10 +95,7 @@ public class Player : Entity
                     
                     break;
                 case ActionType.ATTACK:
-                    action = new Task(GetComponent<MeleeAttack>().DoAttack(input+GetPos(), CalculateDamage(), this));
-                    action.Finished += delegate {
-                        EventManager.InvokeEvent("DAMAGE_HAPPENED");
-                    };
+                    action = new Task(GetComponent<MeleeAttack>().DoAttack(input+GetPos(), CalculateDamage((IWeapon)GetComponent<PlayerInventory>().GetItemBySlotID("WEAPON")), this));
                     
                     break;                
                 case ActionType.INTERACT:

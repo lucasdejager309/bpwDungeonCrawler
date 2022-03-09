@@ -12,7 +12,11 @@ public class Attack : MonoBehaviour {
         lastTurnDone = GameManager.Instance.CurrentTurn;
         
         Entity entity = EntityManager.Instance.EntityAtPos(attackPos);
-        if (entity != null) entity.TakeDamage(damage);
+        if (entity != null) {
+            entity.TakeDamage(damage);
+            EventManager.InvokeEvent("DAMAGE_HAPPENED");
+        }
+
         return null;
     }
 

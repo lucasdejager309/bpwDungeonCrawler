@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New HealItem", menuName = "Item/HealItem")]
-public class HealItem : Item
+public class HealItem : ConsumableItem
 {
     [Header("Healing")]
     public int healingAmount;

@@ -21,9 +21,9 @@ public class RangedAttack : Attack {
             }
     }
 
-    public bool HasAimOnTarget(Entity target) {
+    public bool HasAimOnTarget(Vector2 pos) {
         Vector2 selfPos = new Vector2(GetComponent<Entity>().GetPos().x+0.5f, GetComponent<Entity>().GetPos().y+0.5f);
-        Vector2 posFloat = new Vector2(target.GetPos().x+0.5f, target.GetPos().y+0.5f);
+        Vector2 posFloat = new Vector2(pos.x+0.5f, pos.y+0.5f);
         
         RaycastHit2D hit = Physics2D.Raycast(selfPos, (posFloat-selfPos), (posFloat-selfPos).magnitude, GetComponent<Entity>().solidLayer);
         if (hit.collider != null) {
@@ -34,7 +34,7 @@ public class RangedAttack : Attack {
     }
 
     IEnumerator AttackAnimRanged(Vector2Int attackPos, Entity attacker) {
-        Vector3 startPos = attacker.transform.position + new Vector3(0.5f, 0.5f, 0.5f);
+        Vector3 startPos = (Vector3Int)attacker.GetPos() + new Vector3(0.5f, 0.5f, 0.5f);
         Vector3 endPos = (Vector3Int)attackPos + new Vector3(0.5f, 0.5f, 0.5f);
         
         GameObject projectile = Instantiate(projectilePrefab, startPos, Quaternion.identity);

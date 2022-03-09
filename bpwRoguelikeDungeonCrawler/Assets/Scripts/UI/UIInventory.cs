@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIInventory : UIPanel 
 {
-    public Text name;
+    public Text itemName;
     public Text description;
 
     public Text useButton;
@@ -53,13 +53,13 @@ public class UIInventory : UIPanel
         Item item = inventory.GetItem(PointerIndex);
         if (item != null) {
             
-            name.text = item.itemName;
+            itemName.text = item.itemName;
             description.text = item.GetDescription();
 
             if (inventory.pointerIndex >= inventory.MAX_SLOTS) {
                 useButton.text = "UNEQUIP";
-            } else if (item.equippable) {
-                useButton.text = "EQUIP";
+            } else if (item.useButtonText != "") {
+                useButton.text = item.useButtonText;
             } else {
                 useButton.text = "USE";
             }

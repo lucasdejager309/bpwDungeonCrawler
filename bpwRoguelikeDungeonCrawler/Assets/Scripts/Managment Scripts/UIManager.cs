@@ -9,6 +9,8 @@ public class UIManager : Singleton<UIManager>
     public UIPanel inventoryCard;
     public UISlider healthSlider;
 
+    public AimPointer aimpointer;
+
     void Awake() {
         Instance = this;
         EventManager.AddListener("UI_WAIT", ToggleWait);

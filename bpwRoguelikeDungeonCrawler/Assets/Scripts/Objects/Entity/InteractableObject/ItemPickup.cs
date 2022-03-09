@@ -7,7 +7,8 @@ public class ItemPickup : InteractableObject
     public Item item;
     public int amount;
 
-    void Start() {
+    public override void Start() {
+        base.Start();
         transform.position += new Vector3(0.5f, 0.5f, 0);
         transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
     }

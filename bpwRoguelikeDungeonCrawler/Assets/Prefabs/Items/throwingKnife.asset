@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28089e485074ddb4a88789764bf899de, type: 3}
+  m_Name: throwingKnife
+  m_EditorClassIdentifier: 
+  itemName: Throwing Knife
+  itemSprite: {fileID: 21300000, guid: b984ab7907b87994d99863b95dfd01f4, type: 3}
+  itemDescription: Throwing this at someone is sure to hurt!
+  stackAble: 1
+  useButtonText: THROW
+  equippable: 0
+  equipSlotID: 
+  requiredStrength: 10
+  requiredInteligence: 0
+  projectilePrefab: {fileID: 2037808370954092619, guid: 9508b7db64dbd5a4294f1ea2f6dc8a63, type: 3}
+  minDamage: 1
+  maxDamage: 3

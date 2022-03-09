@@ -16,6 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: c27f7eb812ad0194ebd297f73dc0d07a, type: 3}
   itemDescription: You can use it to stab people!
   stackAble: 0
+  useButtonText: EQUIP
   equippable: 1
   equipSlotID: WEAPON
   requiredStrength: 11

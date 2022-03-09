@@ -11,4 +11,11 @@ public class ArmorItem : Item
     public int AbsorbDamage() {
         return Random.Range(0, maxAbsorbedDamage);
     }
+
+    public override string GetDescription()
+    {
+        string description = base.GetDescription();
+        description = "Protects from up to " + maxAbsorbedDamage +  " damage when worn.\n\n" + description;
+        return description;
+    }
 }

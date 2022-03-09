@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: healingPotion
   m_EditorClassIdentifier: 
   itemName: Healing Potion
-  itemSprite: {fileID: 21300000, guid: 2d12a64362818264dae7c34e3a03d14d, type: 3}
+  itemSprite: {fileID: 21300000, guid: 25cea70d7b77ed146a22399c011f7a3c, type: 3}
   itemDescription: It tastes like strawberry!
   stackAble: 1
+  useButtonText: DRINK
   equippable: 0
   equipSlotID: 
   requiredStrength: 0

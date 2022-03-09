@@ -26,7 +26,7 @@ public class Enemy : Entity
         target = GameManager.Instance.player;
     }
 
-    public override int CalculateDamage() {
+    public int CalculateDamage() {
         return damage;
     }
 
@@ -77,7 +77,7 @@ public class Enemy : Entity
                     return enemyState.MELEEATTACK;
                 }
             } else if (GetComponent<RangedAttack>() != null) {
-                if (GetComponent<RangedAttack>().AttackIsAllowed() && GetComponent<RangedAttack>().HasAimOnTarget(target.GetComponent<Entity>())) {
+                if (GetComponent<RangedAttack>().AttackIsAllowed() && GetComponent<RangedAttack>().HasAimOnTarget(target.GetComponent<Entity>().GetPos())) {
                     return enemyState.RANGEDATTACK;
                 }
             }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2118473169861415954}
   - component: {fileID: -8041413422110321472}
   - component: {fileID: -7691622291691934766}
+  - component: {fileID: 6421797944952835270}
   - component: {fileID: 184184215787896632}
   - component: {fileID: 825765330299835702}
   - component: {fileID: -7954610942754421442}
@@ -54,11 +55,13 @@ MonoBehaviour:
     m_Bits: 64
   entityIsSolid: 1
   maxHealth: 30
+  health: 0
   timeBetweenMoves: 0.01
   moveDistance: 1
   inputAllowed: 1
-  damage: 2
+  baseDamage: 2
   strength: 11
+  inteligence: 11
 --- !u!114 &-7691622291691934766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +77,22 @@ MonoBehaviour:
   animationSpeed: 10
   howManyTurns: 1
   lastTurnDone: 0
+--- !u!114 &6421797944952835270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118473169861415980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cad13c13283b1e459e08207e3d85a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
+  howManyTurns: 1
+  lastTurnDone: 0
+  projectilePrefab: {fileID: 0}
 --- !u!114 &184184215787896632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,10 +118,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31cce2e2444e314fa61b121fce260e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items:
+  - amount: 30
+    item: {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
   droppedItemPrefab: {fileID: 4198374168029916651, guid: 764a3993331b8384e8822697f2f8f686, type: 3}
   equipSlots:
   - slotID: ARMOR
-    item: {fileID: 0}
+    item: {fileID: 11400000, guid: dbb027bd52e2100499dd3a78b2d2fa43, type: 2}
   - slotID: WEAPON
     item: {fileID: 0}
   pointerIndex: 0
