@@ -4,6 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class LootItem {
+    public bool NOTHING;
     public int pickChance;
     public Item item;
 
@@ -18,11 +19,12 @@ public class LootItem {
 
 [CreateAssetMenu(fileName = "New LootTable", menuName = "LootTable")]
 public class LootTable : ScriptableObject {
+    
     public LootItem[] table;
 
-    public List<Item> GetItemsFromTable(int number) {
+    public Dictionary<Item, int> GetItemsFromTable(int number) {
         
-        List<Item> pickedItems = new List<Item>();
+        Dictionary<Item, int> pickedItems = new Dictionary<Item, int>();
         
         for (int i = 0; i < number; i++) {
             LootItem pickedItem = null;
@@ -49,14 +51,13 @@ public class LootTable : ScriptableObject {
                 pickedItem = table[table.Length-1];
             }
 
-
-            if (pickedItem.multiple) {
-                int amount = pickedItem.GetAmount();
-                for (int a = 0; a < amount; a++) {
-                    pickedItems.Add(pickedItem.item);
+            if (!pickedItem.NOTHING) {
+                if (pickedItems.ContainsKey(pickedItem.item)) {
+                    pickedItems[pickedItem.item] += pickedItem.GetAmount();
+                } else {
+                    pickedItems.Add(pickedItem.item, pickedItem.GetAmount());
                 }
             }
-            pickedItems.Add(pickedItem.item);
         }
         
      

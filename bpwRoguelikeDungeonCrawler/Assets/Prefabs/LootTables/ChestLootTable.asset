@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ChestLootTable
   m_EditorClassIdentifier: 
   table:
-  - pickChance: 30
+  - pickChance: 10
     item: {fileID: 11400000, guid: d96b04adcb481f745b52665337213cb4, type: 2}
     multiple: 1
-    amountRange: {x: 1, y: 14}
+    amountRange: {x: 1, y: 3}
   - pickChance: 5
     item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
     multiple: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: df6313313122f6d4e89437c515647b25, type: 2}
     multiple: 0
     amountRange: {x: 0, y: 0}
-  - pickChance: 15
+  - pickChance: 8
     item: {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
     multiple: 1
     amountRange: {x: 1, y: 4}

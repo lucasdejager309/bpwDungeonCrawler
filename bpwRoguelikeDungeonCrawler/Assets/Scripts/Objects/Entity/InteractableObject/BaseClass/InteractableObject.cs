@@ -5,7 +5,7 @@ using UnityEngine;
 public class InteractableObject : Entity
 {
     public virtual void Interact(GameObject interacter) {
-
+        
     }
 }
  

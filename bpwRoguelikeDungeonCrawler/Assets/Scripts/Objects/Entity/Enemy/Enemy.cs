@@ -15,7 +15,9 @@ public class Enemy : Entity
     public float sightRange;
     public float attackRange = 1f;
     public int moveSpeed = 1;
-    public int damage = 1;
+    
+    public int minDamage;
+    public int maxDamage;
 
     public UISlider slider;
 
@@ -27,7 +29,7 @@ public class Enemy : Entity
     }
 
     public int CalculateDamage() {
-        return damage;
+        return Random.Range(minDamage, maxDamage);
     }
 
     public override IEnumerator DoAction()
@@ -83,6 +85,12 @@ public class Enemy : Entity
             }
         }
         return enemyState.CHASE;
+    }
+
+    public override void Die()
+    {
+        GetComponent<DropItems>().DropFromLootTable(GetPos());
+        base.Die();
     }
 
     public override void DeleteEntity()

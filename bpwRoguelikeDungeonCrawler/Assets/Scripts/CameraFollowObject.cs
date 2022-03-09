@@ -10,6 +10,11 @@ public class CameraFollowObject : MonoBehaviour
 
     void Start() {
         EventManager.AddListener("PLAYER_SPAWNED", SetCameraToFollow);
+        EventManager.AddListener("RELOAD_DUNGEON", UnCouple);
+    }
+
+    void UnCouple() {
+        transform.parent = null;
     }
 
     void SetCameraToFollow() {

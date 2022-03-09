@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8501893301332470393
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7954610942754421442, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1286a557e98b38844832e7663aaedcbf, type: 3}
+    - target: {fileID: -7954610942754421442, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415954, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118473169861415980, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+      propertyPath: m_Name
+      value: chest
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+--- !u!1 &7537511706092174933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2118473169861415980, guid: b3e082ba19ac27a4f8606539828ce299, type: 3}
+  m_PrefabInstance: {fileID: 8501893301332470393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7517892754499833744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537511706092174933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4910776dfc7461843b8e4000f86748f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minItems: 1
+  maxItems: 4
+  lootTable: {fileID: 11400000, guid: 90790a5eb49414b43875d09bfb5e2b97, type: 2}
+--- !u!114 &-4176278074146254691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537511706092174933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b44be64f20607c4eb506cb31cad0ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solidLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  entityIsSolid: 1
+  maxHealth: 3000
+  health: 0

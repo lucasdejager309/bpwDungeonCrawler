@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager> {
     
     public GameObject playerPrefab;
     public GameObject player;
+    public Minimap minimap;
 
     public enum Controlling {
         PLAYER,
@@ -36,6 +37,10 @@ public class GameManager : Singleton<GameManager> {
         EventManager.AddListener("INTERACT", Interact);
         EventManager.AddListener("TOGGLE_AIM", ToggleAimingPointer);
         EventManager.AddListener("ESC", Esc);
+
+        EntityManager.Instance.entityDict.Clear();
+        EntityManager.Instance.validPositions.Clear();
+
         DungeonGen.Instance.GenerateDungeon();
 
         UIManager.Instance.inventory.TogglePanel(false);
@@ -163,6 +168,7 @@ public class GameManager : Singleton<GameManager> {
     void SpawnPlayer() {
         player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
         EventManager.InvokeEvent("PLAYER_SPAWNED");
+        minimap.SetDungeon();
     }
 
     Vector2Int GetInput() {

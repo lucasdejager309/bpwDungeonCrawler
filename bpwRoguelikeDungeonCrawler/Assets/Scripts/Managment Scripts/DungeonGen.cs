@@ -22,6 +22,10 @@ public class DungeonGen : Singleton<DungeonGen>
 
     public Tile startTile;
     public Tile endTile;
+
+    public GameObject startOfLevel;
+    public GameObject endOfLevel;
+
     public GameObject doorPrefab;
 
     public TileLayer floorTilelayer;
@@ -274,13 +278,15 @@ public class DungeonGen : Singleton<DungeonGen>
             if (room.endRoom) {
                 Vector2Int pos = room.GetRandomPosInRoom(false);
 
-                AddTileToDictionary(pos, endTile, dungeonFeaturelayer, true);
+                //AddTileToDictionary(pos, endTile, dungeonFeaturelayer, true);
+                EntityManager.Instance.SpawnEntity(pos, endOfLevel);
             }
 
             if (room.spawnRoom) {
                 Vector2Int pos = room.GetRandomPosInRoom(false);
 
-                AddTileToDictionary(pos, startTile, dungeonFeaturelayer, true);
+                //AddTileToDictionary(pos, startTile, dungeonFeaturelayer, true);
+                EntityManager.Instance.SpawnEntity(pos, startOfLevel);
                 SpawnPos = new Vector2Int(pos.x, pos.y);
             }
         }

@@ -23,6 +23,7 @@ public class Entity : MonoBehaviour, IDamagable
     public virtual void Start() {
         EntityManager.Instance.UpdatePos(this, GetPos());
         health = maxHealth;
+        EventManager.AddListener("RELOAD_DUNGEON", DeleteEntity);
     }
     
     public virtual void TakeDamage(int damage) {
@@ -153,8 +154,8 @@ public class Entity : MonoBehaviour, IDamagable
     }
 
     public virtual void DeleteEntity() {
-        EntityManager.Instance.entityDict.Remove(this);
         GameObject.Destroy(gameObject);
+        EntityManager.Instance.entityDict.Remove(this);
     } 
 
     public float GetDistance(Vector2Int pos) {

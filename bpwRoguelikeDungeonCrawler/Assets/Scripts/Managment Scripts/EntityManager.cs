@@ -11,7 +11,7 @@ public class EntityManager : Singleton<EntityManager>
     void Awake() {
         Instance = this;
         EventManager.AddListener("DUNGEON_GENERATED", FillValidPositionsDict);
-        EventManager.AddListener("RELOAD_DUNGEON", DeleteEntities);
+        EventManager.AddListener("RELOAD_DUNGEON", ClearValidPositions);
     }
 
     //temp DRAWS NICE LITTLE CROSSES AT ENTITYDICT VALUES
@@ -49,6 +49,8 @@ public class EntityManager : Singleton<EntityManager>
                 }
             }
         }
+
+        Debug.Log(validPositions.Count + " " + entityDict.Values.Count);
     }
 
     public void UpdatePos(Entity entity, Vector2Int entityPos) {
@@ -153,12 +155,7 @@ public class EntityManager : Singleton<EntityManager>
         return spawnedObject;
     }
 
-    void DeleteEntities() {
-        foreach (KeyValuePair<Entity, Vector2Int> entity in entityDict) {
-            entity.Key.DeleteEntity();
-        }
-
-        entityDict.Clear();
+    void ClearValidPositions() {
         validPositions.Clear();
     }
 }

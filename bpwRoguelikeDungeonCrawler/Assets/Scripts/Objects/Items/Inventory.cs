@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
         int itemAmount = GetItemAmount(item);
         
         if (RemoveStack(item)) {
-            Inventory.SpawnDroppedItem(droppedItemPrefab, item, itemAmount, pos);
+            SpawnDroppedItem(item, itemAmount, pos);
 
             EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
 
@@ -128,10 +128,8 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public static void SpawnDroppedItem(GameObject prefab, Item item, int amount, Vector2Int pos) {
-        GameObject droppedItemObject = prefab;
+    public void SpawnDroppedItem(Item item, int amount, Vector2Int pos) {
+        GameObject droppedItemObject = EntityManager.Instance.SpawnEntity(pos, droppedItemPrefab);
         droppedItemObject.GetComponent<ItemPickup>().SetItem(item, amount);
-
-        EntityManager.Instance.SpawnEntity(pos, droppedItemObject);
     }
 }

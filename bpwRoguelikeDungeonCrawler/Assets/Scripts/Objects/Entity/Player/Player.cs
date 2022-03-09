@@ -85,12 +85,13 @@ public class Player : Entity
     public void UpdatePlayer(Vector2Int input) {
         Task action = new Task();
 
+        Debug.Log(GetActionType(input));
+
         if (input != new Vector2Int(0,0) && GetActionType(input) != ActionType.NOTHING && inputAllowed) {
             inputAllowed = false;
 
             switch (GetActionType(input)) {
                 case ActionType.MOVE:
-                    
                     action = new Task(Move(input, moveDistance, true, 0.1f, timeBetweenMoves));
                     
                     break;
