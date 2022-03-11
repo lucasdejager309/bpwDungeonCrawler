@@ -23,7 +23,6 @@ public class Entity : MonoBehaviour, IDamagable
     public virtual void Start() {
         EntityManager.Instance.UpdatePos(this, GetPos());
         health = maxHealth;
-        EventManager.AddListener("RELOAD_DUNGEON", DeleteEntity);
     }
     
     public virtual void TakeDamage(int damage) {

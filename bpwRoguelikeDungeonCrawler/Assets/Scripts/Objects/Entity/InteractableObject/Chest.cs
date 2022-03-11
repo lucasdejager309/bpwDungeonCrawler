@@ -6,8 +6,11 @@ public class Chest : InteractableObject {
     
     public override void Interact(GameObject interacter)
     {
-        GetComponent<DropItems>().DropFromLootTable(GetPos());
-
         Die();
+    }
+
+    public override void Die() {
+        GetComponent<DropItems>().DropFromLootTable(GetPos());
+        base.Die();
     }
 }

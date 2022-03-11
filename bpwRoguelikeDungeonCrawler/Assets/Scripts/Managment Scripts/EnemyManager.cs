@@ -50,6 +50,10 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
+    public void SpawnEnemy(GameObject enemy, Vector2Int pos) {
+        enemies.Add(EntityManager.Instance.SpawnEntity(pos, enemy));
+    }
+
     IEnumerator DoActions() {
         EventManager.InvokeEvent("UI_WAIT");
 

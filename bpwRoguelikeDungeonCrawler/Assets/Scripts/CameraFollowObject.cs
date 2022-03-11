@@ -24,6 +24,9 @@ public class CameraFollowObject : MonoBehaviour
     }
 
     void Update() {
+        if (objectToFollow == null) {
+            Debug.Log("oh oh stinky");
+        }
         SetCameraToFollow();
     }
 }

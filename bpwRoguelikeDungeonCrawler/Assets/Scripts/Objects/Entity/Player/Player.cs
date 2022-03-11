@@ -85,8 +85,6 @@ public class Player : Entity
     public void UpdatePlayer(Vector2Int input) {
         Task action = new Task();
 
-        Debug.Log(GetActionType(input));
-
         if (input != new Vector2Int(0,0) && GetActionType(input) != ActionType.NOTHING && inputAllowed) {
             inputAllowed = false;
 
@@ -118,6 +116,7 @@ public class Player : Entity
     ActionType GetActionType(Vector2Int input)
     {
         Vector2Int pos = input + GetPos();
+        
         ActionType actionToReturn = ActionType.NOTHING;
         Entity entity = EntityManager.Instance.EntityAtPos(pos);
         if (entity != null && entity.entityIsSolid) {

@@ -743,13 +743,10 @@ MonoBehaviour:
   maxNewRoomRange: 7
   minRoomSpacing: 3
   corridorWidth: 1
-  startTile: {fileID: 11400000, guid: bf6ca791e6b09b14689cc641ebe0b0df, type: 2}
-  endTile: {fileID: 11400000, guid: 71657d898350e314182afe25e0baae99, type: 2}
   startOfLevel: {fileID: 559575418393072140, guid: 966491e5684099c43a070e5eb7295ed0, type: 3}
   endOfLevel: {fileID: 559575418393072140, guid: 63830c5bec38d4f4696b1db3ed8c3e49, type: 3}
   doorPrefab: {fileID: 2118473169861415980, guid: 6bf1011a363da834fa43280ed9d11743, type: 3}
   floorTilelayer:
-    tilemap: {fileID: 1016175335}
     tiles:
     - tiles:
       - {fileID: 11400000, guid: 50ce4177ad18e2d408002dfdd2852e7d, type: 2}
@@ -761,7 +758,6 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 4267502c9074ae84abd43ec9816c03c0, type: 2}
       spawnChance: 2
   solidTileLayer:
-    tilemap: {fileID: 71502960}
     tiles:
     - tiles:
       - {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
@@ -770,8 +766,10 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
       spawnChance: 1
   dungeonFeaturelayer:
-    tilemap: {fileID: 1249948054}
     tiles: []
+  floorTileMap: {fileID: 1016175335}
+  solidTileMap: {fileID: 71502960}
+  dungeonFeatureMap: {fileID: 1249948054}
   minDungeonFeaturesPerRoom: 2
   maxDungeonFeaturesPerRoom: 5
   dungeonFeatures:
@@ -948,8 +946,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableObjects:
-  - spawnChance: 1
+  - spawnChance: 10
     gameObject: {fileID: 7537511706092174933, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+    wallAdjacent: 1
+  - spawnChance: 1
+    gameObject: {fileID: 5056227480076459459, guid: 6d22951640a256e4c99f238f0803ed95, type: 3}
     wallAdjacent: 1
   minDensity: 3
   maxDensity: 8

@@ -159,6 +159,10 @@ public class GameManager : Singleton<GameManager> {
             }
         }
         
+        //UGLY FIX camera turns itself off when reloading dungeon??
+        CameraFollowObject camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowObject>();
+        camera.enabled = true;
+        camera.gameObject.GetComponent<Camera>().enabled = true;
     }
 
     void AddTurn() {

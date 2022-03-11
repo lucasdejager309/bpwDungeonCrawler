@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 
 [System.Serializable]
 public class TileLayer {
-    public Tilemap tilemap;
 
     public GenTile[] tiles;
 

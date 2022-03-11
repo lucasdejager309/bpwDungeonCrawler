@@ -20,9 +20,6 @@ public class DungeonGen : Singleton<DungeonGen>
 
     public List<Room> roomList {get; private set; } = new List<Room>();
 
-    public Tile startTile;
-    public Tile endTile;
-
     public GameObject startOfLevel;
     public GameObject endOfLevel;
 
@@ -31,6 +28,10 @@ public class DungeonGen : Singleton<DungeonGen>
     public TileLayer floorTilelayer;
     public TileLayer solidTileLayer;
     public TileLayer dungeonFeaturelayer;
+
+    public Tilemap floorTileMap;
+    public Tilemap solidTileMap;
+    public Tilemap dungeonFeatureMap;
 
     public int minDungeonFeaturesPerRoom;
     public int maxDungeonFeaturesPerRoom;
@@ -50,14 +51,19 @@ public class DungeonGen : Singleton<DungeonGen>
         AllocateWalls();
         FindRoomEntrances();
 
-        CreateLevelEnds();
+        
 
         if (dungeonFeatures.Length != 0) {
             AllocateDungeonFeatures();
         }
 
-        SpawnTiles();
+        
         //SpawnDoors();
+
+        EntityManager.Instance.ClearEntityDict();
+        CreateLevelEnds();
+
+        SpawnTiles();
 
         EventManager.InvokeEvent("DUNGEON_GENERATED");
     }
@@ -65,13 +71,13 @@ public class DungeonGen : Singleton<DungeonGen>
     public void WipeDungeon() {
         //this is bad code
         
-        floorTilelayer.tilemap.ClearAllTiles();
+        floorTileMap.ClearAllTiles();
         floorTilelayer.tileDictionary.Clear();
 
-        solidTileLayer.tilemap.ClearAllTiles();
+        solidTileMap.ClearAllTiles();
         solidTileLayer.tileDictionary.Clear();
 
-        dungeonFeaturelayer.tilemap.ClearAllTiles();
+        dungeonFeatureMap.ClearAllTiles();
         dungeonFeaturelayer.tileDictionary.Clear();
 
         roomList.Clear();
@@ -297,24 +303,24 @@ public class DungeonGen : Singleton<DungeonGen>
         
         foreach(KeyValuePair<Vector2Int, Tile> entry in floorTilelayer.tileDictionary) {
                 Vector3Int location = new Vector3Int(entry.Key.x, entry.Key.y, 0);
-                floorTilelayer.tilemap.SetTile(location, entry.Value);
+                floorTileMap.SetTile(location, entry.Value);
         }
 
         foreach(KeyValuePair<Vector2Int, Tile> entry in solidTileLayer.tileDictionary) {
                 Vector3Int location = new Vector3Int(entry.Key.x, entry.Key.y, 0);
-                solidTileLayer.tilemap.SetTile(location, entry.Value);
+                solidTileMap.SetTile(location, entry.Value);
         }
 
         foreach(KeyValuePair<Vector2Int, Tile> entry in dungeonFeaturelayer.tileDictionary) {
                 Vector3Int location = new Vector3Int(entry.Key.x, entry.Key.y, 0);
-                dungeonFeaturelayer.tilemap.SetTile(location, entry.Value);
+                dungeonFeatureMap.SetTile(location, entry.Value);
         }
     }
 
     void SpawnDoors() {
         foreach(Room room in roomList) {
             foreach(Vector2Int entrance in room.entrances) {
-                //Instantiate(doorPrefab, new Vector3(entrance.x, entrance.y, -3), Quaternion.identity);
+                Instantiate(doorPrefab, new Vector3(entrance.x, entrance.y, -3), Quaternion.identity);
                 EntityManager.Instance.SpawnEntity(entrance, doorPrefab);
             }
         }

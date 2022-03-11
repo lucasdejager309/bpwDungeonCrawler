@@ -11,7 +11,6 @@ public class EntityManager : Singleton<EntityManager>
     void Awake() {
         Instance = this;
         EventManager.AddListener("DUNGEON_GENERATED", FillValidPositionsDict);
-        EventManager.AddListener("RELOAD_DUNGEON", ClearValidPositions);
     }
 
     //temp DRAWS NICE LITTLE CROSSES AT ENTITYDICT VALUES
@@ -29,7 +28,16 @@ public class EntityManager : Singleton<EntityManager>
         }
     }
 
+    public void ClearEntityDict() {
+        List<Entity> entities = new List<Entity>(entityDict.Keys);
+        entityDict.Clear();
+        foreach(var key in entities) {
+            key.DeleteEntity();
+        }
+    }
+
     void FillValidPositionsDict() {
+        ClearValidPositions();
         foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.floorTilelayer.tileDictionary) {
             validPositions.Add(tile.Key);
         }
@@ -49,8 +57,6 @@ public class EntityManager : Singleton<EntityManager>
                 }
             }
         }
-
-        Debug.Log(validPositions.Count + " " + entityDict.Values.Count);
     }
 
     public void UpdatePos(Entity entity, Vector2Int entityPos) {
