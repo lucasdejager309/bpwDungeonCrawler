@@ -30,10 +30,6 @@ public class Inventory : MonoBehaviour
 
     public GameObject droppedItemPrefab;
 
-    void Start() {
-        EventManager.AddListener("RELOAD_DUNGEON", ClearInventory);
-    }
-
     public virtual bool AddItem(Item item, int amount = 1) {
         foreach (InventoryItem slot in items) {
             if (slot.item == item && slot.item.stackAble) {

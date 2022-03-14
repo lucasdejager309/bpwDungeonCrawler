@@ -36,12 +36,12 @@ public class EntityManager : Singleton<EntityManager>
         }
     }
 
-    void FillValidPositionsDict() {
+    public void FillValidPositionsDict() {
         ClearValidPositions();
-        foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.floorTilelayer.tileDictionary) {
+        foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.floorTileDictionary) {
             validPositions.Add(tile.Key);
         }
-        foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.solidTileLayer.tileDictionary) {
+        foreach (KeyValuePair<Vector2Int, Tile> tile in DungeonGen.Instance.solidTileDictionary) {
             if (validPositions.Contains(tile.Key)) {
                 validPositions.Remove(tile.Key);
             }         

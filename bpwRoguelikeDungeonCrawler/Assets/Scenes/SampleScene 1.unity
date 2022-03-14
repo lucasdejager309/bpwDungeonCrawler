@@ -511,10 +511,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 261855325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eecb6f25fd8d82e4b9b1837f98adb63a, type: 3}
+  m_Script: {fileID: 11500000, guid: 63eb558fa3816b74da915dac6eff2ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagToFollow: Player
+  objectsToFollow: []
+  speed: 0.025
   offset: {x: 0.5, y: 0.5}
 --- !u!81 &261855327
 AudioListener:
@@ -734,56 +735,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677c0ce198801a94eb9bc45956598f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 35
-  amountRooms: 3
-  amountRandomRooms: 7
-  minRoomSize: 4
-  maxRoomSize: 6
-  minNewRoomRange: -7
-  maxNewRoomRange: 7
-  minRoomSpacing: 3
-  corridorWidth: 1
-  startOfLevel: {fileID: 559575418393072140, guid: 966491e5684099c43a070e5eb7295ed0, type: 3}
-  endOfLevel: {fileID: 559575418393072140, guid: 63830c5bec38d4f4696b1db3ed8c3e49, type: 3}
+  appearance: {fileID: 11400000, guid: cea3520db26d4564cb1e5915f19374f0, type: 2}
+  settings: {fileID: 11400000, guid: e38402088fbd4934b975942ecbb6cb8f, type: 2}
   doorPrefab: {fileID: 2118473169861415980, guid: 6bf1011a363da834fa43280ed9d11743, type: 3}
-  floorTilelayer:
-    tiles:
-    - tiles:
-      - {fileID: 11400000, guid: 50ce4177ad18e2d408002dfdd2852e7d, type: 2}
-      spawnChance: 200
-    - tiles:
-      - {fileID: 11400000, guid: ca6fbf7ce3ab18943b8b8887b7e09374, type: 2}
-      spawnChance: 20
-    - tiles:
-      - {fileID: 11400000, guid: 4267502c9074ae84abd43ec9816c03c0, type: 2}
-      spawnChance: 2
-  solidTileLayer:
-    tiles:
-    - tiles:
-      - {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
-      spawnChance: 20
-    - tiles:
-      - {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
-      spawnChance: 1
-  dungeonFeaturelayer:
-    tiles: []
   floorTileMap: {fileID: 1016175335}
   solidTileMap: {fileID: 71502960}
   dungeonFeatureMap: {fileID: 1249948054}
-  minDungeonFeaturesPerRoom: 2
-  maxDungeonFeaturesPerRoom: 5
-  dungeonFeatures:
-  - tiles:
-    - {fileID: 11400000, guid: 75b05a1c17e97134faa81946e6bced99, type: 2}
-    - {fileID: 11400000, guid: 8f62c814a50bf264d88afe94900ea06a, type: 2}
-    spawnChance: 10
-    wallAdjacent: 0
-    solid: 0
-  - tiles:
-    - {fileID: 11400000, guid: 5a569e67497b13943aadda472a2a0ee2, type: 2}
-    spawnChance: 5
-    wallAdjacent: 1
-    solid: 1
   SpawnPos: {x: 0, y: 0}
 --- !u!4 &632915592
 Transform:
@@ -1748,9 +1705,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputs:
-  - key: 112
-    state: 0
-    action: RELOAD_DUNGEON
   - key: 101
     state: 0
     action: TOGGLE_INVENTORY
@@ -1760,6 +1714,15 @@ MonoBehaviour:
   - key: 27
     state: 0
     action: ESC
+  - key: 111
+    state: 0
+    action: SAVE_DUNGEON
+  - key: 112
+    state: 0
+    action: LOAD_DUNGEON
+  - key: 108
+    state: 0
+    action: NEW_DUNGEON
 --- !u!114 &1564800005
 MonoBehaviour:
   m_ObjectHideFlags: 0

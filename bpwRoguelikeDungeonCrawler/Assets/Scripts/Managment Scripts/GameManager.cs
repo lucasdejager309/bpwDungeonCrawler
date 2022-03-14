@@ -26,8 +26,20 @@ public class GameManager : Singleton<GameManager> {
 
     public Controlling currentlyControling = Controlling.PLAYER;
 
+    CameraFollowPlayer camera;
+
     void Awake() {
         Instance = this;
+        EventManager.AddListener("SAVE", Save);
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowPlayer>();
+    }
+
+    void GenerateDungeon(DungeonAppearance appearance, DungeonSettings settings) {
+        //generate dungeon
+    }
+
+    void Save() {
+        Debug.Log("pretend i saved");
     }
 
     void Start()
@@ -94,12 +106,14 @@ public class GameManager : Singleton<GameManager> {
         SetControlTo(Controlling.AIM_POINTER);
     }
 
-    void Esc() {
+    void Esc() {        
         SetControlTo(Controlling.PLAYER);
     }
 
     public void SetControlTo(Controlling control) {
         currentlyControling = control;
+
+        camera.RemoveCameraFollow(UIManager.Instance.aimpointer.gameObject);
 
         switch (currentlyControling) {
             case Controlling.PLAYER:
@@ -131,6 +145,8 @@ public class GameManager : Singleton<GameManager> {
                 UIManager.Instance.aimpointer.SetPos(player.GetComponent<Player>().GetPos());
                 UIManager.Instance.aimpointer.SetActive(true);
 
+                camera.SetCameraToFollow(UIManager.Instance.aimpointer.gameObject);
+
                 break;
             default:
                 break;
@@ -158,11 +174,10 @@ public class GameManager : Singleton<GameManager> {
                     break;
             }
         }
-        
-        //UGLY FIX camera turns itself off when reloading dungeon??
-        CameraFollowObject camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowObject>();
-        camera.enabled = true;
-        camera.gameObject.GetComponent<Camera>().enabled = true;
+
+        if (player == null) {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     void AddTurn() {
@@ -173,6 +188,8 @@ public class GameManager : Singleton<GameManager> {
         player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
         EventManager.InvokeEvent("PLAYER_SPAWNED");
         minimap.SetDungeon();
+        camera.SetCameraToFollow(player);
+        camera.SetCameraPos(DungeonGen.Instance.SpawnPos);
     }
 
     Vector2Int GetInput() {

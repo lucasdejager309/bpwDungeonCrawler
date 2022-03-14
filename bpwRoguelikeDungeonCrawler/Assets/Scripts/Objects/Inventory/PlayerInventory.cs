@@ -8,7 +8,7 @@ public class EquipSlot {
     public Item item;
 }
 
-class PlayerInventory : Inventory {
+public class PlayerInventory : Inventory {
     
     public EquipSlot[] equipSlots;
     public int pointerIndex = 0;
@@ -19,6 +19,13 @@ class PlayerInventory : Inventory {
             pointerIndex = index;
             return true;
         } else return false;
+    }
+
+    public void SetInventory(List<InventoryItem> newInventory) {
+        Items.Clear();
+        foreach(InventoryItem item in newInventory) {
+            Items.Add(item);
+        }
     }
 
     public override bool AddItem(Item item, int amount = 1)

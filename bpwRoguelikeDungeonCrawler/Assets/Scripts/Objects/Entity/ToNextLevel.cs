@@ -9,6 +9,6 @@ public class ToNextLevel : InteractableObject
 
     public override void Interact(GameObject interacter)
     {
-        SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
+        DungeonGen.Instance.GenerateDungeon();
     }
 }

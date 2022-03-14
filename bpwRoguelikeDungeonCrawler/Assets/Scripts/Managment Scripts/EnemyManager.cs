@@ -25,6 +25,12 @@ public class EnemyManager : Singleton<EnemyManager>
         StartCoroutine(DoActions());
     }
 
+    public void SetEnemyTarget(GameObject target) {
+        foreach (GameObject enemyObject in enemies) {
+            enemyObject.GetComponent<Enemy>().target = target;
+        }
+    }
+
     void UpdateHealthBars() {
         foreach (GameObject enemyObject in enemies) {
             Enemy enemy = enemyObject.GetComponent<Enemy>();
@@ -48,6 +54,10 @@ public class EnemyManager : Singleton<EnemyManager>
                 enemies.Add(EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value));
             }
         }
+    }
+
+    public void WipeEnemyList() {
+        enemies.Clear();
     }
 
     public void SpawnEnemy(GameObject enemy, Vector2Int pos) {

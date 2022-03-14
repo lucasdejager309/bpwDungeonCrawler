@@ -12,14 +12,15 @@ public class DungeonSettings : ScriptableObject
     public int amountRooms;
     [Tooltip("non-sequential rooms")]
     public int amountRandomRooms;
-    public Vector2 roomSizeRange;
+    public Vector2Int roomSizeRange;
     [Tooltip("spacing between rooms")]
+    public int newRoomRange;
     public int minRoomSpacing;
 
     [Header("Corridors")]
     public int corridorWidth;
 
     [Header("Dungeon Features")]
-    public Vector2 dungeonFeaturesAmountRange;
-    
+    public Vector2Int dungeonFeaturesAmountRange;
+
 }

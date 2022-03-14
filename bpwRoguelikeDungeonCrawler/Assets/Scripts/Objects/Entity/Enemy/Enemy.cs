@@ -34,6 +34,8 @@ public class Enemy : Entity
 
     public override IEnumerator DoAction()
     {
+        target = GameObject.FindGameObjectWithTag("Player");
+
         Task t = new Task();
         bool finished = false;
         switch (GetState()) {

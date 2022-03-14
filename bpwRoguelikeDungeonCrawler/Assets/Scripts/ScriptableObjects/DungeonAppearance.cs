@@ -8,7 +8,7 @@ public class DungeonAppearance : ScriptableObject
     public GameObject startOfLevel;
     public GameObject endOfLevel;
 
-    public TileLayer floorTilelayer;
-    public TileLayer solidTileLayer;
-    public TileLayer dungeonFeaturelayer;
+    public GenTile[] floorTiles;
+    public GenTile[] solidTiles;
+    public DungeonFeature[] dungeonFeatures;
 }

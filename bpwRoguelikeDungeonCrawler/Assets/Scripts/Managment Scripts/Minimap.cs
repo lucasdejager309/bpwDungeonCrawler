@@ -12,8 +12,8 @@ public class Minimap : MonoBehaviour
     public void SetDungeon() {
         minimapTileMap.ClearAllTiles();
         
-        Dictionary<Vector2Int, Tile> floorTiles = DungeonGen.Instance.floorTilelayer.tileDictionary;
-        Dictionary<Vector2Int, Tile> solidTiles = DungeonGen.Instance.solidTileLayer.tileDictionary;
+        Dictionary<Vector2Int, Tile> floorTiles = DungeonGen.Instance.floorTileDictionary;
+        Dictionary<Vector2Int, Tile> solidTiles = DungeonGen.Instance.solidTileDictionary;
 
         foreach(KeyValuePair<Vector2Int, Tile> entry in floorTiles) {
                 Vector3Int location = new Vector3Int(entry.Key.x, entry.Key.y, 0);
