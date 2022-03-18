@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour, IDamagable
     public LayerMask solidLayer;
     
     [Header("entity attributes")]
+    public bool CantBeDestroyed = false;
     
     public bool entityIsSolid;
     
@@ -22,7 +23,9 @@ public class Entity : MonoBehaviour, IDamagable
 
     public virtual void Start() {
         EntityManager.Instance.UpdatePos(this, GetPos());
-        health = maxHealth;
+        if (health == 0) {
+            health = maxHealth;
+        }
     }
     
     public virtual void TakeDamage(int damage) {
@@ -53,13 +56,13 @@ public class Entity : MonoBehaviour, IDamagable
             //move to actual position
             if (EntityMovement.IsValidMovePos(newPos)) {
                 if (!smoothMove) {
-                    transform.position = new Vector3(newPos.x, newPos.y, 0);
+                    SetPos(newPos);
 
                 } else {
                     Vector3 startPos = transform.position;
                     Task t = new Task(SmoothMove(transform, newPos, moveTime/distance, waitBetweenMoves));
                     t.Finished += delegate (bool manual) {
-                        transform.position = new Vector3(newPos.x, newPos.y, 0);
+                        SetPos(newPos);
                         
                         EntityManager.Instance.UpdatePos(this, newPos);
 
@@ -163,5 +166,10 @@ public class Entity : MonoBehaviour, IDamagable
 
     public Vector2Int GetPos() {
         return new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+
+    public void SetPos(Vector2Int newPos) {
+        EntityManager.Instance.UpdatePos(this, newPos);
+        transform.position = new Vector3(newPos.x, newPos.y, 0);
     }
 }

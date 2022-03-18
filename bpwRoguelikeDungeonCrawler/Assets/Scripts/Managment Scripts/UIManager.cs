@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    public UIInventory  inventory;
+    public UIInventory inventory;
     public UIPanel inventoryCard;
+    public UIPanel escMenu;
     public UISlider healthSlider;
 
     public AimPointer aimpointer;
 
     void Awake() {
         Instance = this;
-        EventManager.AddListener("UI_WAIT", ToggleWait);
+        EventManager.AddListener("UI_TOGGLE_WAIT", ToggleWait);
         EventManager.AddListener("UI_UPDATE_STATS", UpdateHealthBar);
         EventManager.AddListener("PLAYER_SPAWNED", UpdateHealthBar);
     }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 679dae6024b3d5b4bb993c81799b63b8, type: 3}
-  m_Name: Lvl1DungeonAppearance
+  m_Name: DungeonAppearance1
   m_EditorClassIdentifier: 
   startOfLevel: {fileID: 559575418393072140, guid: 966491e5684099c43a070e5eb7295ed0, type: 3}
   endOfLevel: {fileID: 559575418393072140, guid: 63830c5bec38d4f4696b1db3ed8c3e49, type: 3}

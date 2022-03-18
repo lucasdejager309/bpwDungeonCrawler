@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ public class AimPointer : MonoBehaviour
     }
 
     public void SetPos(Vector2Int newPos) {
-        transform.position = new Vector3(newPos.x + 0.5f, newPos.y+0.5f, 0);
+        transform.position = new Vector3(newPos.x, newPos.y, 0);
         currentPos = newPos;
     }
 

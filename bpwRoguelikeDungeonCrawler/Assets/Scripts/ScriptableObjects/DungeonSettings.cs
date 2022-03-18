@@ -23,4 +23,10 @@ public class DungeonSettings : ScriptableObject
     [Header("Dungeon Features")]
     public Vector2Int dungeonFeaturesAmountRange;
 
+    [Header("Difficulty")]
+    public float enemyDamageMultiplier = 1;
+    public float enemyHealthMultiplier = 1;
+
+    public Vector2 enemyDensityRange;
+    public SpawnableObject[] enemyPrefabs;
 }

@@ -28,8 +28,8 @@ public class CameraFollowPlayer : MonoBehaviour
         objectsToFollow.Remove(objectToUnFollow);
     }
 
-    void Update() {
-        if (objectsToFollow.Count > 1) {
+    void FixedUpdate() {
+        if (objectsToFollow.Count > 0) {
             float x = 0;
             float y = 0;
 

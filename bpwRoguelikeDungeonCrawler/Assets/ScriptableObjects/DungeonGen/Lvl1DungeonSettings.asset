@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af129991270b16469eff81a5f82bed5, type: 3}
+  m_Name: Lvl1DungeonSettings
+  m_EditorClassIdentifier: 
+  maxRange: 35
+  amountRooms: 3
+  amountRandomRooms: 7
+  roomSizeRange: {x: 4, y: 6}
+  newRoomRange: 7
+  minRoomSpacing: 3
+  corridorWidth: 1
+  dungeonFeaturesAmountRange: {x: 2, y: 5}
+  enemyDamageMultiplier: 1
+  enemyHealthMultiplier: 1
+  enemyDensityRange: {x: 3, y: 7}
+  enemyPrefabs:
+  - spawnChance: 10
+    gameObject: {fileID: 5859420433078302010, guid: 2a3790518ae7c9241a924fc545627f92, type: 3}
+    wallAdjacent: 0
+  - spawnChance: 5
+    gameObject: {fileID: 5074122196967646602, guid: 47d203b0323b7a74a8aa78561d4b12c7, type: 3}
+    wallAdjacent: 0

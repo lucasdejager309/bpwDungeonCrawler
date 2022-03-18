@@ -5,41 +5,38 @@ using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
-    [SerializeField]
-    private int currentTurn = 0;
+    public bool loadFromSave;
+    
+    [SerializeField] private int currentLevel = 0;
+    public DungeonSettings[] settings;
+    public DungeonAppearance[] appearances;
+    public Saving saving;
+    [SerializeField] private int currentTurn = 0;
     public int CurrentTurn {
         get {
             return currentTurn;
         }
     }
-    
-    public GameObject playerPrefab;
-    public GameObject player;
-    public Minimap minimap;
 
     public enum Controlling {
         PLAYER,
         INVENTORY,
         INVENTORYCARD,
-        AIM_POINTER
-    }
-
+        AIM_POINTER,
+        ESC_MENU
+    }   
     public Controlling currentlyControling = Controlling.PLAYER;
 
+
+    public GameObject playerPrefab;
+    public GameObject player;
+    public Minimap minimap;
+    
     CameraFollowPlayer camera;
 
     void Awake() {
         Instance = this;
-        EventManager.AddListener("SAVE", Save);
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowPlayer>();
-    }
-
-    void GenerateDungeon(DungeonAppearance appearance, DungeonSettings settings) {
-        //generate dungeon
-    }
-
-    void Save() {
-        Debug.Log("pretend i saved");
     }
 
     void Start()
@@ -49,15 +46,52 @@ public class GameManager : Singleton<GameManager> {
         EventManager.AddListener("INTERACT", Interact);
         EventManager.AddListener("TOGGLE_AIM", ToggleAimingPointer);
         EventManager.AddListener("ESC", Esc);
+        EventManager.AddListener("SAVE", Save);
+        EventManager.AddListener("LOAD", Load);
 
         EntityManager.Instance.entityDict.Clear();
         EntityManager.Instance.validPositions.Clear();
 
         DungeonGen.Instance.GenerateDungeon();
+        if (loadFromSave) {
+            Load();
+        }
+        
 
         UIManager.Instance.inventory.TogglePanel(false);
         UIManager.Instance.inventoryCard.TogglePanel(false);
+        UIManager.Instance.escMenu.TogglePanel(false);
         UIManager.Instance.aimpointer.SetActive(false);
+    }
+
+    public void Save() { 
+        saving.Save(currentLevel, player);
+
+    }
+
+    public void Load() {
+        saving.GetSave();
+        
+        currentLevel = saving.save.currentLevel;
+        DungeonGen.Instance.GenerateDungeon();
+
+    }
+
+    public DungeonSettings GetSettings() {
+        if (currentLevel <= settings.Length) {
+            return settings[currentLevel];
+        }
+        else {
+            return settings[settings.Length];
+        }
+    }
+
+    public DungeonAppearance GetAppearance() {
+        return appearances[Random.Range(0, appearances.Length)];
+    }
+
+    public void NextLevel() {
+        currentLevel++;
     }
 
     void Interact() {
@@ -83,6 +117,9 @@ public class GameManager : Singleton<GameManager> {
                     };
                 }
                 break;
+            case Controlling.ESC_MENU:
+                UIManager.Instance.escMenu.DoActionAtPointer();
+                break;
         }
     }
 
@@ -107,7 +144,11 @@ public class GameManager : Singleton<GameManager> {
     }
 
     void Esc() {        
-        SetControlTo(Controlling.PLAYER);
+        if (currentlyControling != Controlling.PLAYER) {
+            SetControlTo(Controlling.PLAYER);
+        } else {
+            SetControlTo(Controlling.ESC_MENU);
+        }
     }
 
     public void SetControlTo(Controlling control) {
@@ -117,6 +158,8 @@ public class GameManager : Singleton<GameManager> {
 
         switch (currentlyControling) {
             case Controlling.PLAYER:
+                UIManager.Instance.escMenu.TogglePanel(false);
+                UIManager.Instance.escMenu.SetPointer(0);
                 UIManager.Instance.inventory.TogglePanel(false);
                 UIManager.Instance.inventoryCard.TogglePanel(false);
                 UIManager.Instance.inventory.SetPointer(0);
@@ -148,6 +191,10 @@ public class GameManager : Singleton<GameManager> {
                 camera.SetCameraToFollow(UIManager.Instance.aimpointer.gameObject);
 
                 break;
+            case Controlling.ESC_MENU:
+                UIManager.Instance.escMenu.TogglePanel(true);
+
+                break;
             default:
                 break;
         }
@@ -172,6 +219,10 @@ public class GameManager : Singleton<GameManager> {
                 case Controlling.AIM_POINTER:
                     UIManager.Instance.aimpointer.UpdatePos(input);
                     break;
+                
+                case Controlling.ESC_MENU:
+                    UIManager.Instance.escMenu.UpdatePointer(input);
+                    break;
             }
         }
 
@@ -185,11 +236,32 @@ public class GameManager : Singleton<GameManager> {
     }
 
     void SpawnPlayer() {
-        player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
-        EventManager.InvokeEvent("PLAYER_SPAWNED");
-        minimap.SetDungeon();
+        if (player == null) {
+            player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.SpawnPos, Quaternion.identity);
+        } else {
+            
+            player.GetComponent<Entity>().SetPos(DungeonGen.Instance.SpawnPos);
+            
+        }
+
+        if (loadFromSave) {
+            saving.GetSave();
+
+            PlayerInventory inventory = player.GetComponent<PlayerInventory>();
+            Player playerScript = player.GetComponent<Player>();
+
+            inventory.equipSlots = saving.GetSlotsFromSave(player.GetComponent<PlayerInventory>().equipSlots);
+            inventory.SetInventory(saving.GetItemsFromSave());
+            
+            player.GetComponent<Player>().SetHealth(saving.save.currentHealth);
+            playerScript.SetStrength(saving.save.currentStrength);
+            playerScript.SetInteligence(saving.save.currentInteligence);
+        }
+
         camera.SetCameraToFollow(player);
         camera.SetCameraPos(DungeonGen.Instance.SpawnPos);
+        minimap.SetDungeon();
+        EventManager.InvokeEvent("PLAYER_SPAWNED");
     }
 
     Vector2Int GetInput() {

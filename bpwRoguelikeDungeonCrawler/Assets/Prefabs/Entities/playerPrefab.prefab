@@ -54,6 +54,7 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  CantBeDestroyed: 1
   entityIsSolid: 1
   maxHealth: 30
   health: 0

@@ -91,7 +91,6 @@ public class Player : Entity
             switch (GetActionType(input)) {
                 case ActionType.MOVE:
                     action = new Task(Move(input, moveDistance, true, 0.1f, timeBetweenMoves));
-                    
                     break;
                 case ActionType.ATTACK:
                     action = new Task(GetComponent<MeleeAttack>().DoAttack(input+GetPos(), CalculateDamage((IWeapon)GetComponent<PlayerInventory>().GetItemBySlotID("WEAPON")), this));

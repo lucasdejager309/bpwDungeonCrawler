@@ -13,7 +13,7 @@ public class Interact : MonoBehaviour {
 
                     bool finished = false;
 
-                    if (pos != GameManager.Instance.player.GetComponent<Player>().GetPos()) {
+                    if (pos != GameManager.Instance.player.GetComponent<Player>().GetPos() && kv.Key.GetComponent<InteractableObject>().doInteractAnim) {
                         Task t = new Task(MeleeAttack.AttackAnimMelee(pos, this.GetComponent<Entity>(), animationSpeed));
                         t.Finished += delegate {
                             finished = true;

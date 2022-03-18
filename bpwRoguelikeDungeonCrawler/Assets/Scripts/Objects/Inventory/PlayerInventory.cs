@@ -6,6 +6,10 @@ using UnityEngine;
 public class EquipSlot {
     public string slotID;
     public Item item;
+
+    public EquipSlot() {
+        slotID = "";
+    }
 }
 
 public class PlayerInventory : Inventory {

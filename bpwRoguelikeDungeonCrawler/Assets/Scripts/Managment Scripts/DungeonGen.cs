@@ -5,9 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class DungeonGen : Singleton<DungeonGen>
 {
-   public DungeonAppearance appearance;
-   public DungeonSettings settings;
-
     public List<Room> roomList {get; private set; } = new List<Room>();
 
     public GameObject doorPrefab;
@@ -22,12 +19,18 @@ public class DungeonGen : Singleton<DungeonGen>
 
     public Vector2Int SpawnPos;
 
+    private DungeonAppearance appearance;
+    private DungeonSettings settings;
+
     void Awake() {
         Instance = this;
         EventManager.AddListener("NEW_DUNGEON", GenerateDungeon);
     }
 
     public void GenerateDungeon() {
+        appearance = GameManager.Instance.GetAppearance();
+        settings = GameManager.Instance.GetSettings();
+        
         EventManager.InvokeEvent("RELOAD_DUNGEON");
         WipeDungeon();
         AllocateRooms();

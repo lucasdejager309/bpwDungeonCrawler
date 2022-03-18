@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 3f54f5d30e5f12d49aaae48d7a30f327, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,9 +99,11 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  CantBeDestroyed: 0
   entityIsSolid: 0
-  maxHealth: 0
+  maxHealth: 3000
   health: 0
+  doInteractAnim: 0
   sceneToLoad: 1
 --- !u!1001 &1669191763457433198
 PrefabInstance:

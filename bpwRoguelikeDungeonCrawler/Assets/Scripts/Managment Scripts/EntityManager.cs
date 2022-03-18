@@ -30,9 +30,12 @@ public class EntityManager : Singleton<EntityManager>
 
     public void ClearEntityDict() {
         List<Entity> entities = new List<Entity>(entityDict.Keys);
-        entityDict.Clear();
+        // entityDict.Clear();
         foreach(var key in entities) {
-            key.DeleteEntity();
+            if (!key.CantBeDestroyed) {
+                key.DeleteEntity();
+                entityDict.Remove(key);
+            }
         }
     }
 
@@ -81,6 +84,17 @@ public class EntityManager : Singleton<EntityManager>
         }
 
         return null;
+    }
+
+    public List<Entity> EntitiesAtPos(Vector2Int pos) {
+        List<Entity> entities = new List<Entity>();
+        foreach (var kv in entityDict) {
+            if (kv.Value == pos) {
+                entities.Add(kv.Key);
+            }
+        }
+
+        return entities;
     }
 
     public Vector2Int PosOfEntity(Entity entity) {

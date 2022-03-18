@@ -78,7 +78,9 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  CantBeDestroyed: 0
   entityIsSolid: 1
   maxHealth: 0
   health: 0
+  doInteractAnim: 1
   mimicPrefab: {fileID: 1002256150901696455, guid: e93ce074df7fa544686eacb7d58b4043, type: 3}

@@ -28,6 +28,11 @@ public class Enemy : Entity
         target = GameManager.Instance.player;
     }
 
+    public void SetDamage(float multiplier) {
+        minDamage = Mathf.CeilToInt(minDamage * multiplier);
+        maxDamage = Mathf.CeilToInt(maxDamage * multiplier);
+    }
+
     public int CalculateDamage() {
         return Random.Range(minDamage, maxDamage);
     }

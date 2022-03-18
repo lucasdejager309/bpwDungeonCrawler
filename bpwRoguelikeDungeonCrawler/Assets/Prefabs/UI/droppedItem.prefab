@@ -109,8 +109,10 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  CantBeDestroyed: 0
   entityIsSolid: 0
-  maxHealth: 0
+  maxHealth: 3000
   health: 0
+  doInteractAnim: 1
   item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
   amount: 1

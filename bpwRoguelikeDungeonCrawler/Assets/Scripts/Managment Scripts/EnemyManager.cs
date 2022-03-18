@@ -48,8 +48,10 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     void SpawnEnemies() {
+        DungeonSettings settings = GameManager.Instance.GetSettings();
+
         if (spawnEnemies) {
-            Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(enemyPrefabs, minEnemyDensity, maxEnemyDensity);
+            Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(settings.enemyPrefabs, settings.enemyDensityRange.x, settings.enemyDensityRange.y);
             foreach (KeyValuePair<Vector2Int, GameObject> enemy in enemiesToSpawn) {
                 enemies.Add(EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value));
             }
@@ -61,11 +63,17 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     public void SpawnEnemy(GameObject enemy, Vector2Int pos) {
-        enemies.Add(EntityManager.Instance.SpawnEntity(pos, enemy));
+        DungeonSettings settings = GameManager.Instance.GetSettings();
+        
+        GameObject spawnedObject = EntityManager.Instance.SpawnEntity(pos, enemy);
+        Enemy spawnedEnemy = spawnedObject.GetComponent<Enemy>();
+        spawnedEnemy.SetHealth(Mathf.CeilToInt(spawnedEnemy.MaxHealth*settings.enemyHealthMultiplier));
+        spawnedEnemy.SetDamage(settings.enemyDamageMultiplier);
+        enemies.Add(spawnedObject);
     }
 
     IEnumerator DoActions() {
-        EventManager.InvokeEvent("UI_WAIT");
+        EventManager.InvokeEvent("UI_TOGGLE_WAIT");
 
         List<GameObject> actionQueue = new List<GameObject>();
 
@@ -103,7 +111,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 yield return null;
             }
         }
-        EventManager.InvokeEvent("UI_WAIT");
+        EventManager.InvokeEvent("UI_TOGGLE_WAIT");
         EventManager.InvokeEvent("OTHER_TURNS_FINISHED"); 
     }
 }

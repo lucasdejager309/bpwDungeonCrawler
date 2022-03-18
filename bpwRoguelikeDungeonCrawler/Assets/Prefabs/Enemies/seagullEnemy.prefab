@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: seagullEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2664543417932978900, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e085a94b6518c8a4f93a447c371c2e6b, type: 2}
     - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: minItems
       value: 1

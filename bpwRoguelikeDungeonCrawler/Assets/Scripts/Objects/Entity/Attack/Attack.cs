@@ -11,10 +11,12 @@ public class Attack : MonoBehaviour {
     public virtual IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker) {
         lastTurnDone = GameManager.Instance.CurrentTurn;
         
-        Entity entity = EntityManager.Instance.EntityAtPos(attackPos);
-        if (entity != null) {
-            entity.TakeDamage(damage);
-            EventManager.InvokeEvent("DAMAGE_HAPPENED");
+        List<Entity> entities = EntityManager.Instance.EntitiesAtPos(attackPos);
+        foreach(Entity entity in entities) {
+            if (entity != null) {
+                entity.TakeDamage(damage);
+                EventManager.InvokeEvent("DAMAGE_HAPPENED");
+            }
         }
 
         return null;
