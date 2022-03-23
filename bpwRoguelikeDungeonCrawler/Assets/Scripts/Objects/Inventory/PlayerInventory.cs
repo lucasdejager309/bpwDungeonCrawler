@@ -55,6 +55,8 @@ public class PlayerInventory : Inventory {
                         }
                         
                         slot.item = item;
+
+                        LogText.Instance.Log("You equipped " + item.itemName);
                         
                         EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
 
@@ -74,6 +76,8 @@ public class PlayerInventory : Inventory {
                 Item unequipedItem = slot.item;
                 slot.item = null;
                 AddItem(unequipedItem);
+
+                LogText.Instance.Log("You unequipped " + unequipedItem.itemName);
                 
                 EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
                 

@@ -12,17 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af129991270b16469eff81a5f82bed5, type: 3}
   m_Name: Lvl3DungeonSettings
   m_EditorClassIdentifier: 
-  maxRange: 35
+  maxRange: 40
   amountRooms: 5
   amountRandomRooms: 4
-  roomSizeRange: {x: 6, y: 8}
-  newRoomRange: 7
+  roomSizeRange:
+    min: 6
+    max: 8
+  newRoomRange: 12
   minRoomSpacing: 3
   corridorWidth: 1
-  dungeonFeaturesAmountRange: {x: 2, y: 5}
+  dungeonFeaturesAmountRange:
+    min: 6
+    max: 9
+  interactableObjectsDensityRange:
+    min: 5
+    max: 6
+  interactableObjects:
+  - spawnChance: 10
+    gameObject: {fileID: 7537511706092174933, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+    wallAdjacent: 1
+  - spawnChance: 4
+    gameObject: {fileID: 5056227480076459459, guid: 6d22951640a256e4c99f238f0803ed95, type: 3}
+    wallAdjacent: 1
   enemyDamageMultiplier: 1.4
   enemyHealthMultiplier: 1.4
-  enemyDensityRange: {x: 3, y: 7}
+  enemyDensityRange:
+    min: 3
+    max: 7
   enemyPrefabs:
   - spawnChance: 10
     gameObject: {fileID: 5859420433078302010, guid: 2a3790518ae7c9241a924fc545627f92, type: 3}

@@ -14,6 +14,8 @@ public class Attack : MonoBehaviour {
         List<Entity> entities = EntityManager.Instance.EntitiesAtPos(attackPos);
         foreach(Entity entity in entities) {
             if (entity != null) {
+                LogText.Instance.Log(attacker.entityName + " attacked " + entity.entityName + " and did " + damage + " damage");
+                
                 entity.TakeDamage(damage);
                 EventManager.InvokeEvent("DAMAGE_HAPPENED");
             }
@@ -28,8 +30,6 @@ public class Attack : MonoBehaviour {
         if (lastTurnDone == 0) {
             return true;
         }
-
-        //Debug.Log(this.gameObject.name + " currentTurn: " + GameManager.Instance.CurrentTurn + " lastTurnDone: " + lastTurnDone + " lastTurnDone + howManyTurns: " + (lastTurnDone + howManyTurns));
 
         if ((lastTurnDone + howManyTurns) <= currentTurn) {
             return true;

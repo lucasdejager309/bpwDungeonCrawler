@@ -43,3 +43,5 @@ MonoBehaviour:
     spawnChance: 5
     wallAdjacent: 1
     solid: 1
+  floorTile: {fileID: 11400000, guid: d369961575c31764c88a0c81bc3692c8, type: 2}
+  solidTile: {fileID: 11400000, guid: de9dffe0b0e7318409258e7ba67f3c49, type: 2}

@@ -23,6 +23,13 @@ public class ItemPickup : InteractableObject
     public override void Interact(GameObject interacter)
     {
         interacter.GetComponent<Inventory>().AddItem(item, amount);
+        
+        if (amount > 1) {
+            LogText.Instance.Log("You picked up " + item.itemName + " (" + amount + ")");
+        } else {
+            LogText.Instance.Log("You picked up " + item.itemName);
+        }
+        
         Die();
     }
 }

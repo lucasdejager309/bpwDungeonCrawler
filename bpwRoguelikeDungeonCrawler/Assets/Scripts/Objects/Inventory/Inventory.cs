@@ -55,8 +55,15 @@ public class Inventory : MonoBehaviour
             SpawnDroppedItem(item, itemAmount, pos);
 
             EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
+            
+            string logMessage = "You dropped " + item.itemName;
+            if (itemAmount > 1) {
+                logMessage += " (" + itemAmount + ")";
+            }
+            LogText.Instance.Log(logMessage);
 
             return true;
+
         } else return false;
     }
 
@@ -114,14 +121,6 @@ public class Inventory : MonoBehaviour
         if (index < Items.Count) {
             return Items[index].item;
         } else return null;
-    }
-
-    public void DebugItems() {
-        foreach (InventoryItem item in Items) {
-            if (item.item != null) {
-                Debug.Log(item.item.itemName + " " + item.amount);
-            }
-        }
     }
 
     public void SpawnDroppedItem(Item item, int amount, Vector2Int pos) {

@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour, IDamagable
     public LayerMask solidLayer;
     
     [Header("entity attributes")]
+    public string entityName;
     public bool CantBeDestroyed = false;
     
     public bool entityIsSolid;
@@ -77,8 +78,6 @@ public class Entity : MonoBehaviour, IDamagable
         
         List<PathNode> path = Pathfinding.FindPath(new PathNode(GetPos()), new PathNode(targetPos), EntityManager.Instance.validPositions);
         if (path != null) {
-            GameManager.Instance.DrawPath(path);
-
             int i = 0;
             bool doingMove = false;
             while(i < tilesPerMove && i < path.Count) {

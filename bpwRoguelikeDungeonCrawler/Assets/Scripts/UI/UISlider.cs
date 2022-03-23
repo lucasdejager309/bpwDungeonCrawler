@@ -45,6 +45,10 @@ public class UISlider : MonoBehaviour
         return false;
     }
 
+    public float GetValue() {
+        return currentValue;
+    }
+
     public void ModifyValue(float amount) {
         if (currentValue + amount > 0 && currentValue + amount < maxValue) {
             SetValue(currentValue + amount);

@@ -97,6 +97,7 @@ public class Enemy : Entity
     public override void Die()
     {
         GetComponent<DropItems>().DropFromLootTable(GetPos());
+        LogText.Instance.Log(entityName + " Died");
         base.Die();
     }
 

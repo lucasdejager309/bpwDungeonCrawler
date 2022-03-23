@@ -28,6 +28,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: entityName
+      value: Fireball
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: attackRange
       value: 3.5
       objectReference: {fileID: 0}

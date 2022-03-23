@@ -15,14 +15,30 @@ MonoBehaviour:
   maxRange: 35
   amountRooms: 3
   amountRandomRooms: 7
-  roomSizeRange: {x: 4, y: 6}
-  newRoomRange: 7
+  roomSizeRange:
+    min: 5
+    max: 6
+  newRoomRange: 9
   minRoomSpacing: 3
   corridorWidth: 1
-  dungeonFeaturesAmountRange: {x: 2, y: 5}
+  dungeonFeaturesAmountRange:
+    min: 2
+    max: 5
+  interactableObjectsDensityRange:
+    min: 3
+    max: 5
+  interactableObjects:
+  - spawnChance: 10
+    gameObject: {fileID: 7537511706092174933, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+    wallAdjacent: 1
+  - spawnChance: 1
+    gameObject: {fileID: 5056227480076459459, guid: 6d22951640a256e4c99f238f0803ed95, type: 3}
+    wallAdjacent: 1
   enemyDamageMultiplier: 1
   enemyHealthMultiplier: 1
-  enemyDensityRange: {x: 3, y: 7}
+  enemyDensityRange:
+    min: 3
+    max: 7
   enemyPrefabs:
   - spawnChance: 10
     gameObject: {fileID: 5859420433078302010, guid: 2a3790518ae7c9241a924fc545627f92, type: 3}

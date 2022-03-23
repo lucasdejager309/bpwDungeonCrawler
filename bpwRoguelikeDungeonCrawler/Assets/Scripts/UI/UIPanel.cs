@@ -25,7 +25,7 @@ public class UIPanel : MonoBehaviour
         this.gameObject.SetActive(state);
     }   
 
-    public void SetPointer(int newIndex) {
+    public virtual void SetPointer(int newIndex) {
         pointerIndex = newIndex;
         pointer.transform.position = selectablePanels[pointerIndex].transform.position;
     }    

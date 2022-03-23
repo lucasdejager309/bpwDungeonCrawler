@@ -67,20 +67,25 @@ public class UIInventory : UIPanel
     }
 
     public override void UpdatePointer(Vector2Int input) {
-        if (input != new Vector2Int(0, 0)) {
+        if (input != new Vector2Int(0, 0)) {    
+            int indexToSet = 0;
+
             //REGULAR INVENTORY SLOTS
             if (PointerIndex < MAX_SLOTS) {
                 if (Mathf.Abs(input.x) == 1) {
                 if (PointerIndex+input.x >= 0 && PointerIndex+input.x < MAX_SLOTS) {
-                    SetPointer(PointerIndex+input.x);
+                    // SetPointer(PointerIndex+input.x);
+                    indexToSet = PointerIndex+input.x;
                 }
                 
                 }
                 if (Mathf.Abs(input.y) == 1) {
                     if (PointerIndex-input.y*ROW_SIZE >= 0 && PointerIndex-input.y*ROW_SIZE < MAX_SLOTS) {
-                        SetPointer(PointerIndex-input.y*ROW_SIZE);
+                        // SetPointer(PointerIndex-input.y*ROW_SIZE);
+                        indexToSet = PointerIndex-input.y*ROW_SIZE;
                     } else if (PointerIndex < ROW_SIZE && input.y == 1) {
-                        SetPointer(MAX_SLOTS);
+                        // SetPointer(MAX_SLOTS);
+                        indexToSet = MAX_SLOTS;
                     }
                 }
             //EQUIP SLOTS
@@ -88,16 +93,25 @@ public class UIInventory : UIPanel
                 
                 if (Mathf.Abs(input.x) == 1) {
                     if (PointerIndex+input.x >= MAX_SLOTS && PointerIndex+input.x < selectablePanels.Length) {
-                        SetPointer(PointerIndex+input.x);
+                        // SetPointer(PointerIndex+input.x);
+                        indexToSet = PointerIndex+input.x;
                     }
                 }
 
                 if (input.y == -1) {
-                    SetPointer(0);
+                    // SetPointer(0);
+                    indexToSet = 0;
                 }
             }
             
+            SetPointer(indexToSet);
+            
         }
-        GameManager.Instance.player.GetComponent<PlayerInventory>().SetInventoryPointer(PointerIndex);
+    }
+
+    public override void SetPointer(int newIndex)
+    {
+        base.SetPointer(newIndex);
+        GameManager.Instance.player.GetComponent<PlayerInventory>().SetInventoryPointer(newIndex);
     }
 }

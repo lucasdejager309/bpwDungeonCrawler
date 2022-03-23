@@ -6,7 +6,7 @@ public class UseButtonAction : UIAction
 {
     public override void DoAction()
     {
-        GameManager.Instance.SetControlTo(GameManager.Controlling.INVENTORY);
+        GameManager.Instance.SetControlTo(ControlMode.INVENTORY);
         PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
         Player player = GameManager.Instance.player.GetComponent<Player>();
 

@@ -14,7 +14,7 @@ public class ThrowableItem : ConsumableItem, IWeapon {
     
     public override void Use()
     {
-        EventManager.InvokeEvent("TOGGLE_AIM");
+        GameManager.Instance.ToggleAimingPointer();
         UIManager.Instance.aimpointer.itemToThrow = this;
         
         RangedAttack ranged = GameManager.Instance.player.GetComponent<RangedAttack>();

@@ -6,9 +6,6 @@ using UnityEngine;
 public class EnemyManager : Singleton<EnemyManager>
 {
     public bool spawnEnemies;
-    public float minEnemyDensity;
-    public float maxEnemyDensity;
-    public SpawnableObject[] enemyPrefabs;
     public List<GameObject> enemies = new List<GameObject>();
 
     void Awake() {
@@ -51,7 +48,7 @@ public class EnemyManager : Singleton<EnemyManager>
         DungeonSettings settings = GameManager.Instance.GetSettings();
 
         if (spawnEnemies) {
-            Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(settings.enemyPrefabs, settings.enemyDensityRange.x, settings.enemyDensityRange.y);
+            Dictionary<Vector2Int, GameObject> enemiesToSpawn = EntityManager.Instance.SpawnByDensity(settings.enemyPrefabs, settings.enemyDensityRange.min, settings.enemyDensityRange.max);
             foreach (KeyValuePair<Vector2Int, GameObject> enemy in enemiesToSpawn) {
                 enemies.Add(EntityManager.Instance.SpawnEntity(enemy.Key, enemy.Value));
             }
@@ -106,7 +103,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 t.Finished += delegate {
                     i++;
                     next = true;
-                    EventManager.InvokeEvent("ADD_TURN");
+                    GameManager.Instance.AddTurn();
                 };
                 yield return null;
             }

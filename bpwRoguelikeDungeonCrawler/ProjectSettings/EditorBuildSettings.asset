@@ -13,5 +13,5 @@ EditorBuildSettings:
     guid: 33f5023b7f01aac44a3d22e7c7a1eaeb
   - enabled: 1
     path: Assets/Scenes/LoadDungeonScene.unity
-    guid: 597bedd4a8567c340bede63b411a1426
+    guid: 0a8e021ca6c315a42859e782a6017c53
   m_configObjects: {}

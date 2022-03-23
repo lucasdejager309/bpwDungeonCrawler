@@ -54,6 +54,7 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  entityName: You
   CantBeDestroyed: 1
   entityIsSolid: 1
   maxHealth: 30
@@ -121,14 +122,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - amount: 30
+  - amount: 15
     item: {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
+  - amount: 2
+    item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
   droppedItemPrefab: {fileID: 426325741944114898, guid: f3862726efa25ca448d4701392066f4b, type: 3}
   equipSlots:
   - slotID: ARMOR
     item: {fileID: 11400000, guid: dbb027bd52e2100499dd3a78b2d2fa43, type: 2}
   - slotID: WEAPON
-    item: {fileID: 0}
+    item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
   pointerIndex: 0
   inputAllowed: 1
 --- !u!212 &-7954610942754421442

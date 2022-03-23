@@ -99,6 +99,7 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
+  entityName: a stair?
   CantBeDestroyed: 0
   entityIsSolid: 0
   maxHealth: 3000

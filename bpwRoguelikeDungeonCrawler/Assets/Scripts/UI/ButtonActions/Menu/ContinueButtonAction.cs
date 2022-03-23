@@ -5,6 +5,6 @@ using UnityEngine;
 public class ContinueButtonAction : UIAction {
     public override void DoAction()
     {
-        GameManager.Instance.SetControlTo(GameManager.Controlling.PLAYER);
+        GameManager.Instance.SetControlTo(ControlMode.PLAYER);
     }
 }

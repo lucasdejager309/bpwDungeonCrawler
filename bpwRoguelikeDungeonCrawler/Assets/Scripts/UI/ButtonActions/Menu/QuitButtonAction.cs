@@ -9,7 +9,7 @@ public class QuitButtonAction : UIAction
 
     public override void DoAction()
     {
-        GameManager.Instance.SetControlTo(GameManager.Controlling.PLAYER);
+        GameManager.Instance.SetControlTo(ControlMode.PLAYER);
         UIManager.Instance.escMenu.TogglePanel(false);
 
         if (save) {

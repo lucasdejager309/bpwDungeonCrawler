@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: minDamage
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: entityName
+      value: Mimic
+      objectReference: {fileID: 0}
     - target: {fileID: 338651139270102538, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
       value: 0

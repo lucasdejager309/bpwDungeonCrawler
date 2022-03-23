@@ -35,4 +35,19 @@ public class Interact : MonoBehaviour {
             }
         }
     }
+
+    public void DoInteractMultiple(Vector2Int pos) {
+        List<InteractableObject> objects = new List<InteractableObject>();
+        foreach (var kv in EntityManager.Instance.entityDict) {
+            if (kv.Value == pos) {
+                if (kv.Key.GetComponent<InteractableObject>() != null) {
+                    objects.Add(kv.Key.GetComponent<InteractableObject>());
+                }
+            }
+        }
+
+        foreach (InteractableObject obj in objects) {
+            obj.GetComponent<InteractableObject>().Interact(this.gameObject);
+        }
+    }
 }

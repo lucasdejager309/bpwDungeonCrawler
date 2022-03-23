@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: minDamage
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: entityName
+      value: Seagull
+      objectReference: {fileID: 0}
     - target: {fileID: 2118473169861415954, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: m_RootOrder
       value: 0

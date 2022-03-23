@@ -29,6 +29,7 @@ public class CameraFollowPlayer : MonoBehaviour
     }
 
     void FixedUpdate() {
+        
         if (objectsToFollow.Count > 0) {
             float x = 0;
             float y = 0;
@@ -44,9 +45,8 @@ public class CameraFollowPlayer : MonoBehaviour
             Vector3 targetPos = new Vector3 (x+offset.x, y+offset.y, transform.position.z);
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed);
-        } else {
-            transform.position = new Vector3(objectsToFollow[0].transform.position.x+offset.x, objectsToFollow[0].transform.position.y+offset.y, transform.position.z);
-        }
-        
+        } // else {
+        //     transform.position = new Vector3(objectsToFollow[0].transform.position.x+offset.x, objectsToFollow[0].transform.position.y+offset.y, transform.position.z);
+        // }
     }
 }

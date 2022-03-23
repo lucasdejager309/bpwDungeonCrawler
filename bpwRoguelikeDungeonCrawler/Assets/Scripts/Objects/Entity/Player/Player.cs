@@ -26,6 +26,11 @@ public class Player : Entity
         NOTHING
     }
 
+    public override void Start() {
+        base.Start();
+        EventManager.AddListener("OTHER_TURNS_FINISHED", AllowInput);
+    }
+
     public bool CheckStrength(int value) {
         if (strength >= value) {
             return true;
@@ -60,13 +65,13 @@ public class Player : Entity
 
         base.TakeDamage(damage);
 
-        EventManager.InvokeEvent("UI_UPDATE_STATS");
+        EventManager.InvokeEvent("UI_UPDATE_HEALTH");
     }
 
     public override void SetHealth(int newHealth)
     {
         base.SetHealth(newHealth);
-        EventManager.InvokeEvent("UI_UPDATE_STATS");
+        EventManager.InvokeEvent("UI_UPDATE_HEALTH");
     }
 
     public int CalculateDamage(IWeapon weapon) {
@@ -108,7 +113,7 @@ public class Player : Entity
 
         action.Finished += delegate {
             EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
-            EventManager.InvokeEvent("ADD_TURN");
+            GameManager.Instance.AddTurn();
         };
     }
 
@@ -130,11 +135,6 @@ public class Player : Entity
         }
         else actionToReturn = ActionType.NOTHING;
         return actionToReturn;
-    }
-
-    public override void Start() {
-        base.Start();
-        EventManager.AddListener("OTHER_TURNS_FINISHED", AllowInput);
     }
     
     void AllowInput() {

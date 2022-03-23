@@ -10,6 +10,6 @@ public class ToNextLevel : InteractableObject
     public override void Interact(GameObject interacter)
     {
         GameManager.Instance.NextLevel();
-        DungeonGen.Instance.GenerateDungeon();
+        DungeonGen.Instance.GenerateDungeon(GameManager.Instance.GetAppearance(), GameManager.Instance.GetSettings());
     }
 }

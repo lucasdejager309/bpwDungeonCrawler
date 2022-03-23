@@ -53,8 +53,6 @@ public static class Pathfinding {
 			}
 		}
 
-		Debug.Log(openHeap.Count);
-
 		return null;
 	}
 
