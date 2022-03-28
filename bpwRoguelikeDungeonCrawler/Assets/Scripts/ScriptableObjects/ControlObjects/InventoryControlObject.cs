@@ -13,7 +13,7 @@ public class InventoryControlObject : ControlObject
     public override void SetControlTo()
     {
         UIManager.Instance.inventory.TogglePanel(true);
-        UIManager.Instance.inventory.UpdateInventory();
+        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
     }
 
     public override void LoseControl()

@@ -8,9 +8,4 @@ public class Chest : InteractableObject {
     {
         Die();
     }
-
-    public override void Die() {
-        GetComponent<DropItems>().DropFromLootTable(GetPos());
-        base.Die();
-    }
 }

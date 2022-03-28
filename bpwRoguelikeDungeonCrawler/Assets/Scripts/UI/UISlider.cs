@@ -21,6 +21,10 @@ public class UISlider : MonoBehaviour
     }
 
     public void SetActive(bool state) {
+        if (background == null) background = gameObject.transform.GetChild(0).GetComponent<Image>();
+        if (slider == null) slider = gameObject.transform.GetChild(1).GetComponent<Image>();
+        if (border == null) border = gameObject.transform.GetChild(2).GetComponent<Image>();
+        
         background.enabled = slider.enabled = border.enabled = state;
     }
 

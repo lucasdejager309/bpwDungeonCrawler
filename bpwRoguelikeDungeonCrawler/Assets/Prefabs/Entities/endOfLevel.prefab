@@ -99,13 +99,18 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
-  entityName: a stairwell?
-  CantBeDestroyed: 0
-  entityIsSolid: 0
+  entityName: Stairwell
+  description: Stairs lead deeper into the dungeon
+  cantBeDestroyed: 0
+  isSolid: 0
+  isAttackable: 0
   maxHealth: 3000
   health: 0
   doInteractAnim: 0
   sceneToLoad: 1
+  itemsNeeded:
+  - amount: 3
+    item: {fileID: 11400000, guid: b8c0a6cfd63220641aef019a9cb255c6, type: 2}
 --- !u!1001 &1669191763457433198
 PrefabInstance:
   m_ObjectHideFlags: 0

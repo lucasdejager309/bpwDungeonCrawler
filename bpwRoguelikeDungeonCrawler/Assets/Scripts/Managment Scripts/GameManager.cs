@@ -20,8 +20,10 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public GameObject playerPrefab;
+    public GameObject droppedItemPrefab;
     public GameObject player;
     public Minimap minimap;
+
     
     public CameraFollowPlayer cameraFollow;
 
@@ -29,21 +31,21 @@ public class GameManager : Singleton<GameManager> {
     public ControlMode currentlyControlling;
     public ControlObject[] controllers;
 
-    DungeonAppearance appearance = null;
-
     void Awake() {
         Instance = this;
     }
 
     void Start() {
         //GAME EVENTS
-        EventManager.AddListener("DUNGEON_GENERATED", SpawnPlayer);
-        EventManager.AddListener("DUNGEON_GENERATED", SpawnObjects);
+        EventManager.AddListener("DUNGEON_GENERATED", SpawnEntities);
+        EventManager.AddListener("DUNGEON_GENERATED", HideUI);
 
         //INPUT EVENTS
         EventManager.AddListener("INTERACT", Interact); //SPACE
         EventManager.AddListener("ESC", Esc); //ESCAPE
         EventManager.AddListener("TOGGLE_INVENTORY", ToggleInventory); //E
+        EventManager.AddListener("SKIP_LEVEL", NextLevel);
+        EventManager.AddListener("INSPECT", Inspect);
 
         //SETUP CAMERA
         cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowPlayer>();
@@ -56,13 +58,6 @@ public class GameManager : Singleton<GameManager> {
         }
 
         SetControlTo(ControlMode.PLAYER);
-
-        //TURN OFF UI ELEMENTS
-        UIManager.Instance.inventory.TogglePanel(false);
-        UIManager.Instance.inventoryCard.TogglePanel(false);
-        UIManager.Instance.escMenu.TogglePanel(false);
-        UIManager.Instance.aimpointer.SetActive(false);
-        UIManager.Instance.bigAnnouncementText.gameObject.SetActive(false);
     }
 
     public void Save() { 
@@ -76,6 +71,13 @@ public class GameManager : Singleton<GameManager> {
         DungeonGen.Instance.GenerateDungeon(GetAppearance(), GetSettings());
 
     }
+    
+    public void NewGame() {
+        player.GetComponent<PlayerInventory>().ResetInventory();
+        player.GetComponent<Player>().ResetStats();
+        SetControlTo(ControlMode.PLAYER);
+        DungeonGen.Instance.GenerateDungeon(GetAppearance(), GetSettings());
+    }
 
     public DungeonSettings GetSettings() {
         if (currentLevel < settings.Length) {
@@ -87,17 +89,22 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public DungeonAppearance GetAppearance() {
-        if (appearance != null) {
-            return appearance;
-        } else {
-            appearance = appearances[Random.Range(0, appearances.Length)];
-            return appearance;
+         if (currentLevel < appearances.Length) {
+            return appearances[currentLevel];
+        }
+        else {
+            return appearances[appearances.Length-1];
         }
         
     }
 
     public void NextLevel() {
+        DungeonGen.Instance.GenerateDungeon(GameManager.Instance.GetAppearance(), GameManager.Instance.GetSettings());
         currentLevel++;
+    }
+
+    void Inspect() {
+        SetControlTo(ControlMode.INSPECT);
     }
 
     public void AddTurn() {
@@ -106,19 +113,29 @@ public class GameManager : Singleton<GameManager> {
 
     public void SetControlTo(ControlMode mode) {
         currentlyControlling = mode;
-        
-        GetControlObject(mode).SetControlTo();
-        
+
         foreach (ControlObject controller in controllers) {
+            //I WANT BOTH INVENTORY AND INVENTORY CARD VISIBLE AT SAME TIME
             if (currentlyControlling == ControlMode.INVENTORYCARD && controller.mode == ControlMode.INVENTORY) {
                 continue;
             }
+
             if (controller.mode != currentlyControlling) {
-                Debug.Log(controller);
                 controller.LoseControl();
             }
         }
+
+        GetControlObject(mode).SetControlTo();
         
+    }
+
+    void HideUI() {
+        UIManager.Instance.inventory.TogglePanel(false);
+        UIManager.Instance.inventoryCard.TogglePanel(false);
+        UIManager.Instance.escMenu.TogglePanel(false);
+        UIManager.Instance.aimpointer.SetActive(false);
+        UIManager.Instance.bigAnnouncementText.gameObject.SetActive(false);
+        UIManager.Instance.deathMenu.TogglePanel(false);
     }
 
     void SpawnPlayer() {
@@ -138,25 +155,56 @@ public class GameManager : Singleton<GameManager> {
             Player playerScript = player.GetComponent<Player>();
 
             inventory.equipSlots = saving.GetSlotsFromSave(player.GetComponent<PlayerInventory>().equipSlots);
+            
             inventory.SetInventory(saving.GetItemsFromSave());
             
             player.GetComponent<Player>().SetHealth(saving.save.currentHealth);
             playerScript.SetStrength(saving.save.currentStrength);
-            playerScript.SetInteligence(saving.save.currentInteligence);
+            playerScript.SetIntelligence(saving.save.currentIntelligence);
         }
 
         cameraFollow.SetCameraToFollow(player);
         cameraFollow.SetCameraPos(player.GetComponent<Player>().GetPos());
         minimap.SetDungeon();
+
+        Save();
+
         EventManager.InvokeEvent("PLAYER_SPAWNED");
     }
 
-    void SpawnObjects() {
-        DungeonSettings settings = GetSettings();
+    void SpawnEntities() {
+        SpawnRequiredObjects();
+        SpawnPlayer();
+        EnemyManager.Instance.SpawnEnemies();
+        InteractableObjectsManager.Instance.SpawnObjects();
+        PopulateRequiredLootItems();
+    }
 
-        Dictionary<Vector2Int, GameObject> objectsToSpawn = new Dictionary<Vector2Int, GameObject>();
-        objectsToSpawn = EntityManager.Instance.SpawnByDensity(settings.interactableObjects, settings.interactableObjectsDensityRange.min, settings.interactableObjectsDensityRange.max);
-        EntityManager.Instance.SpawnEntities(objectsToSpawn);
+    void SpawnRequiredObjects() {
+        foreach (RequiredObject obj in GetSettings().requiredObjects) {
+            for (int i = 0; i < obj.amount; i++) {
+                Vector2Int spawnPos = DungeonGen.Instance.GetRandomRoom().GetRandomPosInRoom(obj.spawnableObj.wallAdjacent);
+            
+                if (obj.spawnableObj.gameObject.GetComponent<Enemy>()) {
+                    EnemyManager.Instance.SpawnEnemy(spawnPos, obj.spawnableObj.gameObject);
+                } else EntityManager.Instance.SpawnEntity(spawnPos, obj.spawnableObj.gameObject);
+            }
+        }
+    }
+
+    void PopulateRequiredLootItems() {
+        List<Entity> entities = new List<Entity>(EntityManager.Instance.entityDict.Keys);
+        foreach (InventoryItem item in GetSettings().requiredItems) {
+            for (int i = 0; i < item.amount; i++) {
+                Entity entity = entities[0];
+
+                while (entity.GetComponent<DropItems>() == null) {
+                    entity = entities[Random.Range(0, entities.Count)];
+                }
+
+                entity.GetComponent<DropItems>().privateTable.Add(item.item);
+            }
+        }
     }
 
     public void Esc() {
@@ -171,10 +219,6 @@ public class GameManager : Singleton<GameManager> {
         if (currentlyControlling == ControlMode.PLAYER || currentlyControlling == ControlMode.INVENTORYCARD) {
             SetControlTo(ControlMode.INVENTORY);
         }
-    }
-
-    public void ToggleAimingPointer() {
-        SetControlTo(ControlMode.AIM_POINTER);
     }
 
     Vector2Int GetInput() {
@@ -215,6 +259,18 @@ public class GameManager : Singleton<GameManager> {
         if (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
         }
+    }
+
+    public void DrawCross(Vector2Int pos, float time, Color color) {
+            Vector2 startPos = new Vector2(pos.x, pos.y);
+            Vector2 endPos = new Vector2(pos.x+1f, pos.y+1f);
+            
+            Debug.DrawLine(startPos, endPos, color, time);
+
+            startPos = new Vector2(pos.x+1, pos.y);
+            endPos = new Vector2(pos.x, pos.y+1f);
+
+            Debug.DrawLine(startPos, endPos, color, time);
     }
     
     ControlObject GetControlObject(ControlMode mode) {

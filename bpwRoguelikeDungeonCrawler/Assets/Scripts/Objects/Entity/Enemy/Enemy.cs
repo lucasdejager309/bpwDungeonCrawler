@@ -96,7 +96,6 @@ public class Enemy : Entity
 
     public override void Die()
     {
-        GetComponent<DropItems>().DropFromLootTable(GetPos());
         LogText.Instance.Log(entityName + " Died");
         base.Die();
     }
@@ -106,5 +105,14 @@ public class Enemy : Entity
         EnemyManager.Instance.enemies.Remove(this.gameObject);
 
         base.DeleteEntity();
+    }
+
+    public override InspectInfo GetInfo()
+    {
+        InspectInfo info = base.GetInfo();
+        string displayDescription = Health + "/" + MaxHealth + " HP\n\n" + info.description;
+
+        info.description = displayDescription;
+        return info;
     }
 }

@@ -21,4 +21,4 @@ MonoBehaviour:
   equipSlotID: ARMOR
   requiredStrength: 15
   requiredInteligence: 0
-  maxAbsorbedDamage: 5
+  maxAbsorbedDamage: 6

@@ -7,7 +7,11 @@ public enum ControlMode {
     INVENTORY,
     INVENTORYCARD,
     AIM_POINTER,
-    ESC_MENU
+    ESC_MENU,
+    DEATH_MENU,
+    QUICK_SLOT,
+    INSPECT,
+    INSPECT_MENU
 }  
 
 public class ControlObject : ScriptableObject {

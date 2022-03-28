@@ -55,16 +55,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   entityName: You
-  CantBeDestroyed: 1
-  entityIsSolid: 1
+  description: a frog!
+  cantBeDestroyed: 1
+  isSolid: 1
+  isAttackable: 0
   maxHealth: 30
   health: 0
   timeBetweenMoves: 0.01
   moveDistance: 1
   inputAllowed: 1
-  baseDamage: 2
+  baseDamage: 3
   strength: 11
-  inteligence: 11
+  intelligence: 10
 --- !u!114 &-7691622291691934766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,19 +123,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31cce2e2444e314fa61b121fce260e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - amount: 15
-    item: {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
-  - amount: 2
-    item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
-  droppedItemPrefab: {fileID: 426325741944114898, guid: f3862726efa25ca448d4701392066f4b, type: 3}
+  items: []
   equipSlots:
   - slotID: ARMOR
     item: {fileID: 11400000, guid: dbb027bd52e2100499dd3a78b2d2fa43, type: 2}
   - slotID: WEAPON
-    item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
+    item: {fileID: 0}
   pointerIndex: 0
   inputAllowed: 1
+  startInventoryItems:
+  - amount: 15
+    item: {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
+  - amount: 2
+    item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
 --- !u!212 &-7954610942754421442
 SpriteRenderer:
   m_ObjectHideFlags: 0

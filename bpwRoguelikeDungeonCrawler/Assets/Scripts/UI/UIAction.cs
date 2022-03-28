@@ -5,6 +5,6 @@ using UnityEngine;
 public class UIAction : MonoBehaviour
 {
     public virtual void DoAction() {
-        UIManager.Instance.inventory.UpdateInventory();
+        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
     }
 }

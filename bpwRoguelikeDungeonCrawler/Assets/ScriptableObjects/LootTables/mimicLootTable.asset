@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: mimicLootTable
   m_EditorClassIdentifier: 
   table:
-  - NOTHING: 0
+  - item: {fileID: 11400000, guid: d96b04adcb481f745b52665337213cb4, type: 2}
+    required: 0
     pickChance: 10
-    item: {fileID: 11400000, guid: d96b04adcb481f745b52665337213cb4, type: 2}
     multiple: 1
-    amountRange: {x: 10, y: 25}
+    amountRange:
+      min: 0
+      max: 0
+  - item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
+    required: 1
+    pickChance: 10
+    multiple: 1
+    amountRange:
+      min: 1
+      max: 2
+  - item: {fileID: 11400000, guid: 44c0ec35da8236347a6121f0fb2dd34f, type: 2}
+    required: 0
+    pickChance: 2
+    multiple: 0
+    amountRange:
+      min: 1
+      max: 2

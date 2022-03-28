@@ -21,3 +21,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df6313313122f6d4e89437c515647b25, type: 2}
   - {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
   - {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
+  - {fileID: 11400000, guid: b8c0a6cfd63220641aef019a9cb255c6, type: 2}
+  - {fileID: 11400000, guid: d437470354bf924418bc21c12d078b14, type: 2}
+  - {fileID: 11400000, guid: fa5ec267c305c0749850b0a4db9bb6fb, type: 2}
+  - {fileID: 11400000, guid: 44c0ec35da8236347a6121f0fb2dd34f, type: 2}
+  - {fileID: 11400000, guid: 154c1f002be730244a9597bd8faba3a8, type: 2}
+  save:
+    currentLevel: 0
+    currentHealth: 0
+    currentStrength: 0
+    currentIntelligence: 0

@@ -20,6 +20,7 @@ MonoBehaviour:
   equippable: 1
   equipSlotID: WEAPON
   requiredStrength: 11
-  requiredInteligence: 0
-  minDamage: 3
-  maxDamage: 6
+  requiredIntelligence: 0
+  damageRange:
+    min: 4
+    max: 6

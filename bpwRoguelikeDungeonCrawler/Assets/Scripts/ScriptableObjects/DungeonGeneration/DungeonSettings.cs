@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Range {
-    Range(float min, float max) {
-        this.min = min;
-        this.max = max;
-    }
-    
-    public float min;
-    public float max;
+public class RequiredObject {
+    public int amount;
+    public SpawnableObject spawnableObj;
 }
 
 
@@ -38,6 +33,10 @@ public class DungeonSettings : ScriptableObject
     [Header("Interactable Objects")]
     public Range interactableObjectsDensityRange;
     public SpawnableObject[] interactableObjects;
+
+    [Header("Required")]
+    public RequiredObject[] requiredObjects;
+    public InventoryItem[] requiredItems;
     
     [Header("Difficulty")]
     public float enemyDamageMultiplier = 1;
@@ -45,4 +44,8 @@ public class DungeonSettings : ScriptableObject
 
     public Range enemyDensityRange;
     public SpawnableObject[] enemyPrefabs;
+
+    [Header("Loot")]
+    public int lootAmount;
+    public LootTable lootTable;
 }

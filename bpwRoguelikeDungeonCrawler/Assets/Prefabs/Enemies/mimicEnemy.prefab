@@ -12,6 +12,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 667512762629b7b4f9f0e4b46341be51, type: 3}
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: isSolid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: maxDamage
       value: 5
       objectReference: {fileID: 0}
@@ -22,6 +26,14 @@ PrefabInstance:
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: entityName
       value: Mimic
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: description
+      value: 'It''s not a chest after all!
+
+
+        These Monsters take the shape
+        of treasure chests, in an attempt to lure unwise adventurers...'
       objectReference: {fileID: 0}
     - target: {fileID: 338651139270102538, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -92,6 +104,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: table
+      value: 
+      objectReference: {fileID: 11400000, guid: d4e2bb87f12a8cb4d9b5a8a81cf0dfb6, type: 2}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: lootID
+      value: ENEMY
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: minItems
       value: 1
       objectReference: {fileID: 0}
@@ -99,5 +119,9 @@ PrefabInstance:
       propertyPath: lootTable
       value: 
       objectReference: {fileID: 11400000, guid: d4e2bb87f12a8cb4d9b5a8a81cf0dfb6, type: 2}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: itemsAmount.max
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}

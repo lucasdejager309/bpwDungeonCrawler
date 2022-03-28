@@ -66,10 +66,21 @@ public class DungeonGen : Singleton<DungeonGen>
         roomList.Clear();
     }
 
+    public InspectInfo GetInfo(Vector2Int pos) {
+        if (solidTileDictionary.ContainsKey(pos)) {
+            return new InspectInfo(solidTileDictionary[pos].sprite, solidTileDictionary[pos].name);
+        } else if (dungeonFeatureDictionary.ContainsKey(pos)) {
+            return new InspectInfo(dungeonFeatureDictionary[pos].sprite, dungeonFeatureDictionary[pos].name);
+        } else if (floorTileDictionary.ContainsKey(pos)) {
+           return new InspectInfo(floorTileDictionary[pos].sprite, floorTileDictionary[pos].name);
+        }
+        return null;
+    }
+
     void AllocateRooms(DungeonSettings settings, DungeonAppearance appearance) {
         for (int i = 0; i <= settings.amountRooms; i++){
             Room room = new Room() {
-                size = new Vector2Int((int)Random.Range(settings.roomSizeRange.min, settings.roomSizeRange.max), (int)Random.Range(settings.roomSizeRange.min, settings.roomSizeRange.max)),
+                size = new Vector2Int((int)settings.roomSizeRange.GetRandom(), (int)settings.roomSizeRange.GetRandom()),
                 sequencialRoom = true
             };
 
@@ -349,6 +360,10 @@ public class DungeonGen : Singleton<DungeonGen>
                 AddTileToDictionary(pos, GenTile.PickRandomGenTile(appearance.floorTiles).GetTile(), floorTileDictionary, false);
             }
         }
+    }
+
+    public Room GetRandomRoom() {
+        return roomList[Random.Range(0, roomList.Count)];
     }
 
 }

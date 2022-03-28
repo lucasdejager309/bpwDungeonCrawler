@@ -4,29 +4,37 @@ using UnityEngine;
 
 [System.Serializable]
 public class LootItem {
-    public bool NOTHING;
-    public int pickChance;
     public Item item;
+    
+    [Header("Required/Optional")]
+    public bool required; //required to drop
+    public int pickChance;
 
-    [Header("multiple")]
+    [Header("Amount")]
     public bool multiple;
-    public Vector2Int amountRange;
+    public Range amountRange;
 
     public int GetAmount() {
-        return Random.Range(amountRange.x, amountRange.y);
+        if (multiple) {
+            return (int)Random.Range(amountRange.min, amountRange.max);
+        } else return 1;
     }
 }
 
 [CreateAssetMenu(fileName = "New LootTable", menuName = "LootTable")]
 public class LootTable : ScriptableObject {
-    
     public LootItem[] table;
 
-    public Dictionary<Item, int> GetItemsFromTable(int number) {
-        
+    public Dictionary<Item, int> GetItemsFromTable(int amount) {
         Dictionary<Item, int> pickedItems = new Dictionary<Item, int>();
-        
-        for (int i = 0; i < number; i++) {
+
+        foreach (LootItem item in table) {
+            if (item.required) {
+                pickedItems = AddItem(pickedItems, item.item, item.GetAmount());
+            }
+        }
+
+        for (int i = 0; i < amount; i++) {
             LootItem pickedItem = null;
             
             float probabilitySum = 0;
@@ -41,26 +49,31 @@ public class LootTable : ScriptableObject {
 
 
             foreach(LootItem item in table) {
-                if (randomFloat > 0) {
+                if (!item.required) {
+                    if (randomFloat > 0) {
                     randomFloat -= item.pickChance;
                     pickedItem = item;
-                } else break;
+                    } else break;
+                }
             }
 
             if (pickedItem == null) {
                 pickedItem = table[table.Length-1];
             }
 
-            if (!pickedItem.NOTHING) {
-                if (pickedItems.ContainsKey(pickedItem.item)) {
-                    pickedItems[pickedItem.item] += pickedItem.GetAmount();
-                } else {
-                    pickedItems.Add(pickedItem.item, pickedItem.GetAmount());
-                }
-            }
+            pickedItems = AddItem(pickedItems, pickedItem.item, pickedItem.GetAmount());
         }
-        
-     
+
         return pickedItems;
+    }
+
+    Dictionary<Item, int> AddItem(Dictionary<Item, int> dict, Item pickedItem, int amount) {
+        if (dict.ContainsKey(pickedItem)) {
+            dict[pickedItem] += amount;
+        } else {
+            dict.Add(pickedItem, amount);
+        }
+
+        return dict;
     }
 }

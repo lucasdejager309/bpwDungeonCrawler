@@ -28,8 +28,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public GameObject droppedItemPrefab;
-
     public virtual bool AddItem(Item item, int amount = 1) {
         foreach (InventoryItem slot in items) {
             if (slot.item == item && slot.item.stackAble) {
@@ -52,7 +50,7 @@ public class Inventory : MonoBehaviour
         int itemAmount = GetItemAmount(item);
         
         if (RemoveStack(item)) {
-            SpawnDroppedItem(item, itemAmount, pos);
+            DropItems.SpawnDroppedItem(item, itemAmount, pos);
 
             EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
             
@@ -121,10 +119,5 @@ public class Inventory : MonoBehaviour
         if (index < Items.Count) {
             return Items[index].item;
         } else return null;
-    }
-
-    public void SpawnDroppedItem(Item item, int amount, Vector2Int pos) {
-        GameObject droppedItemObject = EntityManager.Instance.SpawnEntity(pos, droppedItemPrefab);
-        droppedItemObject.GetComponent<ItemPickup>().SetItem(item, amount);
     }
 }

@@ -14,7 +14,7 @@ public class ItemPickup : InteractableObject
     }
 
     public void SetItem(Item item, int amount = 1) {
-        entityIsSolid = false;
+        isSolid = false;
         this.item = item;
         this.amount = amount;
         GetComponent<SpriteRenderer>().sprite = this.item.itemSprite;
@@ -23,6 +23,7 @@ public class ItemPickup : InteractableObject
     public override void Interact(GameObject interacter)
     {
         interacter.GetComponent<Inventory>().AddItem(item, amount);
+        cantBeDestroyed = false;
         
         if (amount > 1) {
             LogText.Instance.Log("You picked up " + item.itemName + " (" + amount + ")");
@@ -31,5 +32,13 @@ public class ItemPickup : InteractableObject
         }
         
         Die();
+    }
+
+    public override InspectInfo GetInfo()
+    {
+        InspectInfo info = base.GetInfo();
+        info.name = item.itemName + " (" + amount + ")";
+        info.description = item.GetDescription();
+        return info;
     }
 }

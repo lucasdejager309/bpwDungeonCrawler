@@ -5,11 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 [System.Serializable]
 public class Save {
-    public Save(int currentLevel, int currentHealth, int currentStrength, int currentInteligence, Dictionary<int, int> items, Dictionary<string, int> slots) {
+    public Save(int currentLevel, int currentHealth, int currentStrength, int currentIntelligence, Dictionary<int, int> items, Dictionary<string, int> slots) {
         this.currentLevel = currentLevel;
         this.currentHealth = currentHealth;
         this.currentStrength = currentStrength;
-        this.currentInteligence = currentInteligence;
+        this.currentIntelligence = currentIntelligence;
         this.inventoryItems = items;
         this.equipSlotItems = slots;
     }
@@ -17,7 +17,7 @@ public class Save {
     public int currentLevel;
     public int currentHealth;
     public int currentStrength;
-    public int currentInteligence;
+    public int currentIntelligence;
     public Dictionary<int, int> inventoryItems = new Dictionary<int, int>();
     public Dictionary<string, int> equipSlotItems;
 }
@@ -33,7 +33,7 @@ public class Saving : ScriptableObject {
         List<InventoryItem> items = player.GetComponent<PlayerInventory>().Items;
         int currentHealth = player.GetComponent<Player>().Health;
         int currentStrength = player.GetComponent<Player>().Strength;
-        int currentInteligence = player.GetComponent<Player>().Inteligence;
+        int currentIntelligence = player.GetComponent<Player>().Intelligence;
 
 
 
@@ -42,7 +42,7 @@ public class Saving : ScriptableObject {
             slotIndexes.Add(slot.slotID, GetItemIndex(slot.item));
         }
         
-        Save save = new Save(currentLevel, currentHealth, currentStrength, currentInteligence, ItemsToIndexes(items), slotIndexes);
+        Save save = new Save(currentLevel, currentHealth, currentStrength, currentIntelligence, ItemsToIndexes(items), slotIndexes);
 
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/save.data";

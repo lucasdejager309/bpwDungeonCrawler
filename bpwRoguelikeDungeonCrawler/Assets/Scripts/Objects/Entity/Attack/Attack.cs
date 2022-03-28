@@ -8,17 +8,18 @@ public class Attack : MonoBehaviour {
     public int howManyTurns = 1;
     public int lastTurnDone;
 
-    public virtual IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker) {
+    public virtual IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1) {
         lastTurnDone = GameManager.Instance.CurrentTurn;
         
         List<Entity> entities = EntityManager.Instance.EntitiesAtPos(attackPos);
         foreach(Entity entity in entities) {
-            if (entity != null) {
+            if (entity != null && entity.isAttackable) {
                 LogText.Instance.Log(attacker.entityName + " attacked " + entity.entityName + " and did " + damage + " damage");
                 
                 entity.TakeDamage(damage);
                 EventManager.InvokeEvent("DAMAGE_HAPPENED");
             }
+            Debug.Log(entity.name);
         }
 
         return null;

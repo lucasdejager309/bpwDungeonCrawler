@@ -5,12 +5,20 @@ using UnityEngine;
 public class RangedAttack : Attack {
     public GameObject projectilePrefab;
 
-    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker) {
+    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1) {
             Task attack = new Task(AttackAnimRanged(attackPos, attacker));
 
             bool finished  = false;
             attack.Finished += delegate {
-                base.DoAttack(attackPos, damage, attacker);
+                int range = attackRange-1;
+                for (int x = -range; x <= range; x++) {
+                    for (int y = -range; y <= range; y++) {
+                        Vector2Int pos = attackPos + new Vector2Int(x, y);
+                        base.DoAttack(pos, damage, attacker);
+                        GameManager.Instance.DrawCross(pos, 1f, Color.red);
+                    }
+                }
+                
                 finished = true;
             };
 

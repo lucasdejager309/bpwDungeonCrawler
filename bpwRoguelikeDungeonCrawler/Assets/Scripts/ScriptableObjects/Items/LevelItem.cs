@@ -16,7 +16,7 @@ public class LevelItem : ConsumableItem
             player.SetStrength(player.Strength + addSTR);
         }
         if (addINT != 0) {
-            player.SetInteligence(player.Inteligence + addINT);
+            player.SetIntelligence(player.Intelligence + addINT);
         }
 
         base.Use();

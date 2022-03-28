@@ -13,7 +13,6 @@ public class EnemyManager : Singleton<EnemyManager>
     } 
  
     void Start() {
-        EventManager.AddListener("DUNGEON_GENERATED", SpawnEnemies);
         EventManager.AddListener("PLAYER_TURN_FINISHED", OtherTurns);
         EventManager.AddListener("DAMAGE_HAPPENED", UpdateHealthBars);
     }
@@ -44,7 +43,7 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
-    void SpawnEnemies() {
+    public void SpawnEnemies() {
         DungeonSettings settings = GameManager.Instance.GetSettings();
 
         if (spawnEnemies) {
@@ -59,7 +58,7 @@ public class EnemyManager : Singleton<EnemyManager>
         enemies.Clear();
     }
 
-    public void SpawnEnemy(GameObject enemy, Vector2Int pos) {
+    public GameObject SpawnEnemy(Vector2Int pos, GameObject enemy) {
         DungeonSettings settings = GameManager.Instance.GetSettings();
         
         GameObject spawnedObject = EntityManager.Instance.SpawnEntity(pos, enemy);
@@ -67,6 +66,7 @@ public class EnemyManager : Singleton<EnemyManager>
         spawnedEnemy.SetHealth(Mathf.CeilToInt(spawnedEnemy.MaxHealth*settings.enemyHealthMultiplier));
         spawnedEnemy.SetDamage(settings.enemyDamageMultiplier);
         enemies.Add(spawnedObject);
+        return spawnedObject;
     }
 
     IEnumerator DoActions() {

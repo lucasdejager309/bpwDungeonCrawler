@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class UIPanel : MonoBehaviour
 {
+    public enum ScrollDirection {
+        HORIZONTAL,
+        VERTICAL
+    }
+
+    public ScrollDirection scrollDirection = ScrollDirection.HORIZONTAL;
+    public bool activeOnLoad;
     public GameObject[] selectablePanels;
     public GameObject pointer;
     private int pointerIndex;
@@ -13,15 +20,35 @@ public class UIPanel : MonoBehaviour
         }
     }
 
-    public virtual void UpdatePointer(Vector2Int input) {
-        if (Mathf.Abs(input.x) == 1) {
-            if (pointerIndex+input.x < selectablePanels.Length && pointerIndex+input.x >= 0) {
-                SetPointer(pointerIndex+input.x);
-            }
+    void Start() {
+        if (!activeOnLoad) {
+            TogglePanel(false);
         }
     }
 
-    public void TogglePanel(bool state) {
+    public virtual void UpdatePointer(Vector2Int input) {
+        switch (scrollDirection) {
+            case ScrollDirection.HORIZONTAL:
+                if (Mathf.Abs(input.x) == 1) {
+                    if (pointerIndex+input.x < selectablePanels.Length && pointerIndex+input.x >= 0) {
+                        SetPointer(pointerIndex+input.x);
+                    }
+                }
+                break;
+            case ScrollDirection.VERTICAL:
+                if (Mathf.Abs(input.y) == 1) {
+                    if (pointerIndex-input.y < selectablePanels.Length && pointerIndex-input.y >= 0) {
+                        SetPointer(pointerIndex-input.y);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    public virtual void TogglePanel(bool state) {
         this.gameObject.SetActive(state);
     }   
 

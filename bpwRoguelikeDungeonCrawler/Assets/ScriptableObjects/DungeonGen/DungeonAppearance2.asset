@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679dae6024b3d5b4bb993c81799b63b8, type: 3}
+  m_Name: DungeonAppearance2
+  m_EditorClassIdentifier: 
+  startOfLevel: {fileID: 559575418393072140, guid: 966491e5684099c43a070e5eb7295ed0, type: 3}
+  endOfLevel: {fileID: 7439197165640579116, guid: 9cd53735bc82d6f478deeff8bc94d935, type: 3}
+  floorTiles:
+  - tiles:
+    - {fileID: 11400000, guid: 50ce4177ad18e2d408002dfdd2852e7d, type: 2}
+    spawnChance: 200
+  - tiles:
+    - {fileID: 11400000, guid: ca6fbf7ce3ab18943b8b8887b7e09374, type: 2}
+    spawnChance: 20
+  - tiles:
+    - {fileID: 11400000, guid: 4267502c9074ae84abd43ec9816c03c0, type: 2}
+    spawnChance: 2
+  solidTiles:
+  - tiles:
+    - {fileID: 11400000, guid: 50b02a57145db5a43b69c38e7640c6fc, type: 2}
+    spawnChance: 20
+  - tiles:
+    - {fileID: 11400000, guid: 73cbb25257696c144a3812aeecff7f26, type: 2}
+    spawnChance: 2
+  dungeonFeatures:
+  - tiles:
+    - {fileID: 11400000, guid: 75b05a1c17e97134faa81946e6bced99, type: 2}
+    - {fileID: 11400000, guid: 8f62c814a50bf264d88afe94900ea06a, type: 2}
+    spawnChance: 10
+    wallAdjacent: 0
+    solid: 0
+  - tiles:
+    - {fileID: 11400000, guid: 5a569e67497b13943aadda472a2a0ee2, type: 2}
+    spawnChance: 5
+    wallAdjacent: 1
+    solid: 1
+  floorTile: {fileID: 11400000, guid: d369961575c31764c88a0c81bc3692c8, type: 2}
+  solidTile: {fileID: 11400000, guid: de9dffe0b0e7318409258e7ba67f3c49, type: 2}

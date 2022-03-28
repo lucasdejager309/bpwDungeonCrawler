@@ -8,8 +8,14 @@ public class ChestMimic : InteractableObject
 
     public override void Interact(GameObject interacter)
     {
-        EnemyManager.Instance.SpawnEnemy(mimicPrefab, GetPos());
-        Die();
+        EnemyManager.Instance.SpawnEnemy(GetPos(), mimicPrefab);
+        DeleteEntity();
+    }
+
+    public override void Die()
+    {
+        GetComponent<DropItems>().DropFromLootTable(GetPos());
+        base.Die();
     }
 }
 

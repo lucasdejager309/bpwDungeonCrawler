@@ -104,7 +104,11 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
-  entityIsSolid: 1
+  entityName: 
+  description: 
+  cantBeDestroyed: 0
+  isSolid: 1
+  isAttackable: 1
   maxHealth: 8
   health: 0
   sightRange: 7
@@ -186,9 +190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4910776dfc7461843b8e4000f86748f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minItems: 0
-  maxItems: 1
-  lootTable: {fileID: 11400000, guid: fe1ed42b444812d4bb7721bf14c6b756, type: 2}
+  itemsAmount:
+    min: 0
+    max: 0
+  table: {fileID: 0}
+  privateTable: []
 --- !u!1 &6124617512191033196
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ public class Item : ScriptableObject
     public bool equippable;
     public string equipSlotID;
     public int requiredStrength = 0;
-    public int requiredInteligence = 0;
+    public int requiredIntelligence = 0;
 
     public virtual void Use() {
         //use!
@@ -28,8 +28,8 @@ public class Item : ScriptableObject
         if (requiredStrength > 0) {
             description = description + "REQ STR: " + requiredStrength + "\n\n";
         }
-        if (requiredInteligence > 0) {
-            description = description + "REQ INT: " + requiredInteligence + "\n\n";
+        if (requiredIntelligence > 0) {
+            description = description + "REQ INT: " + requiredIntelligence + "\n\n";
         }
         description = description + itemDescription;
         return description;

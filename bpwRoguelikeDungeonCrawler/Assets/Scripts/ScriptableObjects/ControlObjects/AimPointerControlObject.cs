@@ -6,20 +6,28 @@ using UnityEngine;
 public class AimPointerControlObject : ControlObject
 {
     public override void Interact()
-    {
+    {            
         GameObject player = GameManager.Instance.player;
 
-        if (player.GetComponent<RangedAttack>().HasAimOnTarget(UIManager.Instance.aimpointer.GetPos())) {
-            player.GetComponent<Player>().inputAllowed = false;
-            GameManager.Instance.Esc();
-            Task t = new Task(player.GetComponent<RangedAttack>().DoAttack(UIManager.Instance.aimpointer.GetPos(), 
-            player.GetComponent<Player>().CalculateDamage(UIManager.Instance.aimpointer.itemToThrow), player.GetComponent<Entity>()));
+        AimPointer aimPointer = UIManager.Instance.aimpointer;
+
+        if (!GameManager.Instance.player.GetComponent<RangedAttack>().HasAimOnTarget(aimPointer.GetPos()) && aimPointer.ignoreWalls == false) {
+            //nothing
+        } else {
+            DoActionAtPointer();
+        }
+    }
+
+    public virtual void DoActionAtPointer() {
+        Task t = new Task(UIManager.Instance.aimpointer.itemToUse.DoAttack());
 
             t.Finished += delegate {
                 EventManager.InvokeEvent("PLAYER_TURN_FINISHED");
-                UIManager.Instance.aimpointer.itemToThrow.DeleteItem();
-            }; 
-        }
+                if (UIManager.Instance.aimpointer.itemToUse.useItemOnThrow) {
+                    UIManager.Instance.aimpointer.itemToUse.DeleteItem();
+                }
+            };
+        GameManager.Instance.SetControlTo(ControlMode.PLAYER);
     }
 
     public override void SetControlTo()
@@ -27,6 +35,7 @@ public class AimPointerControlObject : ControlObject
         UIManager.Instance.aimpointer.SetPos(GameManager.Instance.player.GetComponent<Player>().GetPos());
         UIManager.Instance.aimpointer.SetActive(true);
         GameManager.Instance.cameraFollow.SetCameraToFollow(UIManager.Instance.aimpointer.gameObject);
+        UIManager.Instance.aimpointer.IgnoreWalls(false);
     }
 
     public override void LoseControl()

@@ -20,7 +20,7 @@ public class EntityMovement {
         bool entityAtNewPosIsSolid = true;
         foreach(KeyValuePair<Entity, Vector2Int> entry in EntityManager.Instance.entityDict) {
             if(entry.Value == newPos) {
-                entityAtNewPosIsSolid = entry.Key.entityIsSolid;
+                entityAtNewPosIsSolid = entry.Key.isSolid;
             }
         }
         

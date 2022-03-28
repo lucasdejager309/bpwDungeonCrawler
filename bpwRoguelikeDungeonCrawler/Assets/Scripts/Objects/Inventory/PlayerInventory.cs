@@ -25,27 +25,48 @@ public class PlayerInventory : Inventory {
         } else return false;
     }
 
-    public void SetInventory(List<InventoryItem> newInventory) {
-        Items.Clear();
-        foreach(InventoryItem item in newInventory) {
-            Items.Add(item);
+    public List<InventoryItem> startInventoryItems = new List<InventoryItem>();
+    EquipSlot[] startsEquipSlots = new EquipSlot[2];
+
+    void Start() {
+        SetInventory(startInventoryItems);
+        startsEquipSlots = equipSlots;
+    }
+
+    public void SetInventory(List<InventoryItem> items) {
+        ClearInventory();
+        foreach (InventoryItem item in items) {
+            AddItem(item.item, item.amount);
         }
+    }
+
+    public void ResetInventory() {
+        SetInventory(startInventoryItems);
+        equipSlots = startsEquipSlots;
     }
 
     public override bool AddItem(Item item, int amount = 1)
     {
         bool succeeded = base.AddItem(item, amount);
+        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
         return succeeded;
     }
 
     public override bool RemoveItem(Item item)
     {
         bool succeeded = base.RemoveItem(item);
+        EventManager.InvokeEvent("UI_UPDATE_INVENTORY");
         return succeeded;
     }
 
+    public void RemoveItems(Item item, int amount) {
+        for (int i = 0; i < amount; i++) {
+            RemoveItem(item);
+        } 
+    }
+
     public bool EquipItem(Item item, string slotID) {
-        if (GetComponent<Player>().CheckStrength(item.requiredStrength)) {
+        if (GetComponent<Player>().CheckStrength(item.requiredStrength) && GetComponent<Player>().CheckIntelligence(item.requiredIntelligence)) {
             if (RemoveItem(item)) {
                 foreach (EquipSlot slot in equipSlots) {
                     if (slot.slotID == slotID) {
@@ -102,6 +123,16 @@ public class PlayerInventory : Inventory {
         foreach (EquipSlot slot in equipSlots) {
             if (slot.slotID == ID) {
                 return slot.item;
+            }
+        }
+
+        return null;
+    }
+
+    public InventoryItem GetInventoryItem(Item item) {
+        foreach (InventoryItem invItem in Items) {
+            if (invItem.item == item) {
+                return invItem;
             }
         }
 

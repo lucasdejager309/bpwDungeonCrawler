@@ -82,9 +82,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4910776dfc7461843b8e4000f86748f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minItems: 1
-  maxItems: 4
-  lootTable: {fileID: 11400000, guid: 90790a5eb49414b43875d09bfb5e2b97, type: 2}
+  itemsAmount:
+    min: 1
+    max: 2
+  table: {fileID: 11400000, guid: 90790a5eb49414b43875d09bfb5e2b97, type: 2}
+  privateTable: []
 --- !u!114 &-4176278074146254691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,8 +103,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   entityName: Chest
-  CantBeDestroyed: 0
-  entityIsSolid: 1
+  description: A treasure chest! Open it to see what it contains!
+  cantBeDestroyed: 0
+  isSolid: 1
+  isAttackable: 1
   maxHealth: 0
   health: 0
   doInteractAnim: 1

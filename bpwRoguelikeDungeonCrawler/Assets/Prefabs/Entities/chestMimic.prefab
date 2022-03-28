@@ -7,6 +7,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7517892754499833744, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+      propertyPath: table
+      value: 
+      objectReference: {fileID: 11400000, guid: d4e2bb87f12a8cb4d9b5a8a81cf0dfb6, type: 2}
+    - target: {fileID: -7517892754499833744, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+      propertyPath: lootID
+      value: CHEST
+      objectReference: {fileID: 0}
+    - target: {fileID: -7517892754499833744, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+      propertyPath: itemsAmount.max
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7517892754499833744, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
+      propertyPath: itemsAmount.min
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7537511706092174933, guid: 869b34fb2761ec84ca426240d17dfd58, type: 3}
       propertyPath: m_Name
       value: chestMimic
@@ -79,8 +95,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   entityName: Chest
-  CantBeDestroyed: 0
-  entityIsSolid: 1
+  description: A handy container to store items.
+  cantBeDestroyed: 0
+  isSolid: 1
+  isAttackable: 1
   maxHealth: 0
   health: 0
   doInteractAnim: 1

@@ -9,9 +9,12 @@ public class Entity : MonoBehaviour, IDamagable
     
     [Header("entity attributes")]
     public string entityName;
-    public bool CantBeDestroyed = false;
+    [TextArea(15,20)]
+    public string description;
+    public bool cantBeDestroyed = false;
     
-    public bool entityIsSolid;
+    public bool isSolid;
+    public bool isAttackable;
     
     [SerializeField]private int maxHealth;
     public int MaxHealth {
@@ -42,8 +45,17 @@ public class Entity : MonoBehaviour, IDamagable
         if (health < 0) health = 0;
         if (health > maxHealth) health = maxHealth;
     }
+
+    public virtual void SetMaxHealth(int newMaxHealth) {
+        maxHealth = newMaxHealth;
+        if (health > maxHealth) health = maxHealth;
+    }
     
     public virtual void Die() {
+        DropItems dropItems = GetComponent<DropItems>();
+        if (dropItems != null) {
+            dropItems.DropFromLootTable(GetPos());
+        }
         DeleteEntity();
     }
 
@@ -155,8 +167,10 @@ public class Entity : MonoBehaviour, IDamagable
     }
 
     public virtual void DeleteEntity() {
-        GameObject.Destroy(gameObject);
-        EntityManager.Instance.entityDict.Remove(this);
+        if (!cantBeDestroyed) {
+            GameObject.Destroy(gameObject);
+            EntityManager.Instance.entityDict.Remove(this);
+        }
     } 
 
     public float GetDistance(Vector2Int pos) {
@@ -170,5 +184,14 @@ public class Entity : MonoBehaviour, IDamagable
     public void SetPos(Vector2Int newPos) {
         EntityManager.Instance.UpdatePos(this, newPos);
         transform.position = new Vector3(newPos.x, newPos.y, 0);
+    }
+
+    public virtual InspectInfo GetInfo() {
+        InspectInfo info = new InspectInfo();
+        info.sprite = GetComponent<SpriteRenderer>().sprite;
+        info.name = entityName;
+        info.description = description;
+
+        return info;
     }
 }

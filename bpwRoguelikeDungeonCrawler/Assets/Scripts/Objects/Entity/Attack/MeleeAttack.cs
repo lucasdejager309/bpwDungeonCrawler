@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeAttack : Attack
 {
-    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker)
+    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1)
     { 
             Task attack = new Task(AttackAnimMelee(attackPos, attacker, animationSpeed));
                 

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f69950955e77341a8ebef41c1551fd, type: 3}
+  m_Name: SeagullLootTable
+  m_EditorClassIdentifier: 
+  table:
+  - item: {fileID: 11400000, guid: d96b04adcb481f745b52665337213cb4, type: 2}
+    required: 0
+    pickChance: 10
+    multiple: 1
+    amountRange:
+      min: 2
+      max: 8
+  - item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
+    required: 0
+    pickChance: 10
+    multiple: 0
+    amountRange:
+      min: 0
+      max: 0

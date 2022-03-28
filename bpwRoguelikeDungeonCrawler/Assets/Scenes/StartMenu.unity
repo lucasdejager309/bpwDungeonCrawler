@@ -1096,6 +1096,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ebfd9db77c5b04085710331f9a71e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollDirection: 0
+  activeOnLoad: 1
   selectablePanels:
   - {fileID: 1396633097}
   - {fileID: 2017138752}

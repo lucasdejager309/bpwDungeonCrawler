@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class EntityManager : Singleton<EntityManager>
+public class EntityManager : Singleton<EntityManager>, Inspectable
 {
     public List<Vector2Int> validPositions = new List<Vector2Int>();
     public Dictionary<Entity, Vector2Int> entityDict = new Dictionary<Entity, Vector2Int>();
@@ -16,23 +16,15 @@ public class EntityManager : Singleton<EntityManager>
     //temp DRAWS NICE LITTLE CROSSES AT ENTITYDICT VALUES
     void Update() {
         foreach (Vector2Int pos in entityDict.Values) {
-            Vector2 startPos = new Vector2(pos.x, pos.y);
-            Vector2 endPos = new Vector2(pos.x+1f, pos.y+1f);
-            
-            Debug.DrawLine(startPos, endPos, Color.green);
-
-            startPos = new Vector2(pos.x+1, pos.y);
-            endPos = new Vector2(pos.x, pos.y+1f);
-
-            Debug.DrawLine(startPos, endPos, Color.green);
-        }
+            GameManager.Instance.DrawCross(pos, 0.1f, Color.green);
+        }   
     }
 
     public void ClearEntityDict() {
         List<Entity> entities = new List<Entity>(entityDict.Keys);
         // entityDict.Clear();
         foreach(var key in entities) {
-            if (!key.CantBeDestroyed) {
+            if (!key.cantBeDestroyed) {
                 key.DeleteEntity();
                 entityDict.Remove(key);
             }
@@ -173,6 +165,17 @@ public class EntityManager : Singleton<EntityManager>
         GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(pos.x, pos.y, -2), Quaternion.identity);
         entityDict.Add(spawnedObject.gameObject.GetComponent<Entity>(), pos);
         return spawnedObject;
+    }
+
+    public InspectInfo GetInfo(Vector2Int pos) {
+        foreach (var kv in entityDict) {
+            if (kv.Value == pos) {
+                InspectInfo info = kv.Key.GetInfo();
+                return info;
+            }
+        }
+
+        return null;
     }
 
     void ClearValidPositions() {

@@ -14,10 +14,13 @@ public class Player : Entity
     public int Strength {
         get { return strength; }
     }
-    [SerializeField] private int inteligence = 11;
-    public int Inteligence {
-        get { return inteligence; }
+    [SerializeField] private int intelligence = 10;
+    public int Intelligence {
+        get { return intelligence; }
     }
+
+    int startStrength;
+    int startIntelligence;
 
     enum ActionType {
         MOVE,
@@ -29,6 +32,9 @@ public class Player : Entity
     public override void Start() {
         base.Start();
         EventManager.AddListener("OTHER_TURNS_FINISHED", AllowInput);
+        
+        startStrength = strength;
+        startIntelligence = intelligence;
     }
 
     public bool CheckStrength(int value) {
@@ -43,16 +49,22 @@ public class Player : Entity
         UIManager.Instance.UpdateStats();
     }
 
-    public bool CheckInteligence(int value) {
-        if (inteligence >= value) {
+    public bool CheckIntelligence(int value) {
+        if (intelligence >= value) {
             return true;
         }
         return false;
     }
 
-    public void SetInteligence(int value) {
-        inteligence = value;
+    public void SetIntelligence(int value) {
+        intelligence = value;
         UIManager.Instance.UpdateStats();
+    }
+
+    public void ResetStats() {
+        SetHealth(MaxHealth);
+        SetStrength(startStrength);
+        SetIntelligence(startIntelligence);
     }
 
     public override void TakeDamage(int damage)
@@ -93,6 +105,8 @@ public class Player : Entity
         if (input != new Vector2Int(0,0) && GetActionType(input) != ActionType.NOTHING && inputAllowed) {
             inputAllowed = false;
 
+            Debug.Log(GetActionType(input));
+
             switch (GetActionType(input)) {
                 case ActionType.MOVE:
                     action = new Task(Move(input, moveDistance, true, 0.1f, timeBetweenMoves));
@@ -123,7 +137,7 @@ public class Player : Entity
         
         ActionType actionToReturn = ActionType.NOTHING;
         Entity entity = EntityManager.Instance.EntityAtPos(pos);
-        if (entity != null && entity.entityIsSolid) {
+        if (entity != null && entity.isSolid) {
             if (entity.GetComponent<Enemy>() != null && GetComponent<Attack>().AttackIsAllowed()) {
                 actionToReturn = ActionType.ATTACK;
             } else if (entity.GetComponent<InteractableObject>() != null) {
@@ -139,6 +153,18 @@ public class Player : Entity
     
     void AllowInput() {
         inputAllowed = true;
+    }
+
+    public override InspectInfo GetInfo()
+    {
+        InspectInfo info =  base.GetInfo();
+        info.description = Health + "/" + MaxHealth + " HP\n\n" + info.description;
+        return info;
+    }
+
+    public override void Die()
+    {
+        GameManager.Instance.SetControlTo(ControlMode.DEATH_MENU);
     }
 
     protected override IEnumerator Move(Vector2Int direction, int distance = 1, bool smoothMove = false, float moveTime = 0.2f, float waitBetweenMoves = 0) {

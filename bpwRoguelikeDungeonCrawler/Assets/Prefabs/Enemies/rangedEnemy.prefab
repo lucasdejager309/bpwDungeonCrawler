@@ -16,6 +16,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: isSolid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: maxDamage
       value: 5
       objectReference: {fileID: 0}
@@ -34,6 +38,10 @@ PrefabInstance:
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: attackRange
       value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: description
+      value: An orb of pure heat and magical energy. Watch out for its ranged attack!
       objectReference: {fileID: 0}
     - target: {fileID: 338651139270102538, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -102,6 +110,18 @@ PrefabInstance:
     - target: {fileID: 2664543417932978900, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: m_Controller
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: table
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b907d37176f84a42a62bcdb23f10e8d, type: 2}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: lootID
+      value: ENEMY
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: itemsAmount.max
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}

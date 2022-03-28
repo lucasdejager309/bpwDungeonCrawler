@@ -34,6 +34,14 @@ MonoBehaviour:
   - spawnChance: 1
     gameObject: {fileID: 5056227480076459459, guid: 6d22951640a256e4c99f238f0803ed95, type: 3}
     wallAdjacent: 1
+  requiredObjects: []
+  requiredItems:
+  - amount: 3
+    item: {fileID: 11400000, guid: b8c0a6cfd63220641aef019a9cb255c6, type: 2}
+  - amount: 1
+    item: {fileID: 11400000, guid: 797ff22f00be7794daf6f44197b7bab6, type: 2}
+  - amount: 1
+    item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
   enemyDamageMultiplier: 1
   enemyHealthMultiplier: 1
   enemyDensityRange:
@@ -46,3 +54,8 @@ MonoBehaviour:
   - spawnChance: 5
     gameObject: {fileID: 5074122196967646602, guid: 47d203b0323b7a74a8aa78561d4b12c7, type: 3}
     wallAdjacent: 0
+  - spawnChance: 2
+    gameObject: {fileID: 3594764606041160187, guid: 5b107571f55454343816544412e1c0d1, type: 3}
+    wallAdjacent: 0
+  lootAmount: 40
+  lootTable: {fileID: 11400000, guid: cf6424dabae65eb4c9966de54cd07b18, type: 2}

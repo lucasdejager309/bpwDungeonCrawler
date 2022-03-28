@@ -109,7 +109,9 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
-  CantBeDestroyed: 0
+  entityName: Dropped Item
+  description: Stand on top of it to pick it up!
+  cantBeDestroyed: 0
   entityIsSolid: 0
   maxHealth: 3000
   health: 0

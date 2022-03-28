@@ -12,7 +12,7 @@ public class UseButtonAction : UIAction
 
         Item itemToUse = inventory.GetItem(inventory.pointerIndex);
 
-        if (player.CheckInteligence(itemToUse.requiredInteligence) && player.CheckStrength(itemToUse.requiredStrength)) {
+        if (player.CheckIntelligence(itemToUse.requiredIntelligence) && player.CheckStrength(itemToUse.requiredStrength)) {
             if (itemToUse.equippable) {
                 if (inventory.pointerIndex >= inventory.MAX_SLOTS) {
                     inventory.UnEquipItem(itemToUse.equipSlotID);
@@ -22,7 +22,17 @@ public class UseButtonAction : UIAction
             } else {
                 itemToUse.Use();
             }
-        }   
+        } else {
+            string textToLog = "";
+            if (!player.CheckIntelligence(itemToUse.requiredIntelligence)) {
+               textToLog = "You do not have the required intelligence to use " + itemToUse.itemName + "!";
+            }
+            if (!player.CheckStrength(itemToUse.requiredStrength)) {
+                textToLog = "You do not have the required strength to use " + itemToUse.itemName + "!";
+            }
+
+            LogText.Instance.Log(textToLog);
+        }
         base.DoAction();
     }
 }

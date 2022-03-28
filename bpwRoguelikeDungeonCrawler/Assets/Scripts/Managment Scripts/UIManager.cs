@@ -8,7 +8,10 @@ public class UIManager : Singleton<UIManager>
     public UIInventory inventory;
     public UIPanel inventoryCard;
     public UIPanel escMenu;
+    public UIPanel deathMenu;
+    public UIHotKeys hotKeys;
     public UISlider healthSlider;
+    public UIInspectPanel inspectPanel;
     public Text bigAnnouncementText;
     public AimPointer aimpointer;
 
@@ -18,11 +21,12 @@ public class UIManager : Singleton<UIManager>
         Instance = this;
         EventManager.AddListener("UI_TOGGLE_WAIT", ToggleWait);
         EventManager.AddListener("UI_UPDATE_HEALTH", UpdateHealthBar);
+        EventManager.AddListener("UIUPDATE_INVENTORY", UpdateInventory);
     }
 
     public void UpdateStats() {
         inventory.STR.text = "STR: " + GameManager.Instance.player.GetComponent<Player>().Strength.ToString();
-        inventory.INT.text = "INT: " + GameManager.Instance.player.GetComponent<Player>().Inteligence.ToString();
+        inventory.INT.text = "INT: " + GameManager.Instance.player.GetComponent<Player>().Intelligence.ToString();
     }
 
     public void DisplayAnnouncement(string announcement, int showDuration = 1) {
@@ -45,6 +49,10 @@ public class UIManager : Singleton<UIManager>
                 yield return null;
             }
         }
+    }
+
+    void UpdateInventory() {
+        inventory.UpdateInventory();
     }
 
     void UpdateHealthBar() {

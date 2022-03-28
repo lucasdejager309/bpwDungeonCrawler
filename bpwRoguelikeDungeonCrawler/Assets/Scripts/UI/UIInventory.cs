@@ -21,6 +21,10 @@ public class UIInventory : UIPanel
         }
     }
 
+    void Start() {
+        EventManager.AddListener("UI_UPDATE_INVENTORY", UpdateInventory);
+    }
+
     public void UpdateInventory() {
         PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
 

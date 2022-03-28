@@ -99,9 +99,11 @@ MonoBehaviour:
   solidLayer:
     serializedVersion: 2
     m_Bits: 64
-  entityName: a stair?
-  CantBeDestroyed: 0
-  entityIsSolid: 0
+  entityName: Stairs
+  description: You can only go down on these stairs...
+  cantBeDestroyed: 0
+  isSolid: 0
+  isAttackable: 0
   maxHealth: 3000
   health: 0
 --- !u!1001 &7851434238983726411

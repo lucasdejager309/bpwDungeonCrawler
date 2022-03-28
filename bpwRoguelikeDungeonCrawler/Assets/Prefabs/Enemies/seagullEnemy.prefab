@@ -12,6 +12,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: isSolid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: maxDamage
       value: 4
       objectReference: {fileID: 0}
@@ -24,8 +28,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: entityName
       value: Seagull
+      objectReference: {fileID: 0}
+    - target: {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: description
+      value: 'Is it a bird, is it a plane? Nah it''s a bird.
+
+
+        Seagulls are
+        natural enemies of frogs.'
       objectReference: {fileID: 0}
     - target: {fileID: 2118473169861415954, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: m_RootOrder
@@ -80,8 +96,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: e085a94b6518c8a4f93a447c371c2e6b, type: 2}
     - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: table
+      value: 
+      objectReference: {fileID: 11400000, guid: fe1ed42b444812d4bb7721bf14c6b756, type: 2}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: lootID
+      value: ENEMY
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: minItems
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+      propertyPath: itemsAmount.max
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
