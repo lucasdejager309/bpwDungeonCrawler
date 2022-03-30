@@ -23,7 +23,6 @@ public class GameManager : Singleton<GameManager> {
     public GameObject droppedItemPrefab;
     public GameObject player;
     public Minimap minimap;
-
     
     public CameraFollowPlayer cameraFollow;
 
@@ -54,10 +53,9 @@ public class GameManager : Singleton<GameManager> {
         if (loadFromSave) {
             Load();
         } else {
+            currentLevel++;
             DungeonGen.Instance.GenerateDungeon(GetAppearance(), GetSettings());
         }
-
-        SetControlTo(ControlMode.PLAYER);
     }
 
     public void Save() { 
@@ -81,7 +79,7 @@ public class GameManager : Singleton<GameManager> {
 
     public DungeonSettings GetSettings() {
         if (currentLevel < settings.Length) {
-            return settings[currentLevel];
+            return settings[currentLevel-1];
         }
         else {
             return settings[settings.Length-1];
@@ -90,7 +88,7 @@ public class GameManager : Singleton<GameManager> {
 
     public DungeonAppearance GetAppearance() {
          if (currentLevel < appearances.Length) {
-            return appearances[currentLevel];
+            return appearances[currentLevel-1];
         }
         else {
             return appearances[appearances.Length-1];
@@ -99,8 +97,8 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public void NextLevel() {
-        DungeonGen.Instance.GenerateDungeon(GameManager.Instance.GetAppearance(), GameManager.Instance.GetSettings());
         currentLevel++;
+        DungeonGen.Instance.GenerateDungeon(GameManager.Instance.GetAppearance(), GameManager.Instance.GetSettings());
     }
 
     void Inspect() {
@@ -134,13 +132,13 @@ public class GameManager : Singleton<GameManager> {
         UIManager.Instance.inventoryCard.TogglePanel(false);
         UIManager.Instance.escMenu.TogglePanel(false);
         UIManager.Instance.aimpointer.SetActive(false);
-        UIManager.Instance.bigAnnouncementText.gameObject.SetActive(false);
         UIManager.Instance.deathMenu.TogglePanel(false);
+        UIManager.Instance.hotKeys.darkBackground.enabled = false;
+        UIManager.Instance.inspectPanel.TogglePanel(false);
     }
 
     void SpawnPlayer() {
-        UIManager.Instance.DisplayAnnouncement("Level " + (currentLevel+1), 1);
-        LogText.Instance.Log("You descended to level " + (currentLevel+1));
+        LogText.Instance.Log("You descended to level " + (currentLevel));
         if (player == null) {
             player = Instantiate(playerPrefab, (Vector2)DungeonGen.Instance.playerSpawnPos, Quaternion.identity);
         } else {
@@ -161,6 +159,8 @@ public class GameManager : Singleton<GameManager> {
             player.GetComponent<Player>().SetHealth(saving.save.currentHealth);
             playerScript.SetStrength(saving.save.currentStrength);
             playerScript.SetIntelligence(saving.save.currentIntelligence);
+            
+            SetControlTo(ControlMode.PLAYER);
         }
 
         cameraFollow.SetCameraToFollow(player);
@@ -168,8 +168,6 @@ public class GameManager : Singleton<GameManager> {
         minimap.SetDungeon();
 
         Save();
-
-        EventManager.InvokeEvent("PLAYER_SPAWNED");
     }
 
     void SpawnEntities() {
@@ -221,39 +219,27 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
-    Vector2Int GetInput() {
-        Vector2Int input = new Vector2Int();
-
-        if (Input.GetKeyDown(KeyCode.W)) {
-            input.y = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.S)) {
-            input.y = -1;
-        }
-        if (Input.GetKeyDown(KeyCode.A)) {
-            input.x = -1;
-        }
-        if (Input.GetKeyDown
-         (KeyCode.D)) {
-            input.x = 1;
-        }
-
-        return input;
-    }
-
     void Interact() {
         GetControlObject(currentlyControlling).Interact();
     }
 
     void Update() {
         //UGLY FIX (HEALTHBAR DOES UPDATE IN EDITOR BUT NOT IN BUILD???? I DONT EVEN KNOW WHY THIS FIXES IT)
-        EventManager.InvokeEvent("UI_UPDATE_HEALTH");
+        if (UIManager.Instance.healthSlider.GetValue() != player.GetComponent<Player>().Health) {
+            EventManager.InvokeEvent("UI_UPDATE_HEALTH");
+        }
+        
 
         //PASS INPUT TO OBJECT CURRENTLY IN CONTROL
-        Vector2Int input = GetInput();
+        Vector2Int input = InputManager.Instance.GetInput(new Axis(KeyCode.A, KeyCode.D), new Axis(KeyCode.S, KeyCode.W), true);
         if (input != new Vector2Int(0, 0)) {
             GetControlObject(currentlyControlling).UpdateControl(input);
         }
+
+        if (player.GetComponent<Player>().inputAllowed) {
+            InputManager.Instance.inputObject.GetInput();
+        }
+        
 
         //IN CASE PLAYER LOST
         if (player == null) {

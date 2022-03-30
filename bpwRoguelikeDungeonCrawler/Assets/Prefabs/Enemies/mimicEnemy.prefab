@@ -121,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d4e2bb87f12a8cb4d9b5a8a81cf0dfb6, type: 2}
     - target: {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
       propertyPath: itemsAmount.max
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}

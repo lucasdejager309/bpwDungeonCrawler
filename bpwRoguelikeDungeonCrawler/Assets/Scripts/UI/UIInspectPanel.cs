@@ -9,6 +9,10 @@ public class UIInspectPanel : UIPanel
     public Text nameDisplay;
     public Text descriptionDisplay;
 
+    void Start() {
+        TogglePanel(false);
+    }
+
     public void UpdateInfo(InspectInfo info) {
         spriteDisplay.GetComponent<Image>().sprite = info.sprite;
         nameDisplay.text = info.name;

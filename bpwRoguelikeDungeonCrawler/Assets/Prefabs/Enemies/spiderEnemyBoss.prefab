@@ -97,6 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -6009707562076051032, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
+    - {fileID: 3258994166088841324, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d54843bae3fa1b74a8e52f1f4ace1fa2, type: 3}
 --- !u!1 &3594764606041160187 stripped
 GameObject:
@@ -176,6 +177,5 @@ MonoBehaviour:
   itemsAmount:
     min: 0
     max: 0
-  table: {fileID: 0}
-  privateTable:
-  - {fileID: 11400000, guid: 3e4c2a2421b495d41b2c6ea074981b66, type: 2}
+  table: {fileID: 11400000, guid: 9465fe1c2c754374dbaab4cec8669940, type: 2}
+  privateTable: []

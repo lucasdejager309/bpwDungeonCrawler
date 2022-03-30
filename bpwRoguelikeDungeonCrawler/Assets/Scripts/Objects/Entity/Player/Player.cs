@@ -103,9 +103,7 @@ public class Player : Entity
         Task action = new Task();
 
         if (input != new Vector2Int(0,0) && GetActionType(input) != ActionType.NOTHING && inputAllowed) {
-            inputAllowed = false;
-
-            Debug.Log(GetActionType(input));
+            SetInputAllowed(false);
 
             switch (GetActionType(input)) {
                 case ActionType.MOVE:
@@ -136,23 +134,41 @@ public class Player : Entity
         Vector2Int pos = input + GetPos();
         
         ActionType actionToReturn = ActionType.NOTHING;
-        Entity entity = EntityManager.Instance.EntityAtPos(pos);
-        if (entity != null && entity.isSolid) {
-            if (entity.GetComponent<Enemy>() != null && GetComponent<Attack>().AttackIsAllowed()) {
-                actionToReturn = ActionType.ATTACK;
-            } else if (entity.GetComponent<InteractableObject>() != null) {
-                actionToReturn = ActionType.INTERACT;
+
+        List<Entity> entities = EntityManager.Instance.EntitiesAtPos(pos);
+
+        bool containsEnemy = false;
+        bool containsInteractable = false;
+        foreach (Entity entity in entities) {
+            if (entity != null && entity.isSolid) {
+                if (entity.GetComponent<Enemy>() != null && GetComponent<Attack>().AttackIsAllowed()) {
+                    containsEnemy = true;
+                }
+                if (entity.GetComponent<InteractableObject>() != null) {
+                    containsInteractable = true;
+                }
             }
         }
-        else if (EntityManager.Instance.validPositions.Contains(pos)) {
+
+        if (containsEnemy) {
+            actionToReturn = ActionType.ATTACK;
+        } else if (containsInteractable) {
+            actionToReturn=  ActionType.INTERACT;
+        } else if (EntityManager.Instance.validPositions.Contains(pos)) {
             actionToReturn = ActionType.MOVE;
         }
         else actionToReturn = ActionType.NOTHING;
+        
+        
         return actionToReturn;
     }
-    
+
+    public void SetInputAllowed(bool state) {
+        inputAllowed = state;
+    }
+
     void AllowInput() {
-        inputAllowed = true;
+        SetInputAllowed(true);
     }
 
     public override InspectInfo GetInfo()

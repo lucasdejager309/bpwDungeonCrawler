@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MeleeAttack : Attack
 {
-    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1)
+    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1, GameObject impactEffect = null)
     { 
             Task attack = new Task(AttackAnimMelee(attackPos, attacker, animationSpeed));
                 
             bool finished  = false;
             attack.Finished += delegate {
-                base.DoAttack(attackPos, damage, attacker);
+                base.DoAttack(attackPos, damage, attacker, attackRange, impactEffect);
                 finished = true;
             };
 

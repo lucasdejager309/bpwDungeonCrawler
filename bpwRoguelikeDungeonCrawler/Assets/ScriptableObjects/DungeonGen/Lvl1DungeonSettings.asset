@@ -42,6 +42,12 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: 797ff22f00be7794daf6f44197b7bab6, type: 2}
   - amount: 1
     item: {fileID: 11400000, guid: b42d6c5b5e1d00e4e92fc9c0090c2b41, type: 2}
+  - amount: 4
+    item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
+  - amount: 1
+    item: {fileID: 11400000, guid: df6313313122f6d4e89437c515647b25, type: 2}
+  - amount: 3
+    item: {fileID: 11400000, guid: 298bb8bff5fc14b47b541b0ef75a5a79, type: 2}
   enemyDamageMultiplier: 1
   enemyHealthMultiplier: 1
   enemyDensityRange:

@@ -31,6 +31,7 @@ public class UIHotKeys : MonoBehaviour
     
     void Start() {
         EventManager.AddListener("UI_UPDATE_INVENTORY", UpdateUI);
+        darkBackground.enabled = false;
     }
 
     void UpdateUI() {
@@ -41,7 +42,11 @@ public class UIHotKeys : MonoBehaviour
             
             if (hotKeys[i].Item != null && inventory.GetItemAmount(hotKeys[i].Item) > 0) {
                 image.sprite = hotKeys[i].Item.itemSprite;
-                text.text = inventory.GetItemAmount(hotKeys[i].Item).ToString();
+                int amount = inventory.GetItemAmount(hotKeys[i].Item);
+                if (amount != 0) {
+                    text.text = amount.ToString();
+                } else text.text = "";
+                
             } else {
                 image.sprite = emptySprite;
                 text.text = "";

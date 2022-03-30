@@ -17,14 +17,14 @@ public class EntityMovement {
     }
 
     public static bool IsValidMovePos(Vector2Int newPos) {
-        bool entityAtNewPosIsSolid = true;
+        bool entityThere = false;
         foreach(KeyValuePair<Entity, Vector2Int> entry in EntityManager.Instance.entityDict) {
             if(entry.Value == newPos) {
-                entityAtNewPosIsSolid = entry.Key.isSolid;
+                if (entry.Key.isSolid) entityThere = true;
             }
         }
         
-        if (EntityManager.Instance.validPositions.Contains(newPos) && !EntityManager.Instance.entityDict.ContainsValue(newPos) || !entityAtNewPosIsSolid) {
+        if (EntityManager.Instance.validPositions.Contains(newPos) && !entityThere) {
             return true;
         } return false;
     }

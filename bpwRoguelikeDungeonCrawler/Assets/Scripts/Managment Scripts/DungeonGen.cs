@@ -32,16 +32,12 @@ public class DungeonGen : Singleton<DungeonGen>
         AllocateRooms(settings, appearance);
         AllocateCorridors(settings, appearance);
         AllocateWalls(appearance);
-        FindRoomEntrances();
-
-        
 
         if (appearance.dungeonFeatures.Length != 0) {
             AllocateDungeonFeatures(settings, appearance);
         }
 
-        
-        //SpawnDoors();
+        FindRoomEntrances();
 
         EntityManager.Instance.ClearEntityDict();
         CreateLevelEnds(appearance);
@@ -362,8 +358,21 @@ public class DungeonGen : Singleton<DungeonGen>
         }
     }
 
-    public Room GetRandomRoom() {
-        return roomList[Random.Range(0, roomList.Count)];
+    public Room GetRandomRoom(bool includeSpawnRoom = false) {
+        Room room = new Room();
+        if (!includeSpawnRoom) {
+            bool roomFound = false;
+            while (!roomFound) {
+                room = roomList[Random.Range(0, roomList.Count)];
+                if (!room.spawnRoom) {
+                    roomFound = true;
+                }
+            }
+        } else {
+            room = roomList[Random.Range(0, roomList.Count)];
+        }
+        
+        return room;
     }
 
 }

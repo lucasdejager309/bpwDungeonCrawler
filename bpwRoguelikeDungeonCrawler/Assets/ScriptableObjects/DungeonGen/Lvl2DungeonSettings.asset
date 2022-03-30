@@ -41,12 +41,18 @@ MonoBehaviour:
       gameObject: {fileID: 3594764606041160187, guid: bc34d6b5050bd2f4e8ab7df0d8ccb8fa, type: 3}
       wallAdjacent: 0
   requiredItems:
-  - amount: 3
-    item: {fileID: 11400000, guid: b8c0a6cfd63220641aef019a9cb255c6, type: 2}
-  - amount: 3
+  - amount: 1
     item: {fileID: 11400000, guid: 3f220471a48980f4faca81099325c44c, type: 2}
+  - amount: 4
+    item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
+  - amount: 1
+    item: {fileID: 11400000, guid: df6313313122f6d4e89437c515647b25, type: 2}
+  - amount: 1
+    item: {fileID: 11400000, guid: 154c1f002be730244a9597bd8faba3a8, type: 2}
+  - amount: 4
+    item: {fileID: 11400000, guid: 298bb8bff5fc14b47b541b0ef75a5a79, type: 2}
   enemyDamageMultiplier: 1.2
-  enemyHealthMultiplier: 1.2
+  enemyHealthMultiplier: 1.8
   enemyDensityRange:
     min: 3
     max: 7

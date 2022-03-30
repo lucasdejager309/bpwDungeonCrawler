@@ -25,7 +25,7 @@ MonoBehaviour:
   useItemOnThrow: 1
   throwRange: 6
   attackRange: 1
-  verb: throw
+  verb: thrown
   damageRange:
     min: 2
     max: 5

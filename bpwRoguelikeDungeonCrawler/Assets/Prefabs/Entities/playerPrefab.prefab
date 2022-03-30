@@ -58,7 +58,7 @@ MonoBehaviour:
   description: a frog!
   cantBeDestroyed: 1
   isSolid: 1
-  isAttackable: 0
+  isAttackable: 1
   maxHealth: 30
   health: 0
   timeBetweenMoves: 0.01
@@ -136,6 +136,8 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: e7609b0db2e8718428a26a66ba4ed59a, type: 2}
   - amount: 2
     item: {fileID: 11400000, guid: 5a5c97cc0483d7e488d6641d1bc2fee2, type: 2}
+  - amount: 3
+    item: {fileID: 11400000, guid: 298bb8bff5fc14b47b541b0ef75a5a79, type: 2}
 --- !u!212 &-7954610942754421442
 SpriteRenderer:
   m_ObjectHideFlags: 0

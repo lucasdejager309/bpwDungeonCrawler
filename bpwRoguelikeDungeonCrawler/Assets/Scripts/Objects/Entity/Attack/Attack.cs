@@ -8,7 +8,7 @@ public class Attack : MonoBehaviour {
     public int howManyTurns = 1;
     public int lastTurnDone;
 
-    public virtual IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1) {
+    public virtual IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1, GameObject impactEffect = null) {
         lastTurnDone = GameManager.Instance.CurrentTurn;
         
         List<Entity> entities = EntityManager.Instance.EntitiesAtPos(attackPos);
@@ -19,7 +19,10 @@ public class Attack : MonoBehaviour {
                 entity.TakeDamage(damage);
                 EventManager.InvokeEvent("DAMAGE_HAPPENED");
             }
-            Debug.Log(entity.name);
+        }
+
+        if (impactEffect != null) {
+            GameObject explosion  =Instantiate(impactEffect, new Vector3(attackPos.x, attackPos.y, -2), Quaternion.identity);
         }
 
         return null;

@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa5ec267c305c0749850b0a4db9bb6fb, type: 2}
   - {fileID: 11400000, guid: 44c0ec35da8236347a6121f0fb2dd34f, type: 2}
   - {fileID: 11400000, guid: 154c1f002be730244a9597bd8faba3a8, type: 2}
+  - {fileID: 11400000, guid: 298bb8bff5fc14b47b541b0ef75a5a79, type: 2}
   save:
     currentLevel: 0
     currentHealth: 0

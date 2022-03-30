@@ -87,7 +87,7 @@ public class Entity : MonoBehaviour, IDamagable
 
     public IEnumerator MoveToWards(GameObject target, int tilesPerMove, float moveSpeed) {
         Vector2Int targetPos = target.GetComponent<Entity>().GetPos();
-        
+
         List<PathNode> path = Pathfinding.FindPath(new PathNode(GetPos()), new PathNode(targetPos), EntityManager.Instance.validPositions);
         if (path != null) {
             int i = 0;

@@ -29,8 +29,10 @@ public class PlayerInventory : Inventory {
     EquipSlot[] startsEquipSlots = new EquipSlot[2];
 
     void Start() {
-        SetInventory(startInventoryItems);
-        startsEquipSlots = equipSlots;
+        if (!GameManager.Instance.loadFromSave) {
+            SetInventory(startInventoryItems);
+            startsEquipSlots = equipSlots;
+        }
     }
 
     public void SetInventory(List<InventoryItem> items) {

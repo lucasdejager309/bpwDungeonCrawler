@@ -21,9 +21,7 @@ public class UIPanel : MonoBehaviour
     }
 
     void Start() {
-        if (!activeOnLoad) {
-            TogglePanel(false);
-        }
+        TogglePanel(activeOnLoad);
     }
 
     public virtual void UpdatePointer(Vector2Int input) {

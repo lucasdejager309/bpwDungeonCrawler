@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangedAttack : Attack {
     public GameObject projectilePrefab;
 
-    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1) {
+    public override IEnumerator DoAttack(Vector2Int attackPos, int damage, Entity attacker, int attackRange = 1, GameObject impactEffect = null) {
             Task attack = new Task(AttackAnimRanged(attackPos, attacker));
 
             bool finished  = false;
@@ -14,7 +14,7 @@ public class RangedAttack : Attack {
                 for (int x = -range; x <= range; x++) {
                     for (int y = -range; y <= range; y++) {
                         Vector2Int pos = attackPos + new Vector2Int(x, y);
-                        base.DoAttack(pos, damage, attacker);
+                        base.DoAttack(pos, damage, attacker, attackRange, impactEffect);
                         GameManager.Instance.DrawCross(pos, 1f, Color.red);
                     }
                 }

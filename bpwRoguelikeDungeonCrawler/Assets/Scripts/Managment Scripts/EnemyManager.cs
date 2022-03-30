@@ -70,8 +70,8 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     IEnumerator DoActions() {
-        EventManager.InvokeEvent("UI_TOGGLE_WAIT");
-
+        UIManager.Instance.ToggleWait(true);
+        GameManager.Instance.player.GetComponent<Player>().SetInputAllowed(false);
         List<GameObject> actionQueue = new List<GameObject>();
 
         foreach(GameObject enemy in enemies) {
@@ -108,7 +108,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 yield return null;
             }
         }
-        EventManager.InvokeEvent("UI_TOGGLE_WAIT");
         EventManager.InvokeEvent("OTHER_TURNS_FINISHED"); 
+        UIManager.Instance.ToggleWait(false);
     }
 }

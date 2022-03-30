@@ -16,6 +16,7 @@ public class ThrowableItem : ConsumableItem, IWeapon {
 
     [Header("Throwable")]
     public GameObject projectilePrefab;
+    public GameObject impactEffect;
     public bool useItemOnThrow;
     public int throwRange;
     public int attackRange;
@@ -31,7 +32,8 @@ public class ThrowableItem : ConsumableItem, IWeapon {
         bool finished = false;
 
         Task t = new Task(player.GetComponent<RangedAttack>().DoAttack(UIManager.Instance.aimpointer.GetPos(), 
-            player.GetComponent<Player>().CalculateDamage(UIManager.Instance.aimpointer.itemToUse), player.GetComponent<Entity>(), attackRange));
+            player.GetComponent<Player>().CalculateDamage(UIManager.Instance.aimpointer.itemToUse), 
+            player.GetComponent<Entity>(), attackRange, impactEffect));
     
         t.Finished += delegate {
             finished = true;

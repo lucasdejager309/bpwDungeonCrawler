@@ -18,6 +18,7 @@ public class AimPointer : MonoBehaviour
 
     void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
     }
 
     public void IgnoreWalls(bool state) {

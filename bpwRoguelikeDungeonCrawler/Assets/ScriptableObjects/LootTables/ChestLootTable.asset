@@ -41,13 +41,6 @@ MonoBehaviour:
     amountRange:
       min: 3
       max: 7
-  - item: {fileID: 11400000, guid: 797ff22f00be7794daf6f44197b7bab6, type: 2}
-    required: 0
-    pickChance: 8
-    multiple: 0
-    amountRange:
-      min: 0
-      max: 0
   - item: {fileID: 11400000, guid: fa5ec267c305c0749850b0a4db9bb6fb, type: 2}
     required: 0
     pickChance: 2

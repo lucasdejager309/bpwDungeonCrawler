@@ -1066,10 +1066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1b5f11c32e2d944a9eb79c421c9a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputs:
-  - key: 32
-    state: 0
-    action: INTERACT
+  inputObject: {fileID: 11400000, guid: 35a7e4d0fe6f8cf4dbc0d3570d7f1867, type: 2}
 --- !u!4 &2110702611
 Transform:
   m_ObjectHideFlags: 0
