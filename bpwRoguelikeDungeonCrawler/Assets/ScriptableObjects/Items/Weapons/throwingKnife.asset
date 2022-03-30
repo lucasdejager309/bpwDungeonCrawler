@@ -22,6 +22,8 @@ MonoBehaviour:
   requiredStrength: 10
   requiredIntelligence: 0
   projectilePrefab: {fileID: 2037808370954092619, guid: 9508b7db64dbd5a4294f1ea2f6dc8a63, type: 3}
+  impactEffect: {fileID: 0}
+  attackSound: ATTACK
   useItemOnThrow: 1
   throwRange: 6
   attackRange: 1

@@ -20,6 +20,7 @@ MonoBehaviour:
   equippable: 0
   equipSlotID: 
   requiredStrength: 0
-  requiredInteligence: 0
+  requiredIntelligence: 0
+  consumeSound: STRENGTH
   addINT: 0
   addSTR: 1

@@ -17,6 +17,7 @@ public class ThrowableItem : ConsumableItem, IWeapon {
     [Header("Throwable")]
     public GameObject projectilePrefab;
     public GameObject impactEffect;
+    public string attackSound;
     public bool useItemOnThrow;
     public int throwRange;
     public int attackRange;
@@ -37,6 +38,7 @@ public class ThrowableItem : ConsumableItem, IWeapon {
     
         t.Finished += delegate {
             finished = true;
+            AudioManager.Instance.PlaySound(attackSound);
         };
 
         while (true) {

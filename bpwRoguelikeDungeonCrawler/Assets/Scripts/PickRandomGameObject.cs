@@ -10,7 +10,6 @@ using UnityEngine;
 
 class PickRandom {
     public static SpawnableObject PickRandomObject(SpawnableObject[] objects) {
-        //how the fuck does relative probability work??
         //https://forum.unity.com/threads/random-item-spawn-using-array-with-item-rarity-variable.176234/
         
         SpawnableObject pickedObject = null;

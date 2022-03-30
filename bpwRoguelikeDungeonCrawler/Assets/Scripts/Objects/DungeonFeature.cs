@@ -8,9 +8,7 @@ public class DungeonFeature : GenTile {
     public bool wallAdjacent;
     public bool solid;
 
-    //copying and pasting this function from GenTiles is not very elegant
     public static DungeonFeature PickRandomFeature(DungeonFeature[] features) {
-        //how the fuck does relative probability work??
         //https://forum.unity.com/threads/random-item-spawn-using-array-with-item-rarity-variable.176234/
         
         DungeonFeature pickedTile = null;

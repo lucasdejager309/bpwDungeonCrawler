@@ -134,6 +134,7 @@ public class GameManager : Singleton<GameManager> {
         UIManager.Instance.aimpointer.SetActive(false);
         UIManager.Instance.deathMenu.TogglePanel(false);
         UIManager.Instance.hotKeys.darkBackground.enabled = false;
+        UIManager.Instance.hotKeys.promptText.enabled = false;
         UIManager.Instance.inspectPanel.TogglePanel(false);
     }
 
@@ -220,11 +221,11 @@ public class GameManager : Singleton<GameManager> {
     }
 
     void Interact() {
+        AudioManager.Instance.PlaySound("test");
         GetControlObject(currentlyControlling).Interact();
     }
 
     void Update() {
-        //UGLY FIX (HEALTHBAR DOES UPDATE IN EDITOR BUT NOT IN BUILD???? I DONT EVEN KNOW WHY THIS FIXES IT)
         if (UIManager.Instance.healthSlider.GetValue() != player.GetComponent<Player>().Health) {
             EventManager.InvokeEvent("UI_UPDATE_HEALTH");
         }
@@ -240,8 +241,6 @@ public class GameManager : Singleton<GameManager> {
             InputManager.Instance.inputObject.GetInput();
         }
         
-
-        //IN CASE PLAYER LOST
         if (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
         }

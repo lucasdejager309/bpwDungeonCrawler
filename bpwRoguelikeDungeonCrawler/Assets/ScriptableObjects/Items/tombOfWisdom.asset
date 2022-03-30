@@ -21,5 +21,6 @@ MonoBehaviour:
   equipSlotID: 
   requiredStrength: 0
   requiredIntelligence: 0
+  consumeSound: MAGIC
   addINT: 1
   addSTR: 0

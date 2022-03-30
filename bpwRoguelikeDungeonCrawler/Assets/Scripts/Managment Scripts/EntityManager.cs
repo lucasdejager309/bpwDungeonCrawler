@@ -13,16 +13,8 @@ public class EntityManager : Singleton<EntityManager>, Inspectable
         EventManager.AddListener("DUNGEON_GENERATED", FillValidPositionsDict);
     }
 
-    //temp DRAWS NICE LITTLE CROSSES AT ENTITYDICT VALUES
-    void Update() {
-        foreach (Vector2Int pos in entityDict.Values) {
-            GameManager.Instance.DrawCross(pos, 0.1f, Color.green);
-        }   
-    }
-
     public void ClearEntityDict() {
         List<Entity> entities = new List<Entity>(entityDict.Keys);
-        // entityDict.Clear();
         foreach(var key in entities) {
             if (!key.cantBeDestroyed) {
                 key.DeleteEntity();

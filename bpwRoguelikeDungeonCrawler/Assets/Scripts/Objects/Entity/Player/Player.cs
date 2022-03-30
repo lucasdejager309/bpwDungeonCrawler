@@ -76,7 +76,7 @@ public class Player : Entity
         }
 
         base.TakeDamage(damage);
-
+        AudioManager.Instance.PlaySound("HURT");
         EventManager.InvokeEvent("UI_UPDATE_HEALTH");
     }
 
@@ -111,7 +111,7 @@ public class Player : Entity
                     break;
                 case ActionType.ATTACK:
                     action = new Task(GetComponent<MeleeAttack>().DoAttack(input+GetPos(), CalculateDamage((IWeapon)GetComponent<PlayerInventory>().GetItemBySlotID("WEAPON")), this));
-                    
+                    AudioManager.Instance.PlaySound("ATTACK");
                     break;                
                 case ActionType.INTERACT:
                     

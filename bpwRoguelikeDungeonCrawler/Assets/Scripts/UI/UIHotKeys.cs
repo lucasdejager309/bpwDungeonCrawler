@@ -25,6 +25,7 @@ public class HotKey {
 public class UIHotKeys : MonoBehaviour
 {
     public Image darkBackground;
+    public Text promptText;
     public Sprite emptySprite;
     public HotKey[] hotKeys;
     public GameObject[] hotKeyDisplays;
@@ -77,7 +78,7 @@ public class UIHotKeys : MonoBehaviour
 
     void Update() {
         foreach(HotKey hotKey in hotKeys) {
-            if (Input.GetKeyDown(hotKey.key)) {
+            if (Input.GetKeyDown(hotKey.key) && GameManager.Instance.currentlyControlling == ControlMode.PLAYER) {
                 PlayerInventory inventory = GameManager.Instance.player.GetComponent<PlayerInventory>();
                 
                 if (hotKey.Item != null) {

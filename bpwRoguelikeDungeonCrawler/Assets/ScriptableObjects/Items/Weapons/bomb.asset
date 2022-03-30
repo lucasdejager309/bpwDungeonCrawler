@@ -23,6 +23,7 @@ MonoBehaviour:
   requiredIntelligence: 0
   projectilePrefab: {fileID: 1928781105036187218, guid: 3ecb5d85e5bcfdc409dc40591c968276, type: 3}
   impactEffect: {fileID: 4288943867746251236, guid: 2b37a675131f562429b5113267f20173, type: 3}
+  attackSound: EXPLOSION
   useItemOnThrow: 1
   throwRange: 6
   attackRange: 2

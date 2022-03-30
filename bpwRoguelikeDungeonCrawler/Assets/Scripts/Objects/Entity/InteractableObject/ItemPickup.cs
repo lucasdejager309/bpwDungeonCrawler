@@ -22,6 +22,7 @@ public class ItemPickup : InteractableObject
 
     public override void Interact(GameObject interacter)
     {
+        AudioManager.Instance.PlaySound("PICKUP");
         interacter.GetComponent<Inventory>().AddItem(item, amount);
         cantBeDestroyed = false;
         

@@ -19,7 +19,6 @@ public class GenTile {
     }
 
     public static GenTile PickRandomGenTile(GenTile[] genTiles) {
-        //how the fuck does relative probability work??
         //https://forum.unity.com/threads/random-item-spawn-using-array-with-item-rarity-variable.176234/
         
         GenTile pickedTile = null;

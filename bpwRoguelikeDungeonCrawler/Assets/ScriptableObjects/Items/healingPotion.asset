@@ -20,5 +20,6 @@ MonoBehaviour:
   equippable: 0
   equipSlotID: 
   requiredStrength: 0
-  requiredInteligence: 0
+  requiredIntelligence: 0
+  consumeSound: HEALING
   healingAmount: 10

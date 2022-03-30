@@ -89,7 +89,7 @@ public class EnemyManager : Singleton<EnemyManager>
         }
 
         if (actionQueue.Count != 0) {
-            //this is a bad fix for the wrong attack pos bug
+            //this is a (bad) fix for the wrong attack pos bug
             yield return new WaitForSeconds(0.1f);
 
             int i = 0;

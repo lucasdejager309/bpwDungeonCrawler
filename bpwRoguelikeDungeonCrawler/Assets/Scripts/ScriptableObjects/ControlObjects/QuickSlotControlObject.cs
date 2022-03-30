@@ -11,10 +11,12 @@ public class QuickSlotControlObject : ControlObject
 
     public override void SetControlTo() {
         UIManager.Instance.hotKeys.darkBackground.enabled = true;
+        UIManager.Instance.hotKeys.promptText.enabled = true;
     }
 
     public override void LoseControl() {
         UIManager.Instance.hotKeys.darkBackground.enabled = false;
+        UIManager.Instance.hotKeys.promptText.enabled = false;
     }
 
     public override void UpdateControl(Vector2Int input) {

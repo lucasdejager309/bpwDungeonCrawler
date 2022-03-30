@@ -141,8 +141,7 @@ public class DungeonGen : Singleton<DungeonGen>
                     AddTileToDictionary(pos, tileToAdd, floorTileDictionary, false);
                 }
             }
-
-            //what does this do?? (i commented it out and it still works so idk)
+            
             if (corridorDir.y < 0) {
                 startPos.y += Mathf.RoundToInt(settings.corridorWidth/2);
             }
